@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <EditText
+        android:id="@+id/edItemName"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:inputType="textAutoComplete"
+        android:autofillHints="null"
+        app:layout_constraintHeight_min="@dimen/_40sdp"
+        tools:ignore="LabelFor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/edItemPrice"/>
+
+    <EditText
+        android:id="@+id/edItemPrice"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:inputType="textAutoComplete"
+        android:autofillHints="null"
+        tools:ignore="LabelFor"
+        app:layout_constraintStart_toEndOf="@id/edItemName"
+        app:layout_constraintTop_toTopOf="@id/edItemName"
+        app:layout_constraintBottom_toBottomOf="@id/edItemName"
+        app:layout_constraintEnd_toStartOf="@id/edItemQuantity"
+        />
+
+    <EditText
+        android:id="@+id/edItemQuantity"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:inputType="textAutoComplete"
+        android:autofillHints="null"
+        tools:ignore="LabelFor"
+        app:layout_constraintStart_toEndOf="@id/edItemPrice"
+        app:layout_constraintTop_toTopOf="@id/edItemPrice"
+        app:layout_constraintBottom_toBottomOf="@id/edItemPrice"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
