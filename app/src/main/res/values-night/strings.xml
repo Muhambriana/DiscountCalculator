@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_more">Add More</string>
-    <string name="item_name">Item Name</string>
+    <string name="item">Item</string>
     <string name="price">Price</string>
     <string name="qty">Qty</string>
 </resources>
