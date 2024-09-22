@@ -13,6 +13,11 @@ class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
     private var listForm = mutableListOf<Form>()
     var onItemClick: ((Form) -> Unit)? = null
 
+    fun addItem(item: Form?) {
+        if (item == null) return
+        listForm.add(item)
+        notifyItemInserted(listForm.size)
+    }
     fun setItemList(items: List<Form>?) {
         if (items == null) return
         listForm.clear()
@@ -44,6 +49,10 @@ class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
                 onItemClick?.invoke(listForm[adapterPosition])
             }
         }
+    }
+
+    fun getList(): MutableList<Form> {
+        return listForm
     }
 
 }

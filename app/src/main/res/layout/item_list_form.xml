@@ -3,16 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_5sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <EditText
         android:id="@+id/edItemName"
-        android:layout_width="@dimen/_100sdp"
+        android:layout_width="@dimen/width_item_name"
         android:layout_height="wrap_content"
+        android:padding="@dimen/_2sdp"
         android:inputType="textAutoComplete"
         android:autofillHints="null"
+        android:gravity="center"
         app:layout_constraintHeight_min="@dimen/_40sdp"
         tools:ignore="LabelFor"
+        android:background="@drawable/background_filled_rounded_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,11 +24,14 @@
 
     <EditText
         android:id="@+id/edItemPrice"
-        android:layout_width="@dimen/_150sdp"
+        android:layout_width="@dimen/width_item_price"
         android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_2sdp"
+        android:gravity="center"
         android:inputType="number"
         android:autofillHints="null"
         tools:ignore="LabelFor"
+        android:background="@drawable/background_filled_rounded_white"
         app:layout_constraintStart_toEndOf="@id/edItemName"
         app:layout_constraintTop_toTopOf="@id/edItemName"
         app:layout_constraintBottom_toBottomOf="@id/edItemName"
@@ -33,11 +40,14 @@
 
     <EditText
         android:id="@+id/edItemQuantity"
-        android:layout_width="@dimen/_40sdp"
+        android:layout_width="@dimen/width_item_qty"
         android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_2sdp"
+        android:gravity="center"
         android:inputType="number"
         android:autofillHints="null"
         tools:ignore="LabelFor"
+        android:background="@drawable/background_filled_rounded_white"
         app:layout_constraintStart_toEndOf="@id/edItemPrice"
         app:layout_constraintTop_toTopOf="@id/edItemPrice"
         app:layout_constraintBottom_toBottomOf="@id/edItemPrice"
