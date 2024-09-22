@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="width_item_name">@dimen/_90sdp</dimen>
+    <dimen name="width_item_price">@dimen/_130sdp</dimen>
+    <dimen name="width_item_qty">@dimen/_40sdp</dimen>
+</resources>
