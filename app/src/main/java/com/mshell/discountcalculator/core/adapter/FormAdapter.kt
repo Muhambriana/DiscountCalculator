@@ -13,10 +13,10 @@ class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
     private var listForm = mutableListOf<Form>()
     var onItemClick: ((Form) -> Unit)? = null
 
-    fun setItemList(attendances: List<Form>?) {
-        if (attendances == null) return
+    fun setItemList(items: List<Form>?) {
+        if (items == null) return
         listForm.clear()
-        listForm.addAll(attendances)
+        listForm.addAll(items)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -35,8 +35,8 @@ class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         private val binding = ItemListFormBinding.bind(itemView)
         fun bind(form: Form) {
             binding.edItemName.setText(form.itemName)
-            binding.edItemPrice.setText(form.itemPrice.toString())
-            binding.edItemQuantity.setText(form.itemQuantity.toString())
+            binding.edItemPrice.setText(form.itemPrice?.toString() ?: "")
+            binding.edItemQuantity.setText(form.itemQuantity?.toString() ?: "")
         }
 
         init {
