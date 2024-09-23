@@ -7,4 +7,5 @@
     <string name="your_item_list">Your Item List</string>
     <string name="no_data">Empty List</string>
     <string name="something_wrong">Oops. Something Wrong</string>
+    <string name="calculate">Calculate</string>
 </resources>
