@@ -51,7 +51,7 @@ class DiscountFormActivity : AppCompatActivity() {
 
     private fun initButton() {
         binding.btnAdd.setOnClickListener {
-            getItem()
+            calculate()
         }
     }
 
@@ -66,7 +66,7 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Success -> {
                         formAdapter.addItem(resource.data)
                     }
-                    null -> {}
+                    else -> {}
                 }
             }
         }
@@ -92,7 +92,7 @@ class DiscountFormActivity : AppCompatActivity() {
                         showRecycleList()
                         binding.viewLoading.root.visibility = View.GONE
                     }
-                    null -> {}
+                    else -> {}
                 }
             }
         }
@@ -100,9 +100,9 @@ class DiscountFormActivity : AppCompatActivity() {
 
 
     private fun calculate() {
-        val discount = binding.edDiscount.text.toString().toInt()
-        val maxDiscount = binding.edMaxDiscount.text.toString().toInt()
-
+        val discount = binding.edDiscount.text.toString().toDouble()
+        val maxDiscount = binding.edMaxDiscount.text.toString().toDouble()
 
     }
+
 }
