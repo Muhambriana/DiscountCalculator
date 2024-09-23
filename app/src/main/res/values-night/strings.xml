@@ -2,6 +2,6 @@
 <resources>
     <string name="add_more">Add More</string>
     <string name="item">Item</string>
-    <string name="price">Price</string>
+    <string name="price">Price per item</string>
     <string name="qty">Qty</string>
 </resources>

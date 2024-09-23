@@ -2,7 +2,7 @@
     <string name="app_name">Discount Calculator</string>
     <string name="add_more">Add More</string>
     <string name="item">Item</string>
-    <string name="price">Price</string>
+    <string name="price">Price per item</string>
     <string name="qty">Qty</string>
     <string name="your_item_list">Your Item List</string>
 </resources>
