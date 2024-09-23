@@ -1,7 +1,23 @@
 package com.mshell.discountcalculator.core.repository
 
-class DiscalRepository constructor() {
+import com.mshell.discountcalculator.core.models.Form
 
-//    fun getAllBooks(token: String) = retrofitClient.create().getAllBook(token)
+class DiscalRepository {
+
+    fun getItem(): Form {
+        return Form(null, null, null)
+    }
+
+    fun getFirstList(count: Int): MutableList<Form> {
+        val list = mutableListOf<Form>()
+        for (i in 1..count) {
+            list.add(getItem())
+        }
+        return list
+    }
+
+    fun getDiscountResult() {
+
+    }
 
 }
