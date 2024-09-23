@@ -3,6 +3,7 @@ package com.mshell.discountcalculator.core.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
@@ -42,6 +43,22 @@ class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
             binding.edItemName.setText(form.itemName)
             binding.edItemPrice.setText(form.itemPrice?.toString() ?: "")
             binding.edItemQuantity.setText(form.itemQuantity?.toString() ?: "")
+
+            binding.edItemName.doAfterTextChanged { value ->
+                form.itemName = value.toString()
+            }
+            binding.edItemPrice.doAfterTextChanged { value ->
+                form.itemPrice = value.toString().let {
+                    if (it == "") 0.0
+                    else it.toDouble()
+                }
+            }
+            binding.edItemQuantity.doAfterTextChanged { value ->
+                form.itemQuantity = value.toString().let {
+                    if (it == "") 0.0
+                    else it.toDouble()
+                }
+            }
         }
 
         init {
