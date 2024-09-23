@@ -4,8 +4,13 @@ data class Form(
 
     var itemName: String? = null,
 
-    var itemPrice: Int? = null,
+    var itemPrice: Double? = null,
 
-    var itemQuantity: Int? = null
+    var itemQuantity: Double? = null,
 
+    var total: Double? = null,
+
+    var discount: Double? = null,
+
+    var afterDiscount: Double? = null
 )
