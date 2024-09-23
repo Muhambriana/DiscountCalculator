@@ -1,6 +1,7 @@
 package com.mshell.discountcalculator.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
@@ -55,7 +56,7 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun getItem() {
-        formViewModel.resourceItemForm
+        formViewModel.getItem()
         formViewModel.resourceItemForm.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
@@ -81,12 +82,15 @@ class DiscountFormActivity : AppCompatActivity() {
         formViewModel.resourceItemsForm.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
-                    is DiscalResource.Loading -> {}
+                    is DiscalResource.Loading -> {
+                        binding.viewLoading.root.visibility = View.VISIBLE
+                    }
                     is DiscalResource.Empty -> {}
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         formAdapter.setItemList(resource.data)
                         showRecycleList()
+                        binding.viewLoading.root.visibility = View.GONE
                     }
                     null -> {}
                 }
