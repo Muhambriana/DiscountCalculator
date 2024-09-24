@@ -55,5 +55,13 @@ class DiscountFormViewModel(private val repository: DiscalRepository): ViewModel
         }
     }
 
+    fun getResultDiscountNominal(list: MutableList<Form>?, discountNominal: Double?) {
+        discountResult.postValue(DiscalEvent(DiscalResource.Loading()))
 
+        CoroutineScope(dispatchers).launch {
+            val result = repository.getDiscountNominalResult(list, discountNominal)
+            async { result }.await()
+            discountResult.postValue(DiscalEvent(DiscalResource.Success(result)))
+        }
+    }
 }

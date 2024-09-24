@@ -43,7 +43,7 @@ class DiscalRepository {
 
             async {
                 list?.forEach {
-                    val firstCalculation = (it.total?.div(totalAllItem))
+                    val firstCalculation = it.total?.div(totalAllItem)
                     val secondCalculation = (firstCalculation)?.times(100)
                     it.discount = (secondCalculation?.times(totalDiscount))?.div(100)
                 }
@@ -53,6 +53,23 @@ class DiscalRepository {
         }
         return result
 
+    }
+
+    suspend fun getDiscountNominalResult(
+        list: MutableList<Form>?,
+        discountNominal: Double?
+    ): MutableList<Form>? {
+        val result = withContext(dispatchers) {
+            val discountPerItem = discountNominal?.div(list?.sumOf { it.itemQuantity ?: 0.0  } ?: 0.0)
+            async {
+                list?.forEach {
+                    it.total = it.itemPrice?.times(it.itemQuantity ?: 0.0)
+                    it.discount = discountPerItem?.times(it.itemQuantity ?: 0.0)
+                }
+            }.await()
+            list
+        }
+        return result
     }
 
 }
