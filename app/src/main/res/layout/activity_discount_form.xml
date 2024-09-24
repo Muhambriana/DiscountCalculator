@@ -15,7 +15,7 @@
         layout="@layout/toolbar_discal"/>
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/cl_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
@@ -36,11 +36,11 @@
         android:padding="@dimen/_5sdp"
         android:background="@drawable/background_filled_rounded_primary_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
 
         <TextView
-            android:id="@+id/tvItemName"
+            android:id="@+id/tv_item_name"
             android:layout_width="@dimen/width_item_name"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
@@ -48,52 +48,52 @@
             android:gravity="center"
             android:text="@string/item"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toStartOf="@id/tvItemPrice"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_price"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvItemPrice"
+            android:id="@+id/tv_item_price"
             android:layout_width="@dimen/width_item_price"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:text="@string/price"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="@id/tvItemName"
-            app:layout_constraintEnd_toStartOf="@id/tvItemQuantity"
-            app:layout_constraintStart_toEndOf="@id/tvItemName"
-            app:layout_constraintTop_toTopOf="@+id/tvItemName" />
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_name"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_quantity"
+            app:layout_constraintStart_toEndOf="@id/tv_item_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_name" />
 
         <TextView
-            android:id="@+id/tvItemQuantity"
+            android:id="@+id/tv_item_quantity"
             android:layout_width="@dimen/width_item_qty"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:text="@string/qty"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="@id/tvItemPrice"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_price"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvItemPrice"
-            app:layout_constraintTop_toTopOf="@+id/tvItemPrice"
+            app:layout_constraintStart_toEndOf="@id/tv_item_price"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_price"
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvItem"
+            android:id="@+id/rv_item_form"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="@+id/tvItemQuantity"
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_quantity"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/tvItemName"
-            app:layout_constraintTop_toBottomOf="@id/tvItemName"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_name"
             tools:itemCount="3"
             tools:listitem="@layout/item_list_form" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
-        android:id="@+id/edDiscount"
+        android:id="@+id/ed_discount"
         android:layout_width="@dimen/width_item_name"
         android:layout_height="wrap_content"
         android:autofillHints="null"
@@ -102,11 +102,11 @@
         android:padding="@dimen/_2sdp"
         app:layout_constraintHeight_min="@dimen/_40sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edMaxDiscount"
+        app:layout_constraintTop_toTopOf="@+id/ed_max_discount"
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/edMaxDiscount"
+        android:id="@+id/ed_max_discount"
         android:layout_width="@dimen/width_item_name"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
@@ -115,12 +115,12 @@
         android:inputType="textAutoComplete"
         android:padding="@dimen/_2sdp"
         app:layout_constraintHeight_min="@dimen/_40sdp"
-        app:layout_constraintStart_toEndOf="@+id/edDiscount"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintStart_toEndOf="@+id/ed_discount"
+        app:layout_constraintTop_toBottomOf="@+id/cl_container"
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/edDiscountNominal"
+        android:id="@+id/ed_discount_nominal"
         android:layout_width="@dimen/width_item_name"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
@@ -129,13 +129,13 @@
         android:inputType="textAutoComplete"
         android:padding="@dimen/_2sdp"
         app:layout_constraintHeight_min="@dimen/_40sdp"
-        app:layout_constraintStart_toEndOf="@+id/edMaxDiscount"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintStart_toEndOf="@+id/ed_max_discount"
+        app:layout_constraintTop_toBottomOf="@+id/cl_container"
         tools:ignore="LabelFor" />
 
 
     <TextView
-        android:id="@+id/tvResult"
+        android:id="@+id/tv_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
@@ -145,10 +145,10 @@
         android:textSize="@dimen/_11ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edDiscount" />
+        app:layout_constraintTop_toBottomOf="@id/ed_discount" />
 
     <Button
-        android:id="@+id/btnCalculate"
+        android:id="@+id/btn_calculate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_10sdp"
@@ -158,8 +158,8 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/cl_container"
+        app:layout_constraintStart_toStartOf="@+id/cl_container" />
 
     <include
         android:id="@+id/view_loading"

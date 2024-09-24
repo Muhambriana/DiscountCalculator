@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <EditText
-        android:id="@+id/edItemName"
+        android:id="@+id/e_iItem_name"
         android:layout_width="@dimen/width_item_name"
         android:layout_height="wrap_content"
         android:padding="@dimen/_2sdp"
@@ -20,10 +20,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/edItemPrice"/>
+        app:layout_constraintEnd_toStartOf="@id/ed_item_price"/>
 
     <EditText
-        android:id="@+id/edItemPrice"
+        android:id="@+id/ed_item_price"
         android:layout_width="@dimen/width_item_price"
         android:layout_height="@dimen/_40sdp"
         android:padding="@dimen/_2sdp"
@@ -32,14 +32,14 @@
         android:autofillHints="null"
         tools:ignore="LabelFor"
         android:background="@drawable/background_filled_rounded_white"
-        app:layout_constraintStart_toEndOf="@id/edItemName"
-        app:layout_constraintTop_toTopOf="@id/edItemName"
-        app:layout_constraintBottom_toBottomOf="@id/edItemName"
-        app:layout_constraintEnd_toStartOf="@id/edItemQuantity"
+        app:layout_constraintStart_toEndOf="@id/e_iItem_name"
+        app:layout_constraintTop_toTopOf="@id/e_iItem_name"
+        app:layout_constraintBottom_toBottomOf="@id/e_iItem_name"
+        app:layout_constraintEnd_toStartOf="@id/e_iItem_quantity"
         />
 
     <EditText
-        android:id="@+id/edItemQuantity"
+        android:id="@+id/e_iItem_quantity"
         android:layout_width="@dimen/width_item_qty"
         android:layout_height="@dimen/_40sdp"
         android:padding="@dimen/_2sdp"
@@ -48,9 +48,9 @@
         android:autofillHints="null"
         tools:ignore="LabelFor"
         android:background="@drawable/background_filled_rounded_white"
-        app:layout_constraintStart_toEndOf="@id/edItemPrice"
-        app:layout_constraintTop_toTopOf="@id/edItemPrice"
-        app:layout_constraintBottom_toBottomOf="@id/edItemPrice"
+        app:layout_constraintStart_toEndOf="@id/ed_item_price"
+        app:layout_constraintTop_toTopOf="@id/ed_item_price"
+        app:layout_constraintBottom_toBottomOf="@id/ed_item_price"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

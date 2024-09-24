@@ -74,8 +74,8 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun showRecycleList() {
-        binding.rvItem.layoutManager = LinearLayoutManager(this)
-        binding.rvItem.adapter = formAdapter
+        binding.rvItemForm.layoutManager = LinearLayoutManager(this)
+        binding.rvItemForm.adapter = formAdapter
     }
 
     private fun getItemList() {
