@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.ui
+package com.mshell.discountcalculator.ui.form
 
 import android.os.Bundle
 import android.view.View
@@ -8,9 +8,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.adapter.FormAdapter
-import com.mshell.discountcalculator.core.enumclass.DiscountType
+import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
@@ -32,7 +33,7 @@ class DiscountFormActivity : AppCompatActivity() {
 
     private fun initialization() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        supportActionBar?.title = "Discal"
+        supportActionBar?.title = resources.getString(R.string.app_name)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -79,7 +80,7 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun getItemList() {
-        formViewModel.getFirstList(2)
+        formViewModel.getFirstList(4)
         formViewModel.resourceItemsForm.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {

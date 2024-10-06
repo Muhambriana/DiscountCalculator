@@ -2,9 +2,8 @@ package com.mshell.discountcalculator.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.mshell.discountcalculator.core.repository.DiscalRepository
-import com.mshell.discountcalculator.ui.DiscountFormViewModel
+import com.mshell.discountcalculator.ui.form.DiscountFormViewModel
 
 
 class DiscalViewModelFactory(private val discalRepository: DiscalRepository) :

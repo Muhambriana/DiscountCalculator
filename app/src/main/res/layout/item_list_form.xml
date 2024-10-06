@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <EditText
-        android:id="@+id/e_iItem_name"
+        android:id="@+id/ed_item_name"
         android:layout_width="@dimen/width_item_name"
         android:layout_height="wrap_content"
         android:padding="@dimen/_2sdp"
@@ -32,14 +32,14 @@
         android:autofillHints="null"
         tools:ignore="LabelFor"
         android:background="@drawable/background_filled_rounded_white"
-        app:layout_constraintStart_toEndOf="@id/e_iItem_name"
-        app:layout_constraintTop_toTopOf="@id/e_iItem_name"
-        app:layout_constraintBottom_toBottomOf="@id/e_iItem_name"
-        app:layout_constraintEnd_toStartOf="@id/e_iItem_quantity"
+        app:layout_constraintStart_toEndOf="@id/ed_item_name"
+        app:layout_constraintTop_toTopOf="@id/ed_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/ed_item_name"
+        app:layout_constraintEnd_toStartOf="@id/ed_item_quantity"
         />
 
     <EditText
-        android:id="@+id/e_iItem_quantity"
+        android:id="@+id/ed_item_quantity"
         android:layout_width="@dimen/width_item_qty"
         android:layout_height="@dimen/_40sdp"
         android:padding="@dimen/_2sdp"

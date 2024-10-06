@@ -1,8 +1,7 @@
-package com.mshell.discountcalculator.ui
+package com.mshell.discountcalculator.ui.form
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mshell.discountcalculator.core.enumclass.DiscountType
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalEvent
@@ -11,7 +10,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DiscountFormViewModel(private val repository: DiscalRepository): ViewModel() {
