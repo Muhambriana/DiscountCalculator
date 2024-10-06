@@ -12,7 +12,7 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="@string/something_wrong"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_normal"
         android:textStyle="bold"
         android:textSize="@dimen/_20ssp"
         android:textColor="@color/white"/>
