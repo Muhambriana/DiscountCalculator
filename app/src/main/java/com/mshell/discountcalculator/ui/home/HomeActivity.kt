@@ -1,11 +1,13 @@
 package com.mshell.discountcalculator.ui.home
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.utils.config.DiscountType
@@ -65,6 +67,10 @@ class HomeActivity : AppCompatActivity() {
                 nominal(true)
             }
         }
+        binding.clgDetailDiscount.also {
+            if (it.isVisible) return
+            it.visibility = View.VISIBLE
+        }
     }
 
     private fun percent(isChecked: Boolean) {
@@ -80,6 +86,7 @@ class HomeActivity : AppCompatActivity() {
             ContextCompat.getColor(this, getColor(isChecked)), // Dynamic stroke color
             resources.getDimension(com.intuit.sdp.R.dimen._6sdp), // Dynamic corner radius
         )
+        binding.layoutFormDiscountPercent.root.visibility = if (isChecked) View.VISIBLE else View.GONE
     }
 
     private fun nominal(isChecked: Boolean) {
@@ -95,6 +102,7 @@ class HomeActivity : AppCompatActivity() {
             ContextCompat.getColor(this, getColor(isChecked)), // Dynamic stroke color
             resources.getDimension(com.intuit.sdp.R.dimen._6sdp), // Dynamic corner radius
         )
+        binding.layoutFormDiscountNominal.root.visibility = if (isChecked) View.VISIBLE else View.GONE
     }
 
     private fun getColor(flag: Boolean): Int {
