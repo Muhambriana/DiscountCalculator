@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.core.enumclass
+package com.mshell.discountcalculator.utils.config
 
 enum class DiscountType {
     PERCENT,
