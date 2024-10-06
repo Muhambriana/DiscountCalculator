@@ -75,7 +75,7 @@ class HomeActivity : AppCompatActivity() {
                 getColor(isChecked)
             )
         )
-        binding.optionNominalDiscount.background = Helper.setShapeDrawableStrokeColor(
+        binding.optionPercentDiscount.background = Helper.setShapeDrawableStrokeColor(
             resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._2sdp), // Dynamic stroke width
             ContextCompat.getColor(this, getColor(isChecked)), // Dynamic stroke color
             resources.getDimension(com.intuit.sdp.R.dimen._6sdp), // Dynamic corner radius
