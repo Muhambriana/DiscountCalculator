@@ -16,7 +16,9 @@
     <string name="choose_discount">Choose Discount</string>
     <string name="detail_discount">Detail Discount</string>
     <string name="max_discount">Max Discount</string>
-    <string name="_100">100</string>
-    <string name="_100_000">100.000</string>
+    <string name="thirty_five">35</string>
+    <string name="one_thousand">100.000</string>
     <string name="id_currency">Rp</string>
+    <string name="additional">Additional</string>
+    <string name="fifteen_thousand">15.000</string>
 </resources>
