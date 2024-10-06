@@ -56,6 +56,10 @@ class CustomRadioGroup : LinearLayout {
     fun setOnCheckedChangeListener(listener: (CustomRadioGroup, Int) -> Unit) {
         onCheckedChangeListener = listener
     }
+
+    // Getter for checkedRadioButtonId
+    val checkedRadioButtonId: Int
+        get() = checkedId
 }
 
 
