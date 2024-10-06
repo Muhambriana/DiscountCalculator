@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.utils.customview
+package com.mshell.discountcalculator.utils.view
 
 import android.content.Context
 import android.util.AttributeSet
