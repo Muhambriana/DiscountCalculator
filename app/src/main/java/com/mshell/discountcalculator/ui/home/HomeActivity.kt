@@ -1,6 +1,8 @@
 package com.mshell.discountcalculator.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -8,19 +10,27 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.mshell.discountcalculator.R
+import com.mshell.discountcalculator.core.DiscalViewModelFactory
+import com.mshell.discountcalculator.core.models.DiscountDetail
+import com.mshell.discountcalculator.core.repository.DiscalRepository
+import com.mshell.discountcalculator.core.resource.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
+import com.mshell.discountcalculator.ui.form.DiscountFormActivity
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
+import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class HomeActivity : AppCompatActivity() {
 
     private val thisContext = this
     private val tag = this.javaClass.simpleName
-
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
+
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +48,10 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
+        homeViewModel = ViewModelProvider(
+            this,
+            DiscalViewModelFactory(DiscalRepository())
+        )[HomeViewModel::class.java]
         viewInitialization()
     }
 
@@ -53,6 +67,39 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.btnNext.setSingleClickListener {
+            getDiscountData()
+        }
+    }
+
+    private fun getDiscountData() {
+        homeViewModel.getDiscountDetail(binding)
+        homeViewModel.discountDetail.observe(this){ event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is DiscalResource.Loading -> {
+                        binding.viewLoading.root.visibility = View.VISIBLE
+                    }
+                    is DiscalResource.Empty -> {}
+                    is DiscalResource.Error -> {
+                        binding.viewLoading.root.visibility = View.GONE
+                        Log.d(tag, resource.error?.message.toString())
+                        resource.error?.printStackTrace()
+                    }
+                    is DiscalResource.Success -> {
+                        moveIntent(resource.data)
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun moveIntent(discountDetail: DiscountDetail?) {
+        val intent = Intent(this, DiscountFormActivity::class.java)
+        intent.putExtra(DiscountFormActivity.EXTRA_DATA, discountDetail)
+        startActivity(intent)
+        binding.viewLoading.root.visibility = View.GONE
     }
 
     private fun stateChecked(discountType: DiscountType) {
@@ -86,7 +133,8 @@ class HomeActivity : AppCompatActivity() {
             ContextCompat.getColor(this, getColor(isChecked)), // Dynamic stroke color
             resources.getDimension(com.intuit.sdp.R.dimen._6sdp), // Dynamic corner radius
         )
-        binding.layoutFormDiscountPercent.root.visibility = if (isChecked) View.VISIBLE else View.GONE
+        binding.layoutFormDiscountPercent.root.visibility =
+            if (isChecked) View.VISIBLE else View.GONE
     }
 
     private fun nominal(isChecked: Boolean) {
@@ -102,7 +150,8 @@ class HomeActivity : AppCompatActivity() {
             ContextCompat.getColor(this, getColor(isChecked)), // Dynamic stroke color
             resources.getDimension(com.intuit.sdp.R.dimen._6sdp), // Dynamic corner radius
         )
-        binding.layoutFormDiscountNominal.root.visibility = if (isChecked) View.VISIBLE else View.GONE
+        binding.layoutFormDiscountNominal.root.visibility =
+            if (isChecked) View.VISIBLE else View.GONE
     }
 
     private fun getColor(flag: Boolean): Int {
