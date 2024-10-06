@@ -14,239 +14,258 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_discount"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:text="@string/discount"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/btn_next"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-    <TextView
-        android:id="@+id/tv_choose_discount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/choose_discount"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintEnd_toEndOf="@id/tv_discount"
-        app:layout_constraintStart_toStartOf="@id/tv_discount"
-        app:layout_constraintTop_toBottomOf="@id/tv_discount" />
-
-    <com.mshell.discountcalculator.utils.view.CustomRadioGroup
-        android:id="@+id/radio_group_discount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@id/tv_choose_discount"
-        app:layout_constraintStart_toStartOf="@id/tv_choose_discount"
-        app:layout_constraintTop_toBottomOf="@id/tv_choose_discount">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/option_percent_discount"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_outline_black"
-            android:padding="@dimen/_7sdp">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_icon_percent"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:contentDescription="@string/percent"
-                android:src="@drawable/ic_discount_black"
+            <TextView
+                android:id="@+id/tv_discount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/discount"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_title_percent"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:gravity="start|center"
-                android:text="@string/percent"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintBottom_toTopOf="@id/tv_sub_title_percent"
-                app:layout_constraintStart_toEndOf="@id/iv_icon_percent"
-                app:layout_constraintTop_toTopOf="@id/iv_icon_percent" />
-
-            <TextView
-                android:id="@+id/tv_sub_title_percent"
+                android:id="@+id/tv_choose_discount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:gravity="start|center"
-                android:text="@string/option_discount_percent"
-                android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_icon_percent"
-                app:layout_constraintEnd_toStartOf="@id/rb_percent"
-                app:layout_constraintStart_toStartOf="@+id/tv_title_percent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_percent" />
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/choose_discount"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/tv_discount"
+                app:layout_constraintStart_toStartOf="@id/tv_discount"
+                app:layout_constraintTop_toBottomOf="@id/tv_discount" />
 
-            <RadioButton
-                android:id="@+id/rb_percent"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
+            <com.mshell.discountcalculator.utils.view.CustomRadioGroup
+                android:id="@+id/radio_group_discount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/tv_choose_discount"
+                app:layout_constraintStart_toStartOf="@id/tv_choose_discount"
+                app:layout_constraintTop_toBottomOf="@id/tv_choose_discount">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/option_percent_discount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_outline_black"
+                    android:padding="@dimen/_7sdp">
+
+                    <ImageView
+                        android:id="@+id/iv_icon_percent"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:contentDescription="@string/percent"
+                        android:src="@drawable/ic_discount_black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_percent"
+                        android:layout_width="@dimen/_150sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:gravity="start|center"
+                        android:text="@string/percent"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toTopOf="@id/tv_sub_title_percent"
+                        app:layout_constraintStart_toEndOf="@id/iv_icon_percent"
+                        app:layout_constraintTop_toTopOf="@id/iv_icon_percent" />
+
+                    <TextView
+                        android:id="@+id/tv_sub_title_percent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="start|center"
+                        android:text="@string/option_discount_percent"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_icon_percent"
+                        app:layout_constraintEnd_toStartOf="@id/rb_percent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title_percent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title_percent" />
+
+                    <RadioButton
+                        android:id="@+id/rb_percent"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_icon_percent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_sub_title_percent"
+                        app:layout_constraintTop_toTopOf="@id/iv_icon_percent"
+                        tools:checked="true" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/option_nominal_discount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/background_outline_black"
+                    android:padding="@dimen/_7sdp">
+
+                    <ImageView
+                        android:id="@+id/iv_icon_nominal"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:contentDescription="@string/percent"
+                        android:src="@drawable/ic_wallet_black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_nominal"
+                        android:layout_width="@dimen/_150sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:gravity="start|center"
+                        android:text="@string/nominal"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toTopOf="@id/tv_sub_title_nominal"
+                        app:layout_constraintStart_toEndOf="@id/iv_icon_nominal"
+                        app:layout_constraintTop_toTopOf="@id/iv_icon_nominal" />
+
+                    <TextView
+                        android:id="@+id/tv_sub_title_nominal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="start|center"
+                        android:text="@string/option_discount_nominal"
+                        android:textSize="@dimen/_8ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_icon_nominal"
+                        app:layout_constraintEnd_toStartOf="@id/rb_nominal"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title_nominal"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title_nominal" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nominal"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_icon_nominal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_sub_title_nominal"
+                        app:layout_constraintTop_toTopOf="@id/iv_icon_nominal" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.mshell.discountcalculator.utils.view.CustomRadioGroup>
+
+            <View
+                android:id="@+id/view_barrier"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/barrier"
+                app:layout_constraintEnd_toEndOf="@id/radio_group_discount"
+                app:layout_constraintStart_toStartOf="@id/radio_group_discount"
+                app:layout_constraintTop_toBottomOf="@id/radio_group_discount" />
+
+            <TextView
+                android:id="@+id/tv_detail_discount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/detail_discount"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/view_barrier"
+                app:layout_constraintStart_toStartOf="@id/view_barrier"
+                app:layout_constraintTop_toBottomOf="@id/view_barrier" />
+
+            <include
+                android:id="@+id/layout_form_discount_percent"
+                layout="@layout/form_discount_percent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/view_barrier"
+                app:layout_constraintStart_toStartOf="@id/view_barrier"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_discount" />
+
+            <include
+                android:id="@+id/layout_form_discount_nominal"
+                layout="@layout/form_discount_nominal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/view_barrier"
+                app:layout_constraintStart_toStartOf="@id/view_barrier"
+                app:layout_constraintTop_toBottomOf="@id/layout_form_discount_percent" />
+
+            <TextView
+                android:id="@+id/tv_title_form_additional"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/iv_icon_percent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_sub_title_percent"
-                app:layout_constraintTop_toTopOf="@id/iv_icon_percent"
-                tools:checked="true" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:text="@string/additional"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@+id/view_barrier"
+                app:layout_constraintTop_toBottomOf="@id/layout_form_discount_nominal" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/option_nominal_discount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/background_outline_black"
-            android:padding="@dimen/_7sdp">
-
-            <ImageView
-                android:id="@+id/iv_icon_nominal"
-                android:layout_width="@dimen/_50sdp"
+            <com.mshell.discountcalculator.utils.view.CurrencyEditText
+                android:id="@+id/ed_additional"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_50sdp"
-                android:contentDescription="@string/percent"
-                android:src="@drawable/ic_wallet_black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_title_nominal"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/background_outline_black_1dp"
+                android:drawableStart="@drawable/ic_currency_rupiah"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="start|center"
-                android:text="@string/nominal"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintBottom_toTopOf="@id/tv_sub_title_nominal"
-                app:layout_constraintStart_toEndOf="@id/iv_icon_nominal"
-                app:layout_constraintTop_toTopOf="@id/iv_icon_nominal" />
+                android:hint="@string/fifteen_thousand"
+                android:inputType="number"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintEnd_toEndOf="@id/view_barrier"
+                app:layout_constraintStart_toStartOf="@+id/tv_title_form_additional"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_form_additional"
+                tools:ignore="Autofill,LabelFor,TextFields" />
 
-            <TextView
-                android:id="@+id/tv_sub_title_nominal"
+            <View
+                android:id="@+id/view_barrier_2"
                 android:layout_width="0dp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/barrier"
+                app:layout_constraintEnd_toEndOf="@+id/ed_additional"
+                app:layout_constraintStart_toStartOf="@+id/ed_additional"
+                app:layout_constraintTop_toBottomOf="@id/ed_additional" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/clg_detail_discount"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:gravity="start|center"
-                android:text="@string/option_discount_nominal"
-                android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_icon_nominal"
-                app:layout_constraintEnd_toStartOf="@id/rb_nominal"
-                app:layout_constraintStart_toStartOf="@+id/tv_title_nominal"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_nominal" />
+                android:visibility="gone"
+                app:constraint_referenced_ids="view_barrier, tv_detail_discount, tv_title_form_additional, ed_additional, view_barrier_2" />
 
-            <RadioButton
-                android:id="@+id/rb_nominal"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/iv_icon_nominal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_sub_title_nominal"
-                app:layout_constraintTop_toTopOf="@id/iv_icon_nominal" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.mshell.discountcalculator.utils.view.CustomRadioGroup>
-
-    <View
-        android:id="@+id/view_barrier"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/barrier"
-        app:layout_constraintEnd_toEndOf="@id/radio_group_discount"
-        app:layout_constraintStart_toStartOf="@id/radio_group_discount"
-        app:layout_constraintTop_toBottomOf="@id/radio_group_discount" />
-
-    <TextView
-        android:id="@+id/tv_detail_discount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/detail_discount"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintEnd_toEndOf="@id/view_barrier"
-        app:layout_constraintStart_toStartOf="@id/view_barrier"
-        app:layout_constraintTop_toBottomOf="@id/view_barrier" />
-
-    <include
-        android:id="@+id/layout_form_discount_percent"
-        layout="@layout/form_discount_percent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/view_barrier"
-        app:layout_constraintStart_toStartOf="@id/view_barrier"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_discount" />
-
-    <include
-        android:id="@+id/layout_form_discount_nominal"
-        layout="@layout/form_discount_nominal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/view_barrier"
-        app:layout_constraintStart_toStartOf="@id/view_barrier"
-        app:layout_constraintTop_toBottomOf="@id/layout_form_discount_percent" />
-
-    <TextView
-        android:id="@+id/tv_title_form_additional"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center"
-        android:text="@string/additional"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintStart_toStartOf="@+id/view_barrier"
-        app:layout_constraintTop_toBottomOf="@id/layout_form_discount_nominal" />
-
-    <com.mshell.discountcalculator.utils.view.CurrencyEditText
-        android:id="@+id/ed_additional"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
-        android:background="@drawable/background_outline_black_1dp"
-        android:drawableStart="@drawable/ic_currency_rupiah"
-        android:drawablePadding="@dimen/_5sdp"
-        android:gravity="start|center"
-        android:hint="@string/fifteen_thousand"
-        android:inputType="number"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:textSize="@dimen/_15ssp"
-        app:layout_constraintEnd_toEndOf="@id/view_barrier"
-        app:layout_constraintStart_toStartOf="@+id/tv_title_form_additional"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_form_additional"
-        tools:ignore="Autofill,LabelFor,TextFields" />
-
-    <View
-        android:id="@+id/view_barrier_2"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/barrier"
-        app:layout_constraintEnd_toEndOf="@+id/ed_additional"
-        app:layout_constraintStart_toStartOf="@+id/ed_additional"
-        app:layout_constraintTop_toBottomOf="@id/ed_additional" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/clg_detail_discount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="view_barrier, tv_detail_discount, tv_title_form_additional, ed_additional, view_barrier_2" />
+    </ScrollView>
 
     <Button
         android:id="@+id/btn_next"
@@ -258,6 +277,6 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tv_discount"
-        app:layout_constraintStart_toStartOf="@+id/tv_discount" />
+        app:layout_constraintEnd_toEndOf="@+id/scroll_view"
+        app:layout_constraintStart_toStartOf="@+id/scroll_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
