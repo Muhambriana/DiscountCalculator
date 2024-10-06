@@ -1,6 +1,9 @@
 package com.mshell.discountcalculator.core.repository
 
+import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.databinding.ActivityHomeBinding
+import com.mshell.discountcalculator.utils.config.DiscountType
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -70,6 +73,31 @@ class DiscalRepository {
             list
         }
         return result
+    }
+
+    fun getDiscountDetail(binding: ActivityHomeBinding): Result<DiscountDetail?> {
+        try {
+            val discountDetail = DiscountDetail()
+            when (binding.radioGroupDiscount.checkedRadioButtonId) {
+                binding.rbPercent.id -> {
+                    discountDetail.discountType = DiscountType.PERCENT
+                    discountDetail.discountPercent =
+                        binding.layoutFormDiscountPercent.edDiscountPercent.text?.toString()?.toInt()
+                    discountDetail.discountMax =
+                        binding.layoutFormDiscountPercent.edMaxDiscount.text?.toString()?.toDouble()
+                }
+
+                binding.rbNominal.id -> {
+                    discountDetail.discountType = DiscountType.NOMINAL
+                    discountDetail.discountNominal =
+                        binding.layoutFormDiscountNominal.edDiscount.text?.toString()?.toDouble()
+                }
+            }
+            discountDetail.additional = binding.edAdditional.text?.toString()?.toDouble()
+            return Result.success(discountDetail)
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
     }
 
 }
