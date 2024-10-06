@@ -12,4 +12,11 @@
     <string name="percent">Percent</string>
     <string name="nominal">Nominal</string>
     <string name="option_discount_nominal">Calculate your payment with Nominal Discount</string>
+    <string name="discount">Discount</string>
+    <string name="choose_discount">Choose Discount</string>
+    <string name="detail_discount">Detail Discount</string>
+    <string name="max_discount">Max Discount</string>
+    <string name="_100">100</string>
+    <string name="_100_000">100.000</string>
+    <string name="id_currency">Rp</string>
 </resources>
