@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.mshell.discountcalculator.ui.form.DiscountFormActivity"
+            android:exported="false"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>
