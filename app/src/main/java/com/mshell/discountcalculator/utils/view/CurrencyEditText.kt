@@ -90,5 +90,10 @@ class CurrencyEditText @JvmOverloads constructor(
             value // Return the original value if parsing fails
         }
     }
+
+    // Custom method to get clean text without dots
+    fun getCleanText(): String {
+        return text.toString().replace(".", "")
+    }
 }
 
