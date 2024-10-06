@@ -18,12 +18,12 @@ import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 
 class DiscountFormActivity : AppCompatActivity() {
 
-    private lateinit var formViewModel: DiscountFormViewModel
-    private lateinit var formAdapter: FormAdapter
-
     private val binding by lazy {
         ActivityDiscountFormBinding.inflate(layoutInflater)
     }
+
+    private lateinit var formViewModel: DiscountFormViewModel
+    private lateinit var formAdapter: FormAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,4 +147,7 @@ class DiscountFormActivity : AppCompatActivity() {
         }
     }
 
+    companion object{
+        const val EXTRA_DATA = "extra_data"
+    }
 }
