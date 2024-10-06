@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_title_form_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/discount"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.mshell.discountcalculator.utils.view.CurrencyEditText
+        android:id="@+id/ed_discount"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:inputType="number"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:gravity="start|center"
+        android:drawableStart="@drawable/ic_currency_rupiah"
+        android:background="@drawable/background_outline_black_1dp"
+        android:textSize="@dimen/_15ssp"
+        android:hint="@string/one_thousand"
+        android:drawablePadding="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_form_discount"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_form_discount"
+        tools:ignore="Autofill,LabelFor,TextFields" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
