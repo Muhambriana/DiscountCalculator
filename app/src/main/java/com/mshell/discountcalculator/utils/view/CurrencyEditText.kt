@@ -28,9 +28,22 @@ class CurrencyEditText @JvmOverloads constructor(
     }
 
     override fun afterTextChanged(editable: Editable) {
-        removeTextChangedListener(this) // Prevent recursive calls
+        // Prevent recursive calls
+        removeTextChangedListener(this)
 
+        // Track the cursor position
+        val cursorPosition = selectionStart
         val value = editable.toString()
+
+        // Prevent leading zeros
+        if (value.isNotEmpty() && value[0] == '0' && value.length > 1) {
+            // If the first character is zero and there are more characters, remove the zero
+            setText(value.substring(1))
+            setSelection(cursorPosition - 1) // Adjust the cursor position
+            addTextChangedListener(this)
+            return // Exit early to prevent further processing
+        }
+
         if (value.isNotEmpty()) {
             // Handle leading zeros and decimal points
             var formattedValue = value.replace(".", "") // Remove existing dots for formatting
@@ -42,11 +55,23 @@ class CurrencyEditText @JvmOverloads constructor(
 
             // Format the number with dots as thousands separators
             formattedValue = formatWithDots(formattedValue)
+
+            // Update the text and restore cursor position
             setText(formattedValue)
-            setSelection(formattedValue.length) // Move cursor to end
+
+            // Adjust the cursor position based on the change
+            val newCursorPosition = calculateCursorPosition(value, formattedValue, cursorPosition)
+            setSelection(newCursorPosition)
         }
 
-        addTextChangedListener(this) // Re-add the listener
+        // Re-add the listener
+        addTextChangedListener(this)
+    }
+
+    private fun calculateCursorPosition(oldValue: String, newValue: String, oldCursorPosition: Int): Int {
+        // Calculate the new cursor position after formatting
+        val difference = newValue.length - oldValue.length
+        return (oldCursorPosition + difference).coerceIn(0, newValue.length)
     }
 
     private fun formatWithDots(value: String): String {
@@ -66,3 +91,4 @@ class CurrencyEditText @JvmOverloads constructor(
         }
     }
 }
+
