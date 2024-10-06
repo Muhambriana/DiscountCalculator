@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Discount Calculator</string>
+    <string name="app_name">CalDis</string>
     <string name="add_more">Add More</string>
     <string name="item">Item</string>
     <string name="price">Price per item</string>
@@ -8,4 +8,8 @@
     <string name="no_data">Empty List</string>
     <string name="something_wrong">Oops. Something Wrong</string>
     <string name="calculate">Calculate</string>
+    <string name="option_discount_percent">Calculate your payment with Percent Discount</string>
+    <string name="percent">Percent</string>
+    <string name="nominal">Nominal</string>
+    <string name="option_discount_nominal">Calculate your payment with Nominal Discount</string>
 </resources>
