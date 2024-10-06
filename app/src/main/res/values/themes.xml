@@ -32,10 +32,4 @@
     <style name="PoppinsButtonStyle" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily">@font/poppins_normal</item>
     </style>
-
-    <style name="TextAppearance.BoldFond" parent="android:TextAppearance">
-        <item name="android:fontFamily">@font/poppins_bold</item>
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 </resources>

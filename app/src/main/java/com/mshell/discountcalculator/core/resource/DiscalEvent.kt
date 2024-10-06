@@ -1,9 +1,7 @@
 package com.mshell.discountcalculator.core.resource
 
 class DiscalEvent<out T> (private val content: T) {
-    var hasBeenHandled = false
-    // Make external to read but cant write
-    private set
+    private var hasBeenHandled = false
 
     // If want to use one time live data, its prevent to use again
     fun getContentIfNotHandled(): T? {
