@@ -9,7 +9,7 @@ import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
 
-class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
+class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
 
     private var listForm = mutableListOf<Form>()
     var onItemClick: ((Form) -> Unit)? = null
@@ -19,6 +19,7 @@ class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         listForm.add(item)
         notifyItemInserted(listForm.size)
     }
+
     fun setItemList(items: List<Form>?) {
         if (items == null) return
         listForm.clear()
@@ -26,7 +27,9 @@ class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        FormViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_form, parent,false))
+        FormViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_list_form, parent, false)
+        )
 
     override fun onBindViewHolder(holder: FormAdapter.FormViewHolder, position: Int) {
         val attendance = listForm[position]
