@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_10sdp"
+    tools:context=".ui.itemdetail.ItemDetailBottomFragment">
+
+    <TextView
+        android:id="@+id/tv_choose_discount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/input_detail_item"
+        android:textSize="@dimen/_20ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_barrier"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/barrier"
+        app:layout_constraintEnd_toEndOf="@id/tv_choose_discount"
+        app:layout_constraintStart_toStartOf="@id/tv_choose_discount"
+        app:layout_constraintTop_toBottomOf="@id/tv_choose_discount" />
+
+    <TextView
+        android:id="@+id/tv_item_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_normal"
+        android:text="@string/item_name"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_barrier" />
+
+    <EditText
+        android:id="@+id/ed_item_name"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:inputType="textAutoComplete"
+        android:padding="@dimen/_10sdp"
+        android:gravity="start|center"
+        android:drawablePadding="@dimen/_3sdp"
+        android:background="@drawable/background_outline_black_1dp"
+        android:hint="@string/item_name"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintStart_toStartOf="@id/tv_item_name"
+        app:layout_constraintEnd_toEndOf="@id/tv_item_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_name"
+        tools:ignore="Autofill,LabelFor,TextFields"
+        tools:text="Ice Tea"/>
+
+    <TextView
+        android:id="@+id/tv_item_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_normal"
+        android:text="@string/item_price"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_item_name" />
+
+    <com.mshell.discountcalculator.utils.view.CurrencyEditText
+        android:id="@+id/ed_item_price"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/background_outline_black_1dp"
+        android:drawableStart="@drawable/ic_currency_rupiah"
+        android:drawablePadding="@dimen/_5sdp"
+        android:gravity="start|center"
+        android:hint="@string/fifteen_thousand"
+        android:inputType="number"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintEnd_toEndOf="@id/tv_item_price"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_price"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_price"
+        tools:ignore="Autofill,LabelFor,TextFields" />
+
+    <View
+        android:id="@+id/view_barrier_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/barrier"
+        app:layout_constraintEnd_toEndOf="@id/ed_item_price"
+        app:layout_constraintStart_toStartOf="@id/ed_item_price"
+        app:layout_constraintTop_toBottomOf="@id/ed_item_price" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/background_filled_rounded_red_color"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/x"
+        app:layout_constraintEnd_toStartOf="@id/btn_next"
+        app:layout_constraintStart_toStartOf="@+id/view_barrier_2"
+        app:layout_constraintTop_toBottomOf="@+id/view_barrier_2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_next"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:background="@drawable/background_filled_rounded_primary_color"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_cancel"
+        app:layout_constraintEnd_toEndOf="@+id/view_barrier_2"
+        app:layout_constraintStart_toEndOf="@id/btn_cancel"
+        app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
+
+    <include
+        android:id="@+id/view_loading"
+        layout="@layout/view_loading"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
