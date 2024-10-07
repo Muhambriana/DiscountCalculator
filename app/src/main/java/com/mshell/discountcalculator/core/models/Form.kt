@@ -1,7 +1,10 @@
 package com.mshell.discountcalculator.core.models
 
-data class Form(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
+data class Form(
     var itemName: String? = null,
 
     var itemPrice: Double? = null,
@@ -13,4 +16,4 @@ data class Form(
     var discount: Double? = null,
 
     var afterDiscount: Double? = null
-)
+) : Parcelable
