@@ -3,6 +3,7 @@ package com.mshell.discountcalculator.core.repository
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
+import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 import com.mshell.discountcalculator.utils.config.DiscountType
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -16,14 +17,15 @@ class DiscalRepository {
     }
     private val dispatchers = (Dispatchers.IO + handler)
 
-    fun getItem(): Form {
-        return Form()
+    fun addNewItem(form: Form? = null): Form {
+        if (form == null) return Form()
+        return form
     }
 
     fun getFirstList(count: Int): MutableList<Form> {
         val list = mutableListOf<Form>()
         for (i in 1..count) {
-            list.add(getItem())
+            list.add(addNewItem())
         }
         return list
     }
@@ -63,7 +65,8 @@ class DiscalRepository {
         discountNominal: Double?
     ): MutableList<Form>? {
         val result = withContext(dispatchers) {
-            val discountPerItem = discountNominal?.div(list?.sumOf { it.itemQuantity ?: 0.0  } ?: 0.0)
+            val discountPerItem =
+                discountNominal?.div(list?.sumOf { it.itemQuantity ?: 0.0 } ?: 0.0)
             async {
                 list?.forEach {
                     it.total = it.itemPrice?.times(it.itemQuantity ?: 0.0)
@@ -82,7 +85,8 @@ class DiscalRepository {
                 binding.rbPercent.id -> {
                     discountDetail.discountType = DiscountType.PERCENT
                     discountDetail.discountPercent =
-                        binding.layoutFormDiscountPercent.edDiscountPercent.text?.toString()?.toInt()
+                        binding.layoutFormDiscountPercent.edDiscountPercent.text?.toString()
+                            ?.toInt()
                     discountDetail.discountMax =
                         binding.layoutFormDiscountPercent.edMaxDiscount.text?.toString()?.toDouble()
                 }
@@ -95,6 +99,17 @@ class DiscalRepository {
             }
             discountDetail.additional = binding.edAdditional.text?.toString()?.toDouble()
             return Result.success(discountDetail)
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
+    }
+
+    fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<Form?> {
+        try {
+            val itemDetail = Form()
+            itemDetail.itemName = binding.edItemName.text.toString()
+            itemDetail.itemPrice = binding.edItemPrice.text.toString().toDouble()
+            return Result.success(itemDetail)
         } catch (e: Exception) {
             return Result.failure(e)
         }

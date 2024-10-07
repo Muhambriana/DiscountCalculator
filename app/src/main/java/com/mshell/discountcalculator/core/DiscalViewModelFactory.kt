@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.ui.form.DiscountFormViewModel
 import com.mshell.discountcalculator.ui.home.HomeViewModel
+import com.mshell.discountcalculator.ui.itemdetail.ItemDetailViewModel
 
 
 class DiscalViewModelFactory(private val discalRepository: DiscalRepository) :
@@ -17,6 +18,9 @@ class DiscalViewModelFactory(private val discalRepository: DiscalRepository) :
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(this.discalRepository) as T
+            }
+            modelClass.isAssignableFrom(ItemDetailViewModel::class.java) -> {
+                ItemDetailViewModel(this.discalRepository) as T
             }
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }

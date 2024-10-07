@@ -7,9 +7,6 @@ import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalEvent
 import com.mshell.discountcalculator.core.resource.DiscalResource
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -29,11 +26,11 @@ class DiscountFormViewModel(private val repository: DiscalRepository): ViewModel
         }
     }
 
-    fun getItem() {
+    fun addNewItem(form: Form? = null) {
         resourceItemForm.postValue(DiscalEvent(DiscalResource.Loading()))
 
         viewModelScope.launch {
-            val item = repository.getItem()
+            val item = repository.addNewItem(form)
             async { item }.await()
             resourceItemForm.postValue(DiscalEvent(DiscalResource.Success(item)))
         }

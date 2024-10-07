@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.adapter.FormAdapter
+import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
+import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 
 class DiscountFormActivity : AppCompatActivity() {
 
@@ -47,27 +49,40 @@ class DiscountFormActivity : AppCompatActivity() {
         )[DiscountFormViewModel::class.java]
         formAdapter = FormAdapter()
 
-        initButton()
+        viewInitialization()
         getItemList()
+    }
+
+    private fun viewInitialization() {
+        initButton()
+        supportFragmentManager.setFragmentResultListener(
+            ItemDetailBottomFragment.KEY_ADD_ITEM,
+            this
+        ) { _, bundle ->
+            val form: Form? = bundle.getParcelable(EXTRA_DATA_ITEM)
+            addNewItem(form)
+        }
     }
 
     private fun initButton() {
         binding.btnCalculate.setOnClickListener {
-            calculate()
+            val bottomDialogFragment = ItemDetailBottomFragment()
+            bottomDialogFragment.show(supportFragmentManager, "")
         }
     }
 
-    private fun getItem() {
-        formViewModel.getItem()
+    private fun addNewItem(form: Form? = null) {
+        formViewModel.addNewItem(form)
         formViewModel.resourceItemForm.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
-                when(resource) {
+                when (resource) {
                     is DiscalResource.Loading -> {}
                     is DiscalResource.Empty -> {}
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         formAdapter.addItem(resource.data)
                     }
+
                     else -> {}
                 }
             }
@@ -80,13 +95,14 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun getItemList() {
-        formViewModel.getFirstList(4)
+        formViewModel.getFirstList(1)
         formViewModel.resourceItemsForm.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
-                when(resource) {
+                when (resource) {
                     is DiscalResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
+
                     is DiscalResource.Empty -> {}
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
@@ -94,6 +110,7 @@ class DiscountFormActivity : AppCompatActivity() {
                         showRecycleList()
                         binding.viewLoading.root.visibility = View.GONE
                     }
+
                     else -> {}
                 }
             }
@@ -105,7 +122,7 @@ class DiscountFormActivity : AppCompatActivity() {
         val discountType = if (tempParam == null) DiscountType.PERCENT else DiscountType.NOMINAL
 
 
-        when(discountType) {
+        when (discountType) {
             DiscountType.PERCENT -> calculateDiscountPercent()
             DiscountType.NOMINAL -> calculateDiscountNominal()
         }
@@ -126,14 +143,14 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
 
-
     private fun observeResult() {
         formViewModel.discountResult.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
-                when(resource) {
+                when (resource) {
                     is DiscalResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
+
                     is DiscalResource.Empty -> {}
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
@@ -141,13 +158,15 @@ class DiscountFormActivity : AppCompatActivity() {
                         binding.tvResult.text = list?.joinToString("\n") { it.discount.toString() }
                         binding.viewLoading.root.visibility = View.GONE
                     }
+
                     else -> {}
                 }
             }
         }
     }
 
-    companion object{
+    companion object {
         const val EXTRA_DATA = "extra_data"
+        const val EXTRA_DATA_ITEM = "extra_data_item"
     }
 }
