@@ -22,4 +22,8 @@
     <string name="additional">Additional</string>
     <string name="fifteen_thousand">15.000</string>
     <string name="next">Next</string>
+    <string name="item_name">Item name</string>
+    <string name="input_detail_item">Input Detail Item</string>
+    <string name="item_price">Item price</string>
+    <string name="x">X</string>
 </resources>
