@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
+import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
 
@@ -43,24 +44,27 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
     inner class FormViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemListFormBinding.bind(itemView)
         fun bind(form: Form) {
-            binding.edItemName.setText(form.itemName)
-            binding.edItemPrice.setText(form.itemPrice?.toString() ?: "")
+            val originalPrice = form.itemPrice
+            binding.tvItemName.text = form.itemName
+            binding.tvItemOriginalPrice.text = if (originalPrice == null) "" else "Rp. $originalPrice"
             binding.edItemQuantity.setText(form.itemQuantity?.toString() ?: "")
 
-            binding.edItemName.doAfterTextChanged { value ->
-                form.itemName = value.toString()
-            }
-            binding.edItemPrice.doAfterTextChanged { value ->
-                form.itemPrice = value.toString().let {
-                    if (it == "") 0.0
-                    else it.toDouble()
-                }
-            }
+
             binding.edItemQuantity.doAfterTextChanged { value ->
                 form.itemQuantity = value.toString().let {
                     if (it == "") 0.0
                     else it.toDouble()
                 }
+            }
+
+            binding.btnPlus.setSingleClickListener {
+                form.itemQuantity = (form.itemQuantity?.plus(1.0)) ?: 1.0
+                notifyItemChanged(adapterPosition)
+            }
+            binding.btnMinus.setSingleClickListener {
+                form.itemQuantity = (form.itemQuantity?.minus(1.0))
+                notifyItemChanged(adapterPosition)
+
             }
         }
 

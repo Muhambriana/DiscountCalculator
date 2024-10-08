@@ -130,15 +130,15 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun calculateDiscountNominal() {
-        val discount = binding.edDiscountNominal.text.toString().toDouble()
-        formViewModel.getResultDiscountNominal(formAdapter.getList(), discount)
+//        val discount = binding.edDiscountNominal.text.toString().toDouble()
+//        formViewModel.getResultDiscountNominal(formAdapter.getList(), discount)
         observeResult()
     }
 
     private fun calculateDiscountPercent() {
-        val discount = binding.edDiscount.text.toString().toDouble()
-        val maxDiscount = binding.edMaxDiscount.text.toString().toDouble()
-        formViewModel.getResultDiscountPercent(formAdapter.getList(), discount, maxDiscount)
+//        val discount = binding.edDiscount.text.toString().toDouble()
+//        val maxDiscount = binding.edMaxDiscount.text.toString().toDouble()
+//        formViewModel.getResultDiscountPercent(formAdapter.getList(), discount, maxDiscount)
         observeResult()
     }
 
@@ -155,7 +155,7 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         val list = resource.data
-                        binding.tvResult.text = list?.joinToString("\n") { it.discount.toString() }
+//                        binding.tvResult.text = list?.joinToString("\n") { it.discount.toString() }
                         binding.viewLoading.root.visibility = View.GONE
                     }
 

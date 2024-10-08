@@ -4,53 +4,88 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_5sdp"
+    android:background="@drawable/background_outline_black_1dp"
+    android:padding="@dimen/_10sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
-    <EditText
-        android:id="@+id/ed_item_name"
-        android:layout_width="@dimen/width_item_name"
+    <TextView
+        android:id="@+id/tv_item_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_2sdp"
-        android:inputType="textAutoComplete"
-        android:autofillHints="null"
-        android:gravity="center"
-        app:layout_constraintHeight_min="@dimen/_40sdp"
-        tools:ignore="LabelFor"
-        android:background="@drawable/background_filled_rounded_white"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/_13ssp"
+        android:gravity="start|center"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ed_item_price"/>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Dimsum"/>
 
-    <EditText
-        android:id="@+id/ed_item_price"
-        android:layout_width="@dimen/width_item_price"
-        android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_2sdp"
-        android:gravity="center"
-        android:inputType="number"
-        android:autofillHints="null"
-        tools:ignore="LabelFor"
-        android:background="@drawable/background_filled_rounded_white"
-        app:layout_constraintStart_toEndOf="@id/ed_item_name"
-        app:layout_constraintTop_toTopOf="@id/ed_item_name"
-        app:layout_constraintBottom_toBottomOf="@id/ed_item_name"
-        app:layout_constraintEnd_toStartOf="@id/ed_item_quantity"
-        />
+    <TextView
+        android:id="@+id/tv_item_original_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="start|center"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_name"
+        app:layout_constraintStart_toStartOf="@id/tv_item_name"
+        tools:text="Rp. 18.000"/>
+
+    <TextView
+        android:id="@+id/tv_item_discounted_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_name"
+        tools:text="Rp. 16.000" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_plus"
+        style="@style/ShapeAppearance.MdcShapeAppearance.SmallComponent.OutlinedCircleButton"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        app:cornerRadius="@dimen/_20sdp"
+        app:icon="@drawable/ic_plus_black"
+        app:iconSize="@dimen/_5sdp"
+        app:iconTint="?colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
+        app:layout_constraintEnd_toEndOf="@+id/tv_item_discounted_price"
+        app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
+        app:layout_constraintVertical_bias="0.333"
+        app:strokeColor="?colorOnBackground" />
 
     <EditText
         android:id="@+id/ed_item_quantity"
-        android:layout_width="@dimen/width_item_qty"
-        android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_2sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:background="@null"
         android:gravity="center"
         android:inputType="number"
-        android:autofillHints="null"
-        tools:ignore="LabelFor"
-        android:background="@drawable/background_filled_rounded_white"
-        app:layout_constraintStart_toEndOf="@id/ed_item_price"
-        app:layout_constraintTop_toTopOf="@id/ed_item_price"
-        app:layout_constraintBottom_toBottomOf="@id/ed_item_price"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:labelFor="@+id/ed_item_quantity"
+        android:textSize="@dimen/_12ssp"
+        android:editable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_original_price"
+        app:layout_constraintEnd_toStartOf="@+id/btn_plus"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_original_price"
+        tools:ignore="Autofill"
+        tools:text="9" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_minus"
+        style="@style/ShapeAppearance.MdcShapeAppearance.SmallComponent.OutlinedCircleButton"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        app:cornerRadius="@dimen/_20sdp"
+        app:icon="@drawable/ic_minus_black"
+        app:iconSize="@dimen/_5sdp"
+        app:iconTint="?colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
+        app:layout_constraintEnd_toStartOf="@+id/ed_item_quantity"
+        app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
+        app:layout_constraintVertical_bias="0.333"
+        app:strokeColor="?colorOnBackground" />
 </androidx.constraintlayout.widget.ConstraintLayout>

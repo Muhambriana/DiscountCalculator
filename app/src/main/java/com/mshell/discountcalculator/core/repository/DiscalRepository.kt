@@ -107,8 +107,11 @@ class DiscalRepository {
     fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<Form?> {
         try {
             val itemDetail = Form()
-            itemDetail.itemName = binding.edItemName.text.toString()
-            itemDetail.itemPrice = binding.edItemPrice.text.toString().toDouble()
+            itemDetail.apply {
+                itemName = binding.edItemName.text.toString()
+                itemPrice = binding.edItemPrice.text.toString().toDouble()
+                itemQuantity = 1.0
+            }
             return Result.success(itemDetail)
         } catch (e: Exception) {
             return Result.failure(e)
