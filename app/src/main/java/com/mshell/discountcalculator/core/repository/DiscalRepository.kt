@@ -109,7 +109,7 @@ class DiscalRepository {
             val itemDetail = Form()
             itemDetail.apply {
                 itemName = binding.edItemName.text.toString()
-                itemPrice = binding.edItemPrice.text.toString().toDouble()
+                itemPrice = binding.edItemPrice.getCleanText().toDouble()
                 itemQuantity = 1.0
             }
             return Result.success(itemDetail)
