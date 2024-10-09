@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
+import com.mshell.discountcalculator.utils.helper.Helper.doubleToCurrency
+import com.mshell.discountcalculator.utils.helper.Helper.doubleToString
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
@@ -43,28 +45,27 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
 
     inner class FormViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemListFormBinding.bind(itemView)
-        fun bind(form: Form) {
-            val originalPrice = form.itemPrice
-            binding.tvItemName.text = form.itemName
-            binding.tvItemOriginalPrice.text = if (originalPrice == null) "" else "Rp. $originalPrice"
-            binding.edItemQuantity.setText(form.itemQuantity?.toString() ?: "")
-
-
+        fun bind(form: Form?) {
+            binding.tvItemName.text = form?.itemName
+            binding.tvItemOriginalPrice.text = doubleToCurrency(form?.itemPrice).let {
+                if (it == null) ""
+                else "Rp. $it"
+            }
+            binding.edItemQuantity.setText(doubleToString(form?.itemQuantity))
             binding.edItemQuantity.doAfterTextChanged { value ->
-                form.itemQuantity = value.toString().let {
+                form?.itemQuantity = value.toString().let {
                     if (it == "") 0.0
                     else it.toDouble()
                 }
             }
-
             binding.btnPlus.setSingleClickListener {
-                form.itemQuantity = (form.itemQuantity?.plus(1.0)) ?: 1.0
+                form?.itemQuantity = (form?.itemQuantity?.plus(1.0)) ?: 1.0
                 notifyItemChanged(adapterPosition)
             }
             binding.btnMinus.setSingleClickListener {
-                form.itemQuantity = (form.itemQuantity?.minus(1.0))
+                if ((form?.itemQuantity ?: 1.0) <= 1.0) return@setSingleClickListener
+                form?.itemQuantity = (form?.itemQuantity?.minus(1.0))
                 notifyItemChanged(adapterPosition)
-
             }
         }
 
