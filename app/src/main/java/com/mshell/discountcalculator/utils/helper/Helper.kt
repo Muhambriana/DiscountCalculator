@@ -9,6 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.mshell.discountcalculator.utils.config.Config.LOCALE
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+
 
 object Helper {
     fun Activity.showLongToast(text: String) {
@@ -50,5 +54,22 @@ object Helper {
             setStroke(width, color)
             this.cornerRadius = cornerRadius
         }
+    }
+
+    fun doubleToString(double: Double?): String {
+        if (double == null) return ""
+        return String.format(LOCALE, "%1$.0f", double)
+    }
+
+    fun doubleToCurrency(double: Double?): String? {
+        if (double == null) return null
+
+        val format = DecimalFormat("#,###")
+        format.maximumFractionDigits = 0
+        format.decimalFormatSymbols = DecimalFormatSymbols().apply {
+            groupingSeparator = '.'
+            decimalSeparator = ','
+        }
+        return format.format(double)
     }
 }
