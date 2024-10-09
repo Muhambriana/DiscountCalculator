@@ -26,4 +26,6 @@
     <string name="input_detail_item">Input Detail Item</string>
     <string name="item_price">Item price</string>
     <string name="x">X</string>
+    <string name="del_item">Del Item</string>
+    <string name="add_item">Add Item</string>
 </resources>

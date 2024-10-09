@@ -41,7 +41,7 @@
         tools:itemCount="3"
         tools:listitem="@layout/item_list_form" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_calculate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -54,6 +54,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tv_title"
         app:layout_constraintStart_toStartOf="@+id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_delete_item"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:background="@drawable/background_filled_rounded_red_color"
+        android:gravity="center"
+        android:text="@string/del_item"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_add_item"
+        app:layout_constraintEnd_toStartOf="@id/btn_add_item"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="@+id/btn_add_item" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_item"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/background_filled_rounded_primary_color"
+        android:fontFamily="@font/poppins_normal"
+        android:text="@string/add_item"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title" />
 
     <include
         android:id="@+id/view_loading"
