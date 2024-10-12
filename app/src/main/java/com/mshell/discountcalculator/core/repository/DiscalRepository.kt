@@ -88,16 +88,16 @@ class DiscalRepository {
                         binding.layoutFormDiscountPercent.edDiscountPercent.text?.toString()
                             ?.toInt()
                     discountDetail.discountMax =
-                        binding.layoutFormDiscountPercent.edMaxDiscount.text?.toString()?.toDouble()
+                        binding.layoutFormDiscountPercent.edMaxDiscount.getCleanText().toDouble()
                 }
 
                 binding.rbNominal.id -> {
                     discountDetail.discountType = DiscountType.NOMINAL
                     discountDetail.discountNominal =
-                        binding.layoutFormDiscountNominal.edDiscount.text?.toString()?.toDouble()
+                        binding.layoutFormDiscountNominal.edDiscount.getCleanText().toDouble()
                 }
             }
-            discountDetail.additional = binding.edAdditional.text?.toString()?.toDouble()
+            discountDetail.additional = binding.edAdditional.getCleanText().toDouble()
             return Result.success(discountDetail)
         } catch (e: Exception) {
             return Result.failure(e)
