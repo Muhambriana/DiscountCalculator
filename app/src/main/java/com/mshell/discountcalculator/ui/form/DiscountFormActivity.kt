@@ -1,5 +1,6 @@
 package com.mshell.discountcalculator.ui.form
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,18 +12,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.adapter.FormAdapter
+import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
+import com.mshell.discountcalculator.utils.helper.Helper
+import com.mshell.discountcalculator.utils.helper.Helper.showLongToast
+import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class DiscountFormActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityDiscountFormBinding.inflate(layoutInflater)
     }
+    private var discountDetail: DiscountDetail? = null
 
     private lateinit var formViewModel: DiscountFormViewModel
     private lateinit var formAdapter: FormAdapter
@@ -49,8 +55,26 @@ class DiscountFormActivity : AppCompatActivity() {
         )[DiscountFormViewModel::class.java]
         formAdapter = FormAdapter()
 
+
+        setDataToModels()
         viewInitialization()
         getItemList()
+    }
+
+    private fun setDataToModels() {
+        discountDetail = intent?.extras?.let {
+            Helper.returnBasedOnSdkVersion(
+                Build.VERSION_CODES.TIRAMISU,
+                onSdkEqualOrAbove = {
+                    // Return the result from this lambda
+                    it.getParcelable(EXTRA_DATA, DiscountDetail::class.java)
+                },
+                onSdkBelow = {
+                    // Return the result from this lambda
+                    it.getParcelable(EXTRA_DATA)
+                }
+            )
+        }
     }
 
     private fun viewInitialization() {
@@ -65,9 +89,15 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun initButton() {
-        binding.btnCalculate.setOnClickListener {
+        binding.btnDeleteItem.setSingleClickListener {
+
+        }
+        binding.btnAddItem.setSingleClickListener {
             val bottomDialogFragment = ItemDetailBottomFragment()
             bottomDialogFragment.show(supportFragmentManager, "")
+        }
+        binding.btnCalculate.setOnClickListener {
+            calculate()
         }
     }
 
@@ -95,7 +125,7 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun getItemList() {
-        formViewModel.getFirstList(1)
+        formViewModel.getFirstList(0)
         formViewModel.resourceItemsForm.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
@@ -138,7 +168,7 @@ class DiscountFormActivity : AppCompatActivity() {
     private fun calculateDiscountPercent() {
 //        val discount = binding.edDiscount.text.toString().toDouble()
 //        val maxDiscount = binding.edMaxDiscount.text.toString().toDouble()
-//        formViewModel.getResultDiscountPercent(formAdapter.getList(), discount, maxDiscount)
+        formViewModel.getResultDiscountPercent(formAdapter.getList(), discountDetail?.discountPercent?.toDouble(), discountDetail?.discountMax)
         observeResult()
     }
 
@@ -155,6 +185,8 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         val list = resource.data
+                        list?.joinToString("\n") { it.discount.toString() }
+                            ?.let { showLongToast(it) }
 //                        binding.tvResult.text = list?.joinToString("\n") { it.discount.toString() }
                         binding.viewLoading.root.visibility = View.GONE
                     }
