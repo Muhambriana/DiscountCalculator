@@ -72,4 +72,29 @@ object Helper {
         }
         return format.format(double)
     }
+
+    fun executeBasedOnSdkVersion(
+        minimumSdkVersion: Int,
+        onSdkEqualOrAbove: () -> Unit,
+        onSdkBelow: () -> Unit
+    ) {
+        if (android.os.Build.VERSION.SDK_INT >= minimumSdkVersion) {
+            onSdkEqualOrAbove()
+        } else {
+            onSdkBelow()
+        }
+    }
+
+    fun <T> returnBasedOnSdkVersion(
+        minimumSdk: Int,
+        onSdkEqualOrAbove: () -> T?,
+        onSdkBelow: () -> T?
+    ): T? {
+        return if (android.os.Build.VERSION.SDK_INT >= minimumSdk) {
+            onSdkEqualOrAbove()
+        } else {
+            onSdkBelow()
+        }
+    }
 }
+
