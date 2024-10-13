@@ -87,6 +87,7 @@ class DiscountFormActivity : AppCompatActivity() {
             val form: Form? = bundle.getParcelable(EXTRA_DATA_ITEM)
             addNewItem(form)
         }
+        showRecycleList()
     }
 
     private fun initButton() {
@@ -112,6 +113,7 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         formAdapter.addItem(resource.data)
+                        binding.btnCalculate.visibility = View.VISIBLE
                     }
 
                     else -> {}
@@ -138,7 +140,6 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         formAdapter.setItemList(resource.data)
-                        showRecycleList()
                         binding.viewLoading.root.visibility = View.GONE
                     }
 
