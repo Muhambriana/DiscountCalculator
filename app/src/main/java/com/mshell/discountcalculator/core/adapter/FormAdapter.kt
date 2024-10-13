@@ -27,6 +27,11 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         if (items == null) return
         listForm.clear()
         listForm.addAll(items)
+        notifyAllItem()
+    }
+
+    fun notifyAllItem(start: Int = 0, endRange: Int = listForm.size) {
+        notifyItemRangeChanged(start, endRange)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -47,8 +52,9 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         private val binding = ItemListFormBinding.bind(itemView)
         fun bind(form: Form?) {
             binding.tvItemName.text = form?.itemName
-            binding.edItemQuantity.setText(form?.itemQuantity?.format(0))
+            binding.edItemQuantity.setText(form?.itemQuantity?.format())
             binding.tvItemOriginalPrice.text = form?.itemPrice?.toCurrency()
+            binding.tvItemDiscountedPrice.text = form?.afterDiscount?.toCurrency(2)
 
             binding.btnPlus.setSingleClickListener {
                 form?.itemQuantity = (form?.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
