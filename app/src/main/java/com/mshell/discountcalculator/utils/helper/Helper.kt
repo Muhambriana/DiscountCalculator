@@ -60,17 +60,23 @@ object Helper {
     fun Double.format(digits: Int = 0) =
         String.format(LOCALE, "%1$.${digits}f", this)
 
-    fun Double?.toCurrency(): String? {
+    fun Double?.toCurrency(digits: Int = 0): String {
         if (this == null) return EMPTY_STRING
 
-        val format = DecimalFormat("#,###").apply {
-            maximumFractionDigits = 0
+        val pattern = if (digits > 0) {
+            "#,##0.${"0".repeat(digits)}" // Include decimals if digits > 0
+        } else {
+            "#,##0" // No decimal part if digits = 0
+        }
+        val format = DecimalFormat(pattern).apply {
+            maximumFractionDigits = digits // Set the maximum digits after the decimal based on the parameter
+            minimumFractionDigits = digits // Ensure at least the same number of digits
             decimalFormatSymbols = DecimalFormatSymbols().apply {
-                groupingSeparator = '.'
-                decimalSeparator = ','
+                groupingSeparator = '.' // Grouping separator
+                decimalSeparator = ','  // Decimal separator
             }
         }
-        return format.format(this)
+        return "Rp. ${format.format(this)}"
     }
 
     fun executeBasedOnSdkVersion(
