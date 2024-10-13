@@ -16,22 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.mshell.discountcalculator.utils.view.CurrencyEditText
+    <include
         android:id="@+id/ed_discount"
+        layout="@layout/edit_text_currency"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
-        android:inputType="number"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:gravity="start|center"
-        android:drawableStart="@drawable/ic_currency_rupiah"
-        android:background="@drawable/background_outline_black_1dp"
-        android:textSize="@dimen/_15ssp"
-        android:hint="@string/one_thousand"
-        android:drawablePadding="@dimen/_5sdp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_title_form_discount"
         app:layout_constraintTop_toBottomOf="@id/tv_title_form_discount"
-        tools:ignore="Autofill,LabelFor,TextFields" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,24 +16,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ed_discount_percent"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:inputType="number"
-        android:padding="@dimen/_10sdp"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_5sdp"
-        android:gravity="start|center"
-        android:drawableEnd="@drawable/ic_percent"
-        android:drawablePadding="@dimen/_3sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_outline_black_1dp"
-        android:hint="@string/thirty_five"
-        android:maxLength="3"
-        android:textSize="@dimen/_15ssp"
         app:layout_constraintStart_toStartOf="@+id/tv_title_form_discount_percent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_form_discount_percent"
-        tools:ignore="Autofill,LabelFor,TextFields" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title_form_discount_percent">
+
+        <EditText
+            android:id="@+id/ed_percent"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:inputType="number"
+            android:padding="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:gravity="start|center"
+            android:drawablePadding="@dimen/_3sdp"
+            android:background="@null"
+            android:hint="@string/thirty_five"
+            android:maxLength="3"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="Autofill,LabelFor,TextFields" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:textSize="@dimen/_15ssp"
+            android:text="@string/percent_icon"
+            app:layout_constraintStart_toEndOf="@id/ed_percent"
+            app:layout_constraintTop_toTopOf="@id/ed_percent"
+            app:layout_constraintBottom_toBottomOf="@id/ed_percent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <TextView
         android:id="@+id/tv_title_form_max_discount"
@@ -47,22 +70,15 @@
         app:layout_constraintStart_toEndOf="@+id/ed_discount_percent"
         app:layout_constraintTop_toTopOf="@+id/tv_title_form_discount_percent" />
 
-    <com.mshell.discountcalculator.utils.view.CurrencyEditText
+    <include
         android:id="@+id/ed_max_discount"
+        layout="@layout/edit_text_currency"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
-        android:inputType="number"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:gravity="start|center"
-        android:drawableStart="@drawable/ic_currency_rupiah"
-        android:background="@drawable/background_outline_black_1dp"
-        android:textSize="@dimen/_15ssp"
-        android:hint="@string/one_thousand"
-        android:drawablePadding="@dimen/_5sdp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_title_form_max_discount"
         app:layout_constraintTop_toTopOf="@+id/ed_discount_percent"
-        tools:ignore="Autofill,LabelFor,TextFields" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

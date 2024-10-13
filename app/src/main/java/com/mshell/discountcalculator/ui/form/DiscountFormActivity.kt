@@ -146,14 +146,14 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
-
                     is DiscalResource.Empty -> {}
-                    is DiscalResource.Error -> {}
+                    is DiscalResource.Error -> {
+                        binding.viewLoading.root.visibility = View.GONE
+                    }
                     is DiscalResource.Success -> {
                         formAdapter.setItemList(resource.data)
                         binding.viewLoading.root.visibility = View.GONE
                     }
-
                     else -> {}
                 }
             }
@@ -191,9 +191,15 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
-
-                    is DiscalResource.Empty -> {}
-                    is DiscalResource.Error -> {}
+                    is DiscalResource.Empty -> {
+                        showShortToast("Data is empty")
+                        binding.viewLoading.root.visibility = View.GONE
+                        binding.btnCalculate.visibility = View.GONE
+                    }
+                    is DiscalResource.Error -> {
+                        showShortToast(resource.error?.message.toString())
+                        binding.viewLoading.root.visibility = View.GONE
+                    }
                     is DiscalResource.Success -> {
                         val list = resource.data
                         formAdapter.notifyAllItem(0, list?.size ?: 0)

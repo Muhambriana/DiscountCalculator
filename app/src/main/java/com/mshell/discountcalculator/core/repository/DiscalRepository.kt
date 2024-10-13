@@ -118,18 +118,19 @@ class DiscalRepository {
         return try {
             Result.success(
                 DiscountDetail().apply {
-                    additional = binding.edAdditional.getCleanText().toDouble()
+                    additional = binding.edAdditional.edCurrency.getCleanText().toDouble()
 
                     when (binding.radioGroupDiscount.checkedRadioButtonId) {
                         binding.rbPercent.id -> {
                             discountType = DiscountType.PERCENT
                             discountPercent = binding.layoutFormDiscountPercent
-                                .edDiscountPercent
+                                .edPercent
                                 .text
                                 ?.toString()
                                 ?.toInt()
                             discountMax = binding.layoutFormDiscountPercent
                                 .edMaxDiscount
+                                .edCurrency
                                 .getCleanText()
                                 .toDouble()
                         }
@@ -137,6 +138,7 @@ class DiscalRepository {
                             discountType = DiscountType.NOMINAL
                             discountNominal = binding.layoutFormDiscountNominal
                                 .edDiscount
+                                .edCurrency
                                 .getCleanText()
                                 .toDouble()
                         }
@@ -153,7 +155,7 @@ class DiscalRepository {
             Result.success(
                 Form().apply {
                     itemName = binding.edItemName.text.toString()
-                    itemPrice = binding.edItemPrice.getCleanText().toDouble()
+                    itemPrice = binding.edItemPrice.edCurrency.getCleanText().toDouble()
                     itemQuantity = DEFAULT_DOUBLE_VALUE_ONE
                 }
             )
