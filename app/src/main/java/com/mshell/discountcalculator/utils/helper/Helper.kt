@@ -57,21 +57,20 @@ object Helper {
         }
     }
 
-    fun doubleToString(double: Double?): String {
-        if (double == null) return EMPTY_STRING
-        return String.format(LOCALE, "%1$.0f", double)
-    }
+    fun Double.format(digits: Int = 0) =
+        String.format(LOCALE, "%1$.${digits}f", this)
 
-    fun doubleToCurrency(double: Double?): String? {
-        if (double == null) return null
+    fun Double?.toCurrency(): String? {
+        if (this == null) return EMPTY_STRING
 
-        val format = DecimalFormat("#,###")
-        format.maximumFractionDigits = 0
-        format.decimalFormatSymbols = DecimalFormatSymbols().apply {
-            groupingSeparator = '.'
-            decimalSeparator = ','
+        val format = DecimalFormat("#,###").apply {
+            maximumFractionDigits = 0
+            decimalFormatSymbols = DecimalFormatSymbols().apply {
+                groupingSeparator = '.'
+                decimalSeparator = ','
+            }
         }
-        return format.format(double)
+        return format.format(this)
     }
 
     fun executeBasedOnSdkVersion(
