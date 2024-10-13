@@ -62,6 +62,7 @@ class DiscountFormActivity : AppCompatActivity() {
         getItemList()
     }
 
+    @Suppress("DEPRECATION")
     private fun setDataToModels() {
         discountDetail = intent?.extras?.let {
             Helper.returnBasedOnSdkVersion(
@@ -78,13 +79,24 @@ class DiscountFormActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun viewInitialization() {
         initButton()
         supportFragmentManager.setFragmentResultListener(
             ItemDetailBottomFragment.KEY_ADD_ITEM,
             this
         ) { _, bundle ->
-            val form: Form? = bundle.getParcelable(EXTRA_DATA_ITEM)
+            val form: Form? = Helper.returnBasedOnSdkVersion(
+                Build.VERSION_CODES.TIRAMISU,
+                onSdkEqualOrAbove = {
+                    // Return the result from this lambda
+                    bundle.getParcelable(EXTRA_DATA_ITEM, Form::class.java)
+                },
+                onSdkBelow = {
+                    // Return the result from this lambda
+                    bundle.getParcelable(EXTRA_DATA_ITEM)
+                }
+            )
             addNewItem(form)
         }
         showRecycleList()
