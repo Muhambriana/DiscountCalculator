@@ -21,6 +21,7 @@ import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.helper.Helper.showLongToast
+import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class DiscountFormActivity : AppCompatActivity() {
@@ -97,7 +98,7 @@ class DiscountFormActivity : AppCompatActivity() {
             bottomDialogFragment.show(supportFragmentManager, "")
         }
         binding.btnCalculate.setOnClickListener {
-            calculate()
+            calculate(discountDetail?.discountType)
         }
     }
 
@@ -148,10 +149,11 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
 
-    private fun calculate(tempParam: Int? = null) {
-        val discountType = if (tempParam == null) DiscountType.PERCENT else DiscountType.NOMINAL
-
-
+    private fun calculate(discountType: DiscountType? = null) {
+        if (discountType == null) {
+            showShortToast("Please choose discount type")
+            return
+        }
         when (discountType) {
             DiscountType.PERCENT -> calculateDiscountPercent()
             DiscountType.NOMINAL -> calculateDiscountNominal()
@@ -160,14 +162,11 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun calculateDiscountNominal() {
-//        val discount = binding.edDiscountNominal.text.toString().toDouble()
-//        formViewModel.getResultDiscountNominal(formAdapter.getList(), discount)
+        formViewModel.getResultDiscountNominal(formAdapter.getList(), discountDetail?.discountNominal)
         observeResult()
     }
 
     private fun calculateDiscountPercent() {
-//        val discount = binding.edDiscount.text.toString().toDouble()
-//        val maxDiscount = binding.edMaxDiscount.text.toString().toDouble()
         formViewModel.getResultDiscountPercent(formAdapter.getList(), discountDetail?.discountPercent?.toDouble(), discountDetail?.discountMax)
         observeResult()
     }
