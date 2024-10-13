@@ -28,4 +28,6 @@
     <string name="x">X</string>
     <string name="del_item">Del Item</string>
     <string name="add_item">Add Item</string>
+    <string name="tambah">Tambah</string>
+    <string name="kurang">Kurang</string>
 </resources>
