@@ -20,7 +20,6 @@ import com.mshell.discountcalculator.core.resource.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.helper.Helper
-import com.mshell.discountcalculator.utils.helper.Helper.showLongToast
 import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
@@ -197,9 +196,7 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         val list = resource.data
-                        list?.joinToString("\n") { it.discount.toString() }
-                            ?.let { showLongToast(it) }
-//                        binding.tvResult.text = list?.joinToString("\n") { it.discount.toString() }
+                        formAdapter.notifyAllItem(0, list?.size ?: 0)
                         binding.viewLoading.root.visibility = View.GONE
                     }
 
