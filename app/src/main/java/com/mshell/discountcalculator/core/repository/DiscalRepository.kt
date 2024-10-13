@@ -80,25 +80,36 @@ class DiscalRepository {
 
     fun getDiscountDetail(binding: ActivityHomeBinding): Result<DiscountDetail?> {
         try {
-            val discountDetail = DiscountDetail()
-            when (binding.radioGroupDiscount.checkedRadioButtonId) {
-                binding.rbPercent.id -> {
-                    discountDetail.discountType = DiscountType.PERCENT
-                    discountDetail.discountPercent =
-                        binding.layoutFormDiscountPercent.edDiscountPercent.text?.toString()
-                            ?.toInt()
-                    discountDetail.discountMax =
-                        binding.layoutFormDiscountPercent.edMaxDiscount.getCleanText().toDouble()
-                }
+            return Result.success(
+                DiscountDetail().apply {
+                    additional = binding.edAdditional.getCleanText().toDouble()
+                    when (binding.radioGroupDiscount.checkedRadioButtonId) {
+                        binding.rbPercent.id -> {
+                            discountType = DiscountType.PERCENT
+                            discountPercent = binding
+                                .layoutFormDiscountPercent
+                                .edDiscountPercent
+                                .text
+                                ?.toString()
+                                ?.toInt()
+                            discountMax = binding
+                                .layoutFormDiscountPercent
+                                .edMaxDiscount
+                                .getCleanText()
+                                .toDouble()
+                        }
 
-                binding.rbNominal.id -> {
-                    discountDetail.discountType = DiscountType.NOMINAL
-                    discountDetail.discountNominal =
-                        binding.layoutFormDiscountNominal.edDiscount.getCleanText().toDouble()
+                        binding.rbNominal.id -> {
+                            discountType = DiscountType.NOMINAL
+                            discountNominal = binding
+                                .layoutFormDiscountNominal
+                                .edDiscount
+                                .getCleanText()
+                                .toDouble()
+                        }
+                    }
                 }
-            }
-            discountDetail.additional = binding.edAdditional.getCleanText().toDouble()
-            return Result.success(discountDetail)
+            )
         } catch (e: Exception) {
             return Result.failure(e)
         }
