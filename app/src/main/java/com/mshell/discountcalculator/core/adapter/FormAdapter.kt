@@ -60,7 +60,11 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
             }
 
             binding.btnMinus.setSingleClickListener {
-                if ((form?.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) return@setSingleClickListener
+                if ((form?.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) {
+                    listForm.remove(form)
+                    notifyItemRemoved(adapterPosition)
+                    return@setSingleClickListener
+                }
                 form?.itemQuantity = (form?.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE))
                 notifyItemChanged(adapterPosition)
             }
