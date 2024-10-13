@@ -30,4 +30,5 @@
     <string name="add_item">Add Item</string>
     <string name="tambah">Tambah</string>
     <string name="kurang">Kurang</string>
+    <string name="percent_icon">%</string>
 </resources>

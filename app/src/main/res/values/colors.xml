@@ -5,4 +5,5 @@
     <color name="my_light_primary">#D7E377</color>
     <color name="_7f000000">#7F000000</color>
     <color name="e37777">#E37777</color>
+    <color name="my_background_primary">@color/black</color>
 </resources>
