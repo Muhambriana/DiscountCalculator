@@ -3,12 +3,10 @@ package com.mshell.discountcalculator.core.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
-import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE
 import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
 import com.mshell.discountcalculator.utils.config.Config.EMPTY_STRING
 import com.mshell.discountcalculator.utils.helper.Helper.doubleToCurrency
@@ -50,21 +48,17 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         private val binding = ItemListFormBinding.bind(itemView)
         fun bind(form: Form?) {
             binding.tvItemName.text = form?.itemName
+            binding.edItemQuantity.setText(doubleToString(form?.itemQuantity))
             binding.tvItemOriginalPrice.text = doubleToCurrency(form?.itemPrice).let {
                 if (it == null) EMPTY_STRING
                 else "Rp. $it"
             }
-            binding.edItemQuantity.setText(doubleToString(form?.itemQuantity))
-            binding.edItemQuantity.doAfterTextChanged { value ->
-                form?.itemQuantity = value.toString().let {
-                    if (it == EMPTY_STRING) DEFAULT_DOUBLE_VALUE
-                    else it.toDouble()
-                }
-            }
+
             binding.btnPlus.setSingleClickListener {
                 form?.itemQuantity = (form?.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
                 notifyItemChanged(adapterPosition)
             }
+
             binding.btnMinus.setSingleClickListener {
                 if ((form?.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) return@setSingleClickListener
                 form?.itemQuantity = (form?.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE))
