@@ -4,6 +4,8 @@ import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
+import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE
+import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
 import com.mshell.discountcalculator.utils.config.DiscountType
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -36,15 +38,15 @@ class DiscalRepository {
         discountMax: Double?
     ): MutableList<Form>? {
         val result = withContext(dispatchers) {
-            var totalAllItem = 0.0
+            var totalAllItem = DEFAULT_DOUBLE_VALUE
             async {
                 list?.forEach {
-                    it.total = it.itemPrice?.times(it.itemQuantity ?: 0.0)
-                    totalAllItem += it.total ?: 0.0
+                    it.total = it.itemPrice?.times(it.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                    totalAllItem += it.total ?: DEFAULT_DOUBLE_VALUE
                 }
             }.await()
             val tempDiscount = ((discountPercent?.div(100))?.times(totalAllItem))
-            val totalDiscount = minOf(tempDiscount ?: 0.0, discountMax ?: 0.0)
+            val totalDiscount = minOf(tempDiscount ?: DEFAULT_DOUBLE_VALUE, discountMax ?: DEFAULT_DOUBLE_VALUE)
 
             async {
                 list?.forEach {
@@ -63,21 +65,21 @@ class DiscalRepository {
         list: MutableList<Form>?,
         discountNominal: Double?
     ): MutableList<Form>? {
-        val discount = discountNominal ?: 0.0
+        val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
         val result = withContext(dispatchers) {
             val sumAllItem = list?.sumOf {
-                val price = it.itemPrice ?: 0.0
-                val quantity = it.itemQuantity ?: 0.0
+                val price = it.itemPrice ?: DEFAULT_DOUBLE_VALUE
+                val quantity = it.itemQuantity ?: DEFAULT_DOUBLE_VALUE
                 val total = price * quantity
                 total
-            } ?: 0.0
-            val discountPerItem = discountNominal?.div(list?.sumOf { it.itemQuantity ?: 0.0} ?: 0.0)
+            } ?: DEFAULT_DOUBLE_VALUE
+            val discountPerItem = discountNominal?.div(list?.sumOf { it.itemQuantity ?: DEFAULT_DOUBLE_VALUE} ?: DEFAULT_DOUBLE_VALUE)
             async {
                 list?.forEach {
-                    it.total = it.itemPrice?.times(it.itemQuantity ?: 0.0)
+                    it.total = it.itemPrice?.times(it.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
                     it.discount =
                         if (sumAllItem < discount) it.total
-                        else discountPerItem?.times(it.itemQuantity ?: 0.0)
+                        else discountPerItem?.times(it.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
                 }
             }.await()
             list
@@ -128,7 +130,7 @@ class DiscalRepository {
             itemDetail.apply {
                 itemName = binding.edItemName.text.toString()
                 itemPrice = binding.edItemPrice.getCleanText().toDouble()
-                itemQuantity = 1.0
+                itemQuantity = DEFAULT_DOUBLE_VALUE_ONE
             }
             return Result.success(itemDetail)
         } catch (e: Exception) {

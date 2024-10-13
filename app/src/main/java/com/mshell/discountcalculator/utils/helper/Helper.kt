@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.mshell.discountcalculator.utils.config.Config.EMPTY_STRING
 import com.mshell.discountcalculator.utils.config.Config.LOCALE
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -57,7 +58,7 @@ object Helper {
     }
 
     fun doubleToString(double: Double?): String {
-        if (double == null) return ""
+        if (double == null) return EMPTY_STRING
         return String.format(LOCALE, "%1$.0f", double)
     }
 

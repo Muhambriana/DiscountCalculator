@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
+import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE
+import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
+import com.mshell.discountcalculator.utils.config.Config.EMPTY_STRING
 import com.mshell.discountcalculator.utils.helper.Helper.doubleToCurrency
 import com.mshell.discountcalculator.utils.helper.Helper.doubleToString
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
@@ -48,23 +51,23 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         fun bind(form: Form?) {
             binding.tvItemName.text = form?.itemName
             binding.tvItemOriginalPrice.text = doubleToCurrency(form?.itemPrice).let {
-                if (it == null) ""
+                if (it == null) EMPTY_STRING
                 else "Rp. $it"
             }
             binding.edItemQuantity.setText(doubleToString(form?.itemQuantity))
             binding.edItemQuantity.doAfterTextChanged { value ->
                 form?.itemQuantity = value.toString().let {
-                    if (it == "") 0.0
+                    if (it == EMPTY_STRING) DEFAULT_DOUBLE_VALUE
                     else it.toDouble()
                 }
             }
             binding.btnPlus.setSingleClickListener {
-                form?.itemQuantity = (form?.itemQuantity?.plus(1.0)) ?: 1.0
+                form?.itemQuantity = (form?.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
                 notifyItemChanged(adapterPosition)
             }
             binding.btnMinus.setSingleClickListener {
-                if ((form?.itemQuantity ?: 1.0) <= 1.0) return@setSingleClickListener
-                form?.itemQuantity = (form?.itemQuantity?.minus(1.0))
+                if ((form?.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) return@setSingleClickListener
+                form?.itemQuantity = (form?.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE))
                 notifyItemChanged(adapterPosition)
             }
         }

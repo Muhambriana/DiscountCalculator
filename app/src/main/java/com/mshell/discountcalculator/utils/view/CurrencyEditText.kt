@@ -4,6 +4,8 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE
+import com.mshell.discountcalculator.utils.config.Config.EMPTY_STRING
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
@@ -45,7 +47,7 @@ class CurrencyEditText @JvmOverloads constructor(
 
         if (value.isNotEmpty()) {
             // Handle leading zeros and decimal points
-            var formattedValue = value.replace(".", "") // Remove existing dots for formatting
+            var formattedValue = value.replace(".", EMPTY_STRING) // Remove existing dots for formatting
             if (formattedValue.startsWith(".")) {
                 formattedValue = "0$formattedValue"
             } else if (formattedValue.startsWith("0") && !formattedValue.startsWith("0.")) {
@@ -82,7 +84,7 @@ class CurrencyEditText @JvmOverloads constructor(
                     decimalSeparator = ','
                 }
             }
-            val number = value.toDoubleOrNull() ?: 0.0
+            val number = value.toDoubleOrNull() ?: DEFAULT_DOUBLE_VALUE
             decimalFormat.format(number)
         } catch (e: NumberFormatException) {
             e.printStackTrace()
@@ -92,7 +94,7 @@ class CurrencyEditText @JvmOverloads constructor(
 
     // Custom method to get clean text without dots
     fun getCleanText(): String {
-        return text.toString().replace(".", "")
+        return text.toString().replace(".", EMPTY_STRING)
     }
 }
 
