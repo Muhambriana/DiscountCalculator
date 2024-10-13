@@ -9,7 +9,6 @@ import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ON
 import com.mshell.discountcalculator.utils.config.DiscountType
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class DiscalRepository {
@@ -19,99 +18,122 @@ class DiscalRepository {
     }
     private val dispatchers = (Dispatchers.IO + handler)
 
-    fun addNewItem(form: Form? = null): Form {
-        if (form == null) return Form()
-        return form
+    fun addNewItem(form: Form? = null): Result<Form> {
+        return Result.success(form ?: Form())
     }
 
-    fun getFirstList(count: Int): MutableList<Form> {
-        val list = mutableListOf<Form>()
-        for (i in 1..count) {
-            list.add(addNewItem())
+    fun getFirstList(count: Int): Result<MutableList<Form>> {
+        return try {
+            addNewItem().map { form ->
+                mutableListOf<Form>().apply {
+                    repeat(count) {
+                        add(form)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
-        return list
     }
 
     suspend fun getDiscountPercentResult(
         list: MutableList<Form>?,
         discountPercent: Double?,
         discountMax: Double?
-    ): MutableList<Form>? {
-        val result = withContext(dispatchers) {
-            var totalAllItem = DEFAULT_DOUBLE_VALUE
-            async {
-                list?.forEach {
-                    it.total = it.itemPrice?.times(it.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
-                    totalAllItem += it.total ?: DEFAULT_DOUBLE_VALUE
-                }
-            }.await()
-            val tempDiscount = ((discountPercent?.div(100))?.times(totalAllItem))
-            val totalDiscount = minOf(tempDiscount ?: DEFAULT_DOUBLE_VALUE, discountMax ?: DEFAULT_DOUBLE_VALUE)
+    ): Result<MutableList<Form>?> {
+        return try {
+            Result.success(
+                withContext(dispatchers) {
+                    var totalAllItem = DEFAULT_DOUBLE_VALUE
 
-            async {
-                list?.forEach {
-                    val firstCalculation = it.total?.div(totalAllItem)
-                    val secondCalculation = (firstCalculation)?.times(100)
-                    it.discount = (secondCalculation?.times(totalDiscount))?.div(100)
-                }
-            }.await()
+                    // Calculate total for all items
+                    list?.forEach { form ->
+                        form.total = form.itemPrice?.times(form.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                        totalAllItem += form.total ?: DEFAULT_DOUBLE_VALUE
+                    }
 
-            list
+                    // Calculate discount
+                    val tempDiscount = (discountPercent?.div(100))?.times(totalAllItem) ?: DEFAULT_DOUBLE_VALUE
+                    val totalDiscount = minOf(tempDiscount, discountMax ?: DEFAULT_DOUBLE_VALUE)
+
+                    // Apply discount to each item
+                    list?.forEach { form ->
+                        val proportion = form.total?.div(totalAllItem) ?: 0.0
+                        val itemDiscount = (proportion * totalDiscount)
+                        form.discount = itemDiscount
+                    }
+
+                    // Return updated list
+                    list
+                }
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
-        return result
     }
 
     suspend fun getDiscountNominalResult(
         list: MutableList<Form>?,
         discountNominal: Double?
-    ): MutableList<Form>? {
-        val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
-        val result = withContext(dispatchers) {
-            val sumAllItem = list?.sumOf {
-                val price = it.itemPrice ?: DEFAULT_DOUBLE_VALUE
-                val quantity = it.itemQuantity ?: DEFAULT_DOUBLE_VALUE
-                val total = price * quantity
-                total
-            } ?: DEFAULT_DOUBLE_VALUE
-            val discountPerItem = discountNominal?.div(list?.sumOf { it.itemQuantity ?: DEFAULT_DOUBLE_VALUE} ?: DEFAULT_DOUBLE_VALUE)
-            async {
-                list?.forEach {
-                    it.total = it.itemPrice?.times(it.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
-                    it.discount =
-                        if (sumAllItem < discount) it.total
-                        else discountPerItem?.times(it.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+    ): Result<MutableList<Form>?> {
+        return try {
+            Result.success(
+                withContext(dispatchers) {
+                    val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
+                    // Calculate the sum of all items' totals
+                    val sumAllItem = list?.sumOf {
+                        val price = it.itemPrice ?: DEFAULT_DOUBLE_VALUE
+                        val quantity = it.itemQuantity ?: DEFAULT_DOUBLE_VALUE
+                        price * quantity
+                    } ?: DEFAULT_DOUBLE_VALUE
+
+                    // Calculate discount per item based on quantity
+                    val totalQuantity = list?.sumOf { it.itemQuantity ?: DEFAULT_DOUBLE_VALUE } ?: DEFAULT_DOUBLE_VALUE
+                    val discountPerItem = discountNominal?.div(totalQuantity)
+
+                    // Apply discount to each item
+                    list?.forEach { form ->
+                        form.total = form.itemPrice?.times(form.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                        form.discount = if (sumAllItem < discount) {
+                            form.total // Full discount
+                        } else {
+                            discountPerItem?.times(form.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                        }
+                    }
+                    list // Return updated list
                 }
-            }.await()
-            list
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
-        return result
     }
 
+
     fun getDiscountDetail(binding: ActivityHomeBinding): Result<DiscountDetail?> {
-        try {
-            return Result.success(
+        return try {
+            Result.success(
                 DiscountDetail().apply {
                     additional = binding.edAdditional.getCleanText().toDouble()
+
                     when (binding.radioGroupDiscount.checkedRadioButtonId) {
                         binding.rbPercent.id -> {
                             discountType = DiscountType.PERCENT
-                            discountPercent = binding
-                                .layoutFormDiscountPercent
+                            discountPercent = binding.layoutFormDiscountPercent
                                 .edDiscountPercent
                                 .text
                                 ?.toString()
                                 ?.toInt()
-                            discountMax = binding
-                                .layoutFormDiscountPercent
+                            discountMax = binding.layoutFormDiscountPercent
                                 .edMaxDiscount
                                 .getCleanText()
                                 .toDouble()
                         }
-
                         binding.rbNominal.id -> {
                             discountType = DiscountType.NOMINAL
-                            discountNominal = binding
-                                .layoutFormDiscountNominal
+                            discountNominal = binding.layoutFormDiscountNominal
                                 .edDiscount
                                 .getCleanText()
                                 .toDouble()
@@ -120,21 +142,21 @@ class DiscalRepository {
                 }
             )
         } catch (e: Exception) {
-            return Result.failure(e)
+            Result.failure(e)
         }
     }
 
     fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<Form?> {
-        try {
-            val itemDetail = Form()
-            itemDetail.apply {
-                itemName = binding.edItemName.text.toString()
-                itemPrice = binding.edItemPrice.getCleanText().toDouble()
-                itemQuantity = DEFAULT_DOUBLE_VALUE_ONE
-            }
-            return Result.success(itemDetail)
+        return try {
+            Result.success(
+                Form().apply {
+                    itemName = binding.edItemName.text.toString()
+                    itemPrice = binding.edItemPrice.getCleanText().toDouble()
+                    itemQuantity = DEFAULT_DOUBLE_VALUE_ONE
+                }
+            )
         } catch (e: Exception) {
-            return Result.failure(e)
+            Result.failure(e)
         }
     }
 
