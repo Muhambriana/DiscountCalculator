@@ -7,16 +7,18 @@
     android:background="@drawable/background_outline_black_1dp"
     android:padding="@dimen/_10sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <TextView
         android:id="@+id/tv_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/_13ssp"
+        android:layout_marginEnd="@dimen/_5sdp"
         android:gravity="start|center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintEnd_toStartOf="@+id/cl_guideline"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Dimsum"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Dimsum" />
 
     <TextView
         android:id="@+id/tv_item_original_price"
@@ -33,12 +35,14 @@
         android:id="@+id/tv_item_discounted_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="start|center"
+        android:gravity="end|center"
+        android:layout_marginStart="@dimen/_5sdp"
         android:textSize="@dimen/_13ssp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_item_name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_name"
         app:layout_constraintTop_toTopOf="@+id/tv_item_name"
-        tools:text="Rp. 16.000" />
+        tools:text="Rp. 999.600.000" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_plus"
@@ -53,7 +57,8 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_item_discounted_price"
         app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
         app:layout_constraintVertical_bias="0.333"
-        app:strokeColor="?colorOnBackground" />
+        app:strokeColor="?colorOnBackground"
+        android:contentDescription="@string/tambah"/>
 
     <EditText
         android:id="@+id/ed_item_quantity"
@@ -87,5 +92,13 @@
         app:layout_constraintEnd_toStartOf="@+id/ed_item_quantity"
         app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
         app:layout_constraintVertical_bias="0.333"
-        app:strokeColor="?colorOnBackground" />
+        app:strokeColor="?colorOnBackground"
+        android:contentDescription="@string/kurang"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cl_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
