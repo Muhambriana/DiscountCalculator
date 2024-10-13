@@ -59,9 +59,12 @@ class DiscalRepository {
 
                     // Apply discount to each item
                     list?.forEach { form ->
-                        val proportion = form.total?.div(totalAllItem) ?: 0.0
+                        val proportion = form.total?.div(totalAllItem) ?: DEFAULT_DOUBLE_VALUE
                         val itemDiscount = (proportion * totalDiscount)
-                        form.discount = itemDiscount
+                        form.apply {
+                            this.itemDiscount = itemDiscount
+                            afterDiscount = total?.minus(this.itemDiscount ?: DEFAULT_DOUBLE_VALUE)
+                        }
                     }
 
                     // Return updated list
@@ -79,37 +82,36 @@ class DiscalRepository {
         discountNominal: Double?
     ): Result<MutableList<Form>?> {
         return try {
-            Result.success(
-                withContext(dispatchers) {
-                    val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
-                    // Calculate the sum of all items' totals
-                    val sumAllItem = list?.sumOf {
-                        val price = it.itemPrice ?: DEFAULT_DOUBLE_VALUE
-                        val quantity = it.itemQuantity ?: DEFAULT_DOUBLE_VALUE
-                        price * quantity
-                    } ?: DEFAULT_DOUBLE_VALUE
+            withContext(dispatchers) {
+                val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
+                val totalQuantity = list?.sumOf { it.itemQuantity ?: DEFAULT_DOUBLE_VALUE } ?: DEFAULT_DOUBLE_VALUE
+                val discountPerItem = discountNominal?.div(totalQuantity)
+                val sumAllItems = list?.sumOf { form ->
+                    (form.itemPrice ?: DEFAULT_DOUBLE_VALUE) * (form.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                } ?: DEFAULT_DOUBLE_VALUE
 
-                    // Calculate discount per item based on quantity
-                    val totalQuantity = list?.sumOf { it.itemQuantity ?: DEFAULT_DOUBLE_VALUE } ?: DEFAULT_DOUBLE_VALUE
-                    val discountPerItem = discountNominal?.div(totalQuantity)
-
-                    // Apply discount to each item
-                    list?.forEach { form ->
-                        form.total = form.itemPrice?.times(form.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
-                        form.discount = if (sumAllItem < discount) {
-                            form.total // Full discount
+                list?.forEach { form ->
+                    form.apply {
+                        total = itemPrice?.times(itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                        itemDiscount = if (sumAllItems < discount) {
+                            total
                         } else {
-                            discountPerItem?.times(form.itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                            discountPerItem?.times(itemQuantity ?: DEFAULT_DOUBLE_VALUE)
                         }
+                        afterDiscount = total?.let { totalValue ->
+                            totalValue - (itemDiscount ?: DEFAULT_DOUBLE_VALUE)
+                        }?.takeIf { it > DEFAULT_DOUBLE_VALUE } ?: DEFAULT_DOUBLE_VALUE
                     }
-                    list // Return updated list
                 }
-            )
+
+                Result.success(list)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             Result.failure(e)
         }
     }
+
 
 
     fun getDiscountDetail(binding: ActivityHomeBinding): Result<DiscountDetail?> {

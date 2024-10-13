@@ -13,7 +13,7 @@ data class Form(
 
     var total: Double? = null,
 
-    var discount: Double? = null,
+    var itemDiscount: Double? = null,
 
     var afterDiscount: Double? = null
 ) : Parcelable

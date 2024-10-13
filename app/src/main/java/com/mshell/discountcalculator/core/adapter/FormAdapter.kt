@@ -8,9 +8,8 @@ import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
 import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
-import com.mshell.discountcalculator.utils.config.Config.EMPTY_STRING
-import com.mshell.discountcalculator.utils.helper.Helper.doubleToCurrency
-import com.mshell.discountcalculator.utils.helper.Helper.doubleToString
+import com.mshell.discountcalculator.utils.helper.Helper.format
+import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
@@ -48,11 +47,8 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         private val binding = ItemListFormBinding.bind(itemView)
         fun bind(form: Form?) {
             binding.tvItemName.text = form?.itemName
-            binding.edItemQuantity.setText(doubleToString(form?.itemQuantity))
-            binding.tvItemOriginalPrice.text = doubleToCurrency(form?.itemPrice).let {
-                if (it == null) EMPTY_STRING
-                else "Rp. $it"
-            }
+            binding.edItemQuantity.setText(form?.itemQuantity?.format(0))
+            binding.tvItemOriginalPrice.text = form?.itemPrice?.toCurrency()
 
             binding.btnPlus.setSingleClickListener {
                 form?.itemQuantity = (form?.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
