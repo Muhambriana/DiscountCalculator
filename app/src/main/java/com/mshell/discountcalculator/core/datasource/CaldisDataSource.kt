@@ -29,7 +29,7 @@ class CaldisDataSource {
         }
     }
 
-    suspend fun calculateDiscountNominal(
+    fun calculateDiscountNominal(
         list: MutableList<Form>?,
         discountNominal: Double?
     ): Result<MutableList<Form>?> {

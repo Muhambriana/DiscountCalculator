@@ -21,7 +21,7 @@ class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
     ): Result<MutableList<Form>?> =
         caldisDataSource.calculateDiscountPercent(list, discountPercent, discountMax)
 
-    suspend fun getDiscountNominalResult(
+    fun getDiscountNominalResult(
         list: MutableList<Form>?,
         discountNominal: Double?
     ): Result<MutableList<Form>?> =
