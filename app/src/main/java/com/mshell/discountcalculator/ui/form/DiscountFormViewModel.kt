@@ -36,7 +36,7 @@ class DiscountFormViewModel(private val repository: DiscalRepository) : ViewMode
     fun addNewItem(form: Form? = null) {
         resourceItemForm.postValue(DiscalEvent(DiscalResource.Loading()))
         viewModelScope.launch {
-            val item = async { repository.addNewItem(form) }.await()
+            val item = async { repository.getNewItem(form) }.await()
             item.onSuccess {
                 resourceItemForm.postValue(DiscalEvent(DiscalResource.Success(it)))
             }.onFailure {

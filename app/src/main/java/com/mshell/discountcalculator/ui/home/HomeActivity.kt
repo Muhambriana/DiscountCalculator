@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
+import com.mshell.discountcalculator.core.datasource.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalResource
@@ -26,9 +27,8 @@ class HomeActivity : AppCompatActivity() {
 
     private val thisContext = this
     private val tag = this.javaClass.simpleName
-    private val binding by lazy {
-        ActivityHomeBinding.inflate(layoutInflater)
-    }
+    private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
+    private val caldisDataSource by lazy { CaldisDataSource() }
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
 
         homeViewModel = ViewModelProvider(
             this,
-            DiscalViewModelFactory(DiscalRepository())
+            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
         )[HomeViewModel::class.java]
         viewInitialization()
     }

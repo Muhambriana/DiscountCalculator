@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.adapter.FormAdapter
+import com.mshell.discountcalculator.core.datasource.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.utils.config.DiscountType
@@ -25,9 +26,8 @@ import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class DiscountFormActivity : AppCompatActivity() {
 
-    private val binding by lazy {
-        ActivityDiscountFormBinding.inflate(layoutInflater)
-    }
+    private val binding by lazy { ActivityDiscountFormBinding.inflate(layoutInflater) }
+    private val caldisDataSource by lazy { CaldisDataSource() }
     private var discountDetail: DiscountDetail? = null
 
     private lateinit var formViewModel: DiscountFormViewModel
@@ -51,7 +51,7 @@ class DiscountFormActivity : AppCompatActivity() {
 
         formViewModel = ViewModelProvider(
             this,
-            DiscalViewModelFactory(DiscalRepository())
+            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
         )[DiscountFormViewModel::class.java]
         formAdapter = FormAdapter()
 

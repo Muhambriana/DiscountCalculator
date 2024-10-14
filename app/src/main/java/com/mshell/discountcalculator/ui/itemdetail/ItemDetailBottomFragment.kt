@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
+import com.mshell.discountcalculator.core.datasource.CaldisDataSource
 import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalResource
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
@@ -17,9 +18,8 @@ import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class ItemDetailBottomFragment : BottomSheetDialogFragment() {
 
-    private val binding by lazy {
-        FragmentItemDetailBottomBinding.inflate(layoutInflater)
-    }
+    private val binding by lazy { FragmentItemDetailBottomBinding.inflate(layoutInflater) }
+    private val caldisDataSource by lazy { CaldisDataSource() }
 
     private lateinit var itemDetailViewModel: ItemDetailViewModel
 
@@ -35,7 +35,7 @@ class ItemDetailBottomFragment : BottomSheetDialogFragment() {
 
         itemDetailViewModel = ViewModelProvider(
             this,
-            DiscalViewModelFactory(DiscalRepository())
+            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
         )[ItemDetailViewModel::class.java]
         initialization()
     }
