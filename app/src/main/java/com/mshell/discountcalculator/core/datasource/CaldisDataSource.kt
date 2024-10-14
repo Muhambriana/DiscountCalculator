@@ -62,7 +62,7 @@ class CaldisDataSource {
         }
     }
 
-    suspend fun calculateDiscountPercent(
+    fun calculateDiscountPercent(
         list: MutableList<Form>?,
         discountPercent: Double?,
         discountMax: Double?

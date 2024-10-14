@@ -14,7 +14,7 @@ class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
     fun getFirstList(count: Int): Result<MutableList<Form>> =
         caldisDataSource.createNewList(count)
 
-    suspend fun getDiscountPercentResult(
+    fun getDiscountPercentResult(
         list: MutableList<Form>?,
         discountPercent: Double?,
         discountMax: Double?
