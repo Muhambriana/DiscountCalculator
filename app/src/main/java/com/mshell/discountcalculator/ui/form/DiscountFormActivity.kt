@@ -141,7 +141,7 @@ class DiscountFormActivity : AppCompatActivity() {
             if ((model.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) {
                 formAdapter.removeItem(model)
                 formAdapter.notifyItemRemoved(pos)
-                changeVisibility(true)
+                if (formAdapter.itemCount <= 0) changeVisibility(true)
                 return@scope
             }
             model.itemQuantity = (model.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE))
