@@ -31,4 +31,8 @@
     <string name="tambah">Tambah</string>
     <string name="kurang">Kurang</string>
     <string name="percent_icon">%</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_item">Delete Item</string>
+    <string name="confirmation_delete">Are you sure want to delete this item?</string>
 </resources>
