@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.mshell.discountcalculator.utils.config.Config.EMPTY_STRING
 import com.mshell.discountcalculator.utils.config.Config.LOCALE
 import java.text.DecimalFormat
@@ -101,6 +104,15 @@ object Helper {
         } else {
             onSdkBelow()
         }
+    }
+
+    fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: (T) -> Unit) {
+        observe(owner, object: Observer<T> {
+            override fun onChanged(value: T) {
+                removeObserver(this)
+                observer(value)
+            }
+        })
     }
 }
 
