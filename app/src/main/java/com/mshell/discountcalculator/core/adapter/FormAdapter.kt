@@ -16,8 +16,8 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
 
     private var listForm = mutableListOf<Form>()
     var onItemClick: ((Form) -> Unit)? = null
-    var onBtnMinusClick: ((Int) -> Unit)? = null
-    var onBtnPlusClick: ((Int) -> Unit)? = null
+    var onBtnMinusClick: ((Form, Int) -> Unit)? = null
+    var onBtnPlusClick: ((Form, Int) -> Unit)? = null
 
     fun addItem(item: Form?) {
         if (item == null) return
@@ -57,36 +57,28 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
             binding.edItemQuantity.setText(form?.itemQuantity?.format())
             binding.tvItemOriginalPrice.text = form?.itemPrice?.toCurrency()
             binding.tvItemDiscountedPrice.text = form?.afterDiscount?.toCurrency(2)
-
-            binding.btnPlus.setSingleClickListener {
-                form?.itemQuantity = (form?.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
-                notifyItemChanged(adapterPosition)
-            }
-
-            binding.btnMinus.setSingleClickListener {
-                if ((form?.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) {
-                    listForm.remove(form)
-                    notifyItemRemoved(adapterPosition)
-                    onBtnMinusClick?.invoke(listForm.size)
-                    return@setSingleClickListener
-                }
-                form?.itemQuantity = (form?.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE))
-                notifyItemChanged(adapterPosition)
-            }
         }
 
         init {
             binding.root.setOnClickListener {
                 onItemClick?.invoke(listForm[adapterPosition])
             }
+            binding.btnMinus.setOnClickListener {
+                onBtnMinusClick?.invoke(listForm[adapterPosition], adapterPosition)
+            }
             binding.btnPlus.setOnClickListener {
-                onBtnPlusClick?.invoke(listForm.size)
+                onBtnPlusClick?.invoke(listForm[adapterPosition], adapterPosition)
             }
         }
     }
 
     fun getList(): MutableList<Form> {
         return listForm
+    }
+
+    fun removeItem(form: Form?) {
+        if (form == null) return
+        listForm.remove(form)
     }
 
 }

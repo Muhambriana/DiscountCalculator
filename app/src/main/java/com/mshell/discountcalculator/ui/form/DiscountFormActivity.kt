@@ -20,6 +20,7 @@ import com.mshell.discountcalculator.core.repository.DiscalRepository
 import com.mshell.discountcalculator.core.resource.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
+import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
@@ -136,8 +137,19 @@ class DiscountFormActivity : AppCompatActivity() {
     private fun showRecycleList() {
         binding.rvItemForm.layoutManager = LinearLayoutManager(this)
         binding.rvItemForm.adapter = formAdapter
-        formAdapter.onBtnMinusClick = {
-            if (it <= 0) changeVisibility(true)
+        formAdapter.onBtnMinusClick = scope@{ model, pos ->
+            if ((model.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) {
+                formAdapter.removeItem(model)
+                formAdapter.notifyItemRemoved(pos)
+                changeVisibility(true)
+                return@scope
+            }
+            model.itemQuantity = (model.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE))
+            formAdapter.notifyItemChanged(pos)
+        }
+        formAdapter.onBtnPlusClick = { model, pos ->
+            model.itemQuantity = (model.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
+            formAdapter.notifyItemChanged(pos)
         }
     }
 
