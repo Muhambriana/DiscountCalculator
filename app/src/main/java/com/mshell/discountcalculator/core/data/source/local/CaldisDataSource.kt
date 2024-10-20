@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.core.datasource
+package com.mshell.discountcalculator.core.data.source.local
 
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form

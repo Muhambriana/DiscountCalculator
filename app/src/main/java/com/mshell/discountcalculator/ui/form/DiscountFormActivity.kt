@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.adapter.FormAdapter
-import com.mshell.discountcalculator.core.datasource.CaldisDataSource
+import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.utils.config.DiscountType
-import com.mshell.discountcalculator.core.repository.DiscalRepository
-import com.mshell.discountcalculator.core.resource.DiscalResource
+import com.mshell.discountcalculator.core.data.DiscalRepository
+import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE

@@ -9,9 +9,9 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
-import com.mshell.discountcalculator.core.datasource.CaldisDataSource
-import com.mshell.discountcalculator.core.repository.DiscalRepository
-import com.mshell.discountcalculator.core.resource.DiscalResource
+import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
+import com.mshell.discountcalculator.core.data.DiscalRepository
+import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 import com.mshell.discountcalculator.ui.form.DiscountFormActivity
 import com.mshell.discountcalculator.utils.view.setSingleClickListener

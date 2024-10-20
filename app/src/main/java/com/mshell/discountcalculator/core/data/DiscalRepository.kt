@@ -1,6 +1,6 @@
-package com.mshell.discountcalculator.core.repository
+package com.mshell.discountcalculator.core.data
 
-import com.mshell.discountcalculator.core.datasource.CaldisDataSource
+import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding

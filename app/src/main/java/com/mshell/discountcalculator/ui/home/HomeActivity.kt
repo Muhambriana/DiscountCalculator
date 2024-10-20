@@ -13,10 +13,10 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
-import com.mshell.discountcalculator.core.datasource.CaldisDataSource
+import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
-import com.mshell.discountcalculator.core.repository.DiscalRepository
-import com.mshell.discountcalculator.core.resource.DiscalResource
+import com.mshell.discountcalculator.core.data.DiscalRepository
+import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.ui.form.DiscountFormActivity
 import com.mshell.discountcalculator.utils.config.DiscountType

@@ -2,7 +2,7 @@ package com.mshell.discountcalculator.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mshell.discountcalculator.core.repository.DiscalRepository
+import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.ui.form.DiscountFormViewModel
 import com.mshell.discountcalculator.ui.home.HomeViewModel
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailViewModel
