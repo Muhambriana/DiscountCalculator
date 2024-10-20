@@ -117,7 +117,7 @@ class DiscountFormActivity : AppCompatActivity() {
 
     private fun addNewItem(form: Form? = null) {
         formViewModel.addNewItem(form)
-        formViewModel.resourceItemForm.observe(this) { event ->
+        formViewModel.item.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
                     is DiscalResource.Loading -> {}
@@ -155,7 +155,7 @@ class DiscountFormActivity : AppCompatActivity() {
 
     private fun getItemList() {
         formViewModel.getFirstList(0)
-        formViewModel.resourceItemsForm.observe(this) { event ->
+        formViewModel.items.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
                     is DiscalResource.Loading -> {

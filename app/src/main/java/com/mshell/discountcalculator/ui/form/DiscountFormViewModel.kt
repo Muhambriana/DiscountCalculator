@@ -1,5 +1,6 @@
 package com.mshell.discountcalculator.ui.form
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,35 +13,39 @@ import kotlinx.coroutines.launch
 
 class DiscountFormViewModel(private val repository: DiscalRepository) : ViewModel() {
 
-    val resourceItemsForm = MutableLiveData<DiscalEvent<DiscalResource<List<Form>>>>()
-    val resourceItemForm = MutableLiveData<DiscalEvent<DiscalResource<Form>>>()
-    val discountResult = MutableLiveData<DiscalEvent<DiscalResource<List<Form>>>>()
+    private val _items = MutableLiveData<DiscalEvent<DiscalResource<MutableList<Form>>>>()
+    private val _item = MutableLiveData<DiscalEvent<DiscalResource<Form>>>()
+    private val _discountResult = MutableLiveData<DiscalEvent<DiscalResource<List<Form>>>>()
+
+    val items: LiveData<DiscalEvent<DiscalResource<MutableList<Form>>>> get() = _items
+    val item: LiveData<DiscalEvent<DiscalResource<Form>>> get() = _item
+    val discountResult:  LiveData<DiscalEvent<DiscalResource<List<Form>>>> = _discountResult
 
     fun getFirstList(count: Int) {
-        resourceItemsForm.postValue(DiscalEvent(DiscalResource.Loading()))
+        _items.postValue(DiscalEvent(DiscalResource.Loading()))
         viewModelScope.launch {
             val items = async { repository.getFirstList(count) }.await()
             items.onSuccess {
                 if (it.isEmpty()) {
-                    resourceItemsForm.postValue(DiscalEvent(DiscalResource.Empty()))
+                    _items.postValue(DiscalEvent(DiscalResource.Empty()))
                     return@onSuccess
                 }
-                resourceItemsForm.postValue(DiscalEvent(DiscalResource.Success(it)))
+                _items.postValue(DiscalEvent(DiscalResource.Success(it)))
             }.onFailure {
-                resourceItemsForm.postValue(DiscalEvent(DiscalResource.Error(null, it)))
+                _items.postValue(DiscalEvent(DiscalResource.Error(null, it)))
             }
 
         }
     }
 
     fun addNewItem(form: Form? = null) {
-        resourceItemForm.postValue(DiscalEvent(DiscalResource.Loading()))
+        _item.postValue(DiscalEvent(DiscalResource.Loading()))
         viewModelScope.launch {
             val item = async { repository.getNewItem(form) }.await()
             item.onSuccess {
-                resourceItemForm.postValue(DiscalEvent(DiscalResource.Success(it)))
+                _item.postValue(DiscalEvent(DiscalResource.Success(it)))
             }.onFailure {
-                resourceItemForm.postValue(DiscalEvent(DiscalResource.Error(null, it)))
+                _item.postValue(DiscalEvent(DiscalResource.Error(null, it)))
             }
         }
     }
@@ -50,33 +55,33 @@ class DiscountFormViewModel(private val repository: DiscalRepository) : ViewMode
         discountPercent: Double?,
         discountMax: Double?
     ) {
-        discountResult.postValue(DiscalEvent(DiscalResource.Loading()))
+        _discountResult.postValue(DiscalEvent(DiscalResource.Loading()))
         viewModelScope.launch {
             val result = async { repository.getDiscountPercentResult(list, discountPercent, discountMax) }.await()
             result.onSuccess {
                 if (it.isNullOrEmpty()) {
-                    discountResult.postValue(DiscalEvent(DiscalResource.Empty()))
+                    _discountResult.postValue(DiscalEvent(DiscalResource.Empty()))
                     return@onSuccess
                 }
-                discountResult.postValue(DiscalEvent(DiscalResource.Success(it)))
+                _discountResult.postValue(DiscalEvent(DiscalResource.Success(it)))
             }.onFailure {
-                discountResult.postValue(DiscalEvent(DiscalResource.Error(null, it)))
+                _discountResult.postValue(DiscalEvent(DiscalResource.Error(null, it)))
             }
         }
     }
 
     fun getResultDiscountNominal(list: MutableList<Form>?, discountNominal: Double?) {
-        discountResult.postValue(DiscalEvent(DiscalResource.Loading()))
+        _discountResult.postValue(DiscalEvent(DiscalResource.Loading()))
         viewModelScope.launch {
             val result = async { repository.getDiscountNominalResult(list, discountNominal) }.await()
             result.onSuccess {
                 if (it.isNullOrEmpty()) {
-                    discountResult.postValue(DiscalEvent(DiscalResource.Empty()))
+                    _discountResult.postValue(DiscalEvent(DiscalResource.Empty()))
                     return@onSuccess
                 }
-                discountResult.postValue(DiscalEvent(DiscalResource.Success(it)))
+                _discountResult.postValue(DiscalEvent(DiscalResource.Success(it)))
             }.onFailure {
-                discountResult.postValue(DiscalEvent(DiscalResource.Error(null, it)))
+                _discountResult.postValue(DiscalEvent(DiscalResource.Error(null, it)))
             }
         }
     }
