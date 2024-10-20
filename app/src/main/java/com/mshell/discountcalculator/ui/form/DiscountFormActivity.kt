@@ -124,7 +124,7 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Error -> {}
                     is DiscalResource.Success -> {
                         formAdapter.addItem(resource.data)
-                        binding.btnCalculate.visibility = View.VISIBLE
+                        changeVisibility(false)
                     }
 
                     else -> {}
@@ -136,6 +136,9 @@ class DiscountFormActivity : AppCompatActivity() {
     private fun showRecycleList() {
         binding.rvItemForm.layoutManager = LinearLayoutManager(this)
         binding.rvItemForm.adapter = formAdapter
+        formAdapter.onBtnMinusClick = {
+            if (it <= 0) changeVisibility(true)
+        }
     }
 
     private fun getItemList() {
@@ -146,18 +149,33 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
-                    is DiscalResource.Empty -> {}
+                    is DiscalResource.Empty -> {
+                        changeVisibility(true)
+                    }
                     is DiscalResource.Error -> {
                         binding.viewLoading.root.visibility = View.GONE
                     }
                     is DiscalResource.Success -> {
                         formAdapter.setItemList(resource.data)
-                        binding.viewLoading.root.visibility = View.GONE
+                        changeVisibility(false)
                     }
                     else -> {}
                 }
             }
         }
+    }
+
+    private fun changeVisibility(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.viewEmpty.root.visibility = View.VISIBLE
+            binding.clgNotEmpty.visibility = View.GONE
+            binding.viewLoading.root.visibility = View.GONE
+            return
+        }
+
+        binding.viewEmpty.root.visibility = View.GONE
+        binding.clgNotEmpty.visibility = View.VISIBLE
+        binding.viewLoading.root.visibility = View.GONE
     }
 
 
@@ -192,9 +210,10 @@ class DiscountFormActivity : AppCompatActivity() {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
                     is DiscalResource.Empty -> {
-                        showShortToast("Data is empty")
                         binding.viewLoading.root.visibility = View.GONE
+                        binding.viewEmpty.root.visibility = View.VISIBLE
                         binding.btnCalculate.visibility = View.GONE
+                        binding.btnDeleteItem.visibility = View.GONE
                     }
                     is DiscalResource.Error -> {
                         showShortToast(resource.error?.message.toString())

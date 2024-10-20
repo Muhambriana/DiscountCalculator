@@ -5,7 +5,7 @@
     <string name="price">Price per item</string>
     <string name="qty">Qty</string>
     <string name="your_item_list">Your Item List</string>
-    <string name="no_data">Empty List</string>
+    <string name="no_data">Empty</string>
     <string name="something_wrong">Oops. Something Wrong</string>
     <string name="calculate">Calculate</string>
     <string name="option_discount_percent">Calculate your payment with Percent Discount</string>
