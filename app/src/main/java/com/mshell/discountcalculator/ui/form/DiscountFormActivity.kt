@@ -59,7 +59,6 @@ class DiscountFormActivity : AppCompatActivity() {
 
         setDataToModels()
         viewInitialization()
-        getItemList()
     }
 
     @Suppress("DEPRECATION")
@@ -150,30 +149,6 @@ class DiscountFormActivity : AppCompatActivity() {
         formAdapter.onBtnPlusClick = { model, pos ->
             model.itemQuantity = (model.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
             formAdapter.notifyItemChanged(pos)
-        }
-    }
-
-    private fun getItemList() {
-        formViewModel.getFirstList(0)
-        formViewModel.items.observe(this) { event ->
-            event.getContentIfNotHandled().let { resource ->
-                when (resource) {
-                    is DiscalResource.Loading -> {
-                        binding.viewLoading.root.visibility = View.VISIBLE
-                    }
-                    is DiscalResource.Empty -> {
-                        changeVisibility(true)
-                    }
-                    is DiscalResource.Error -> {
-                        binding.viewLoading.root.visibility = View.GONE
-                    }
-                    is DiscalResource.Success -> {
-                        formAdapter.setItemList(resource.data)
-                        changeVisibility(false)
-                    }
-                    else -> {}
-                }
-            }
         }
     }
 
