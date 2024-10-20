@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
-import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
 import com.mshell.discountcalculator.utils.helper.Helper.format
 import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
-import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
 
@@ -64,7 +62,11 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
                 onItemClick?.invoke(listForm[adapterPosition])
             }
             binding.btnMinus.setOnClickListener {
-                onBtnMinusClick?.invoke(listForm[adapterPosition], adapterPosition)
+                try {
+                    onBtnMinusClick?.invoke(listForm[adapterPosition], adapterPosition)
+                } catch (e:Exception) {
+                    e.printStackTrace()
+                }
             }
             binding.btnPlus.setOnClickListener {
                 onBtnPlusClick?.invoke(listForm[adapterPosition], adapterPosition)
