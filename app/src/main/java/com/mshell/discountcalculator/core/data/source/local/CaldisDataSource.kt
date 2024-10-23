@@ -10,24 +10,31 @@ import com.mshell.discountcalculator.utils.config.DiscountType
 
 class CaldisDataSource {
 
-    fun createNewItem(form: Form? = null): Result<Form> {
-        return Result.success(form ?: Form())
-    }
+    private var itemIdAutoIncrement = 0
 
-    fun createNewList(count: Int): Result<MutableList<Form>> {
-        return try {
-            createNewItem().map { form ->
-                mutableListOf<Form>().apply {
-                    repeat(count) {
-                        add(form)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Result.failure(e)
+    fun createNewItem(form: Form? = null): Form {
+        itemIdAutoIncrement += 1
+        val item = form ?: Form()
+        return item.apply {
+            itemId = itemIdAutoIncrement
         }
     }
+
+
+//    fun createNewList(count: Int): Result<MutableList<Form>> {
+//        return try {
+//            createNewItem().map { form ->
+//                mutableListOf<Form>().apply {
+//                    repeat(count) {
+//                        add(form)
+//                    }
+//                }
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            Result.failure(e)
+//        }
+//    }
 
     fun calculateDiscountNominal(
         list: MutableList<Form>?,

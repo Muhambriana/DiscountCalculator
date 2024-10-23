@@ -8,11 +8,11 @@ import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 
 class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
 
-    fun getNewItem(form: Form? = null): Result<Form> =
+    fun getNewItem(form: Form? = null) =
         caldisDataSource.createNewItem(form)
 
-    fun getFirstList(count: Int): Result<MutableList<Form>> =
-        caldisDataSource.createNewList(count)
+//    fun getFirstList(count: Int): Result<MutableList<Form>> =
+//        caldisDataSource.createNewList(count)
 
     fun getDiscountPercentResult(
         list: MutableList<Form>?,

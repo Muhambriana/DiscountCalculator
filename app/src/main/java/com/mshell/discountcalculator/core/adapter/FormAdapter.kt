@@ -17,17 +17,11 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
     var onBtnMinusClick: ((Form, Int) -> Unit)? = null
     var onBtnPlusClick: ((Form, Int) -> Unit)? = null
 
-    fun addItem(item: Form?) {
-        if (item == null) return
-        listForm.add(item)
-        notifyItemInserted(listForm.size)
-    }
-
     fun setItemList(items: List<Form>?) {
         if (items == null) return
         listForm.clear()
         listForm.addAll(items)
-        notifyAllItem()
+        notifyAllItem(items.size)
     }
 
     fun notifyAllItem(start: Int = 0, endRange: Int = listForm.size) {
@@ -78,9 +72,28 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         return listForm
     }
 
+    fun updateItem(item: Form?) {
+        listForm.find { it.itemId == item?.itemId }?.apply {
+            itemName = item?.itemName
+            itemPrice = item?.itemPrice
+            itemQuantity = item?.itemQuantity
+            itemDiscount = item?.itemDiscount
+            afterDiscount = item?.afterDiscount
+        }
+        notifyItemChanged(listForm.indexOf(item))
+    }
+
+    fun addItem(item: Form?) {
+        if (item == null) return
+        listForm.add(item)
+        notifyItemInserted(listForm.size)
+    }
+
     fun removeItem(form: Form?) {
+        val index = listForm.indexOf(form)
         if (form == null) return
         listForm.remove(form)
+        notifyItemRemoved(index)
     }
 
 }

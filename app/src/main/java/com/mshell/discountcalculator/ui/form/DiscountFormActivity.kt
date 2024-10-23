@@ -20,9 +20,11 @@ import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
-import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
+import com.mshell.discountcalculator.utils.config.Config
 import com.mshell.discountcalculator.utils.helper.Helper
+import com.mshell.discountcalculator.utils.helper.Helper.observeOnce
 import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
+import com.mshell.discountcalculator.utils.view.CaldisDialog
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class DiscountFormActivity : AppCompatActivity() {
@@ -116,39 +118,52 @@ class DiscountFormActivity : AppCompatActivity() {
 
     private fun addNewItem(form: Form? = null) {
         formViewModel.addNewItem(form)
-        formViewModel.item.observe(this) { event ->
-            event.getContentIfNotHandled().let { resource ->
-                when (resource) {
-                    is DiscalResource.Loading -> {}
-                    is DiscalResource.Empty -> {}
-                    is DiscalResource.Error -> {}
-                    is DiscalResource.Success -> {
-                        formAdapter.addItem(resource.data)
-                        changeVisibility(false)
-                    }
-
-                    else -> {}
-                }
-            }
+        formViewModel.newItem.observeOnce(this) { resource ->
+            formAdapter.addItem(resource)
+            changeVisibility(false)
         }
+    }
+
+    private fun updateQuantity() {
+        formViewModel.item.observe(this) {
+            formAdapter.updateItem(it)
+        }
+    }
+
+    private fun deleteItemConfirmation(model: Form) {
+        CaldisDialog(this)
+            .setTitle(getString(R.string.delete_item))
+            .setSubtitle(getString(R.string.confirmation_delete))
+            .setBtnNegative(getString(R.string.yes), true) {
+                formAdapter.removeItem(model)
+                checkIfListIsEmpty()
+            }
+            .setBtnPositive(getString(R.string.no), true)
+            .setOutsideTouchable(false)
+            .show()
+    }
+
+    private fun checkIfListIsEmpty() {
+        if (formAdapter.itemCount > 0) return
+        binding.viewEmpty.root.visibility = View.VISIBLE
+        binding.clgNotEmpty.visibility = View.GONE
     }
 
     private fun showRecycleList() {
         binding.rvItemForm.layoutManager = LinearLayoutManager(this)
         binding.rvItemForm.adapter = formAdapter
-        formAdapter.onBtnMinusClick = scope@{ model, pos ->
-            if ((model.itemQuantity ?: DEFAULT_DOUBLE_VALUE_ONE) <= DEFAULT_DOUBLE_VALUE_ONE) {
-                formAdapter.removeItem(model)
-                formAdapter.notifyItemRemoved(pos)
-                if (formAdapter.itemCount <= 0) changeVisibility(true)
+        formAdapter.onBtnMinusClick = scope@{ model, _ ->
+            if (model.itemQuantity == Config.DEFAULT_DOUBLE_VALUE_ONE) {
+                deleteItemConfirmation(model)
                 return@scope
             }
-            model.itemQuantity = (model.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE))
-            formAdapter.notifyItemChanged(pos)
+
+            formViewModel.decreaseItemQuantity(model)
+            updateQuantity()
         }
-        formAdapter.onBtnPlusClick = { model, pos ->
-            model.itemQuantity = (model.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
-            formAdapter.notifyItemChanged(pos)
+        formAdapter.onBtnPlusClick = { model, _ ->
+            formViewModel.increaseItemQuantity(model)
+            updateQuantity()
         }
     }
 
