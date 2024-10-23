@@ -5,6 +5,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Form(
+
+    var itemId: Int? = 0,
+
     var itemName: String? = null,
 
     var itemPrice: Double? = null,
