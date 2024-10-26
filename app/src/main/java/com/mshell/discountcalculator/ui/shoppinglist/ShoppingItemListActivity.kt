@@ -22,7 +22,6 @@ import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.discountsummary.DiscountSummaryFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config
-import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.helper.Helper.observeOnce
 import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
@@ -126,7 +125,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
             bottomDialogFragment.show(supportFragmentManager, "")
         }
         binding.btnCalculate.setOnClickListener {
-            calculate(shoppingDetail?.discountDetail?.discountType)
+            calculate()
         }
     }
 
@@ -196,35 +195,22 @@ class ShoppingItemListActivity : AppCompatActivity() {
     }
 
 
-    private fun calculate(discountType: DiscountType? = null) {
-        if (discountType == null) {
+    private fun calculate() {
+        if (shoppingDetail?.discountDetail == null) {
             showShortToast("Please choose discount type")
             return
         }
-        when (discountType) {
-            DiscountType.PERCENT -> calculateDiscountPercent()
-            DiscountType.NOMINAL -> calculateDiscountNominal()
-        }
-
+        calculateDiscount()
     }
 
-    private fun calculateDiscountNominal() {
-        formViewModel.getResultDiscountNominal(
-            formAdapter.getList(),
-            shoppingDetail?.discountDetail?.discountNominal
+    private fun calculateDiscount() {
+        formViewModel.getResultDiscount(
+            shoppingDetail?.apply {
+                listItem = formAdapter.getList()
+            }
         )
         observeResult()
     }
-
-    private fun calculateDiscountPercent() {
-        formViewModel.getResultDiscountPercent(
-            formAdapter.getList(),
-            shoppingDetail?.discountDetail?.discountPercent?.toDouble(),
-            shoppingDetail?.discountDetail?.discountMax
-        )
-        observeResult()
-    }
-
 
     private fun observeResult() {
         formViewModel.discountResult.observe(this) { event ->
@@ -247,8 +233,8 @@ class ShoppingItemListActivity : AppCompatActivity() {
                     }
 
                     is DiscalResource.Success -> {
-                        val list = resource.data
-                        openFragment(list)
+                        val result = resource.data
+                        openFragment(result?.listItem)
                         binding.viewLoading.root.visibility = View.GONE
                     }
 

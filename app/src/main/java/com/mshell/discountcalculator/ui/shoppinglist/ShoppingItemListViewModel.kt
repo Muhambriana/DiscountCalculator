@@ -8,6 +8,7 @@ import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.DiscalEvent
 import com.mshell.discountcalculator.core.data.source.DiscalResource
+import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -16,11 +17,11 @@ class ShoppingItemListViewModel(private val repository: DiscalRepository) : View
 
     private val _newItem = MutableLiveData<ShoppingItem>()
     private val _item = MutableLiveData<ShoppingItem>()
-    private val _discountResult = MutableLiveData<DiscalEvent<DiscalResource<List<ShoppingItem>>>>()
+    private val _discountResult = MutableLiveData<DiscalEvent<DiscalResource<ShoppingDetail>>>()
 
     val newItem: LiveData<ShoppingItem> get() = _newItem
     val item: LiveData<ShoppingItem> get() = _item
-    val discountResult:  LiveData<DiscalEvent<DiscalResource<List<ShoppingItem>>>> = _discountResult
+    val discountResult:  LiveData<DiscalEvent<DiscalResource<ShoppingDetail>>> = _discountResult
 
     fun addNewItem(shoppingItem: ShoppingItem? = null) {
         viewModelScope.launch {
@@ -43,32 +44,12 @@ class ShoppingItemListViewModel(private val repository: DiscalRepository) : View
         }
     }
 
-    fun getResultDiscountPercent(
-        list: MutableList<ShoppingItem>?,
-        discountPercent: Double?,
-        discountMax: Double?
-    ) {
+    fun getResultDiscount(shoppingDetail: ShoppingDetail?) {
         _discountResult.value = DiscalEvent(DiscalResource.Loading())
         viewModelScope.launch {
-            val result = async { repository.getDiscountPercentResult(list, discountPercent, discountMax) }.await()
+            val result = async { repository.getDiscountResult(shoppingDetail) }.await()
             result.onSuccess {
-                if (it.isNullOrEmpty()) {
-                    _discountResult.value = DiscalEvent(DiscalResource.Empty())
-                    return@onSuccess
-                }
-                _discountResult.value = DiscalEvent(DiscalResource.Success(it))
-            }.onFailure {
-                _discountResult.value = DiscalEvent(DiscalResource.Error(null, it))
-            }
-        }
-    }
-
-    fun getResultDiscountNominal(list: MutableList<ShoppingItem>?, discountNominal: Double?) {
-        _discountResult.value = DiscalEvent(DiscalResource.Loading())
-        viewModelScope.launch {
-            val result = async { repository.getDiscountNominalResult(list, discountNominal) }.await()
-            result.onSuccess {
-                if (it.isNullOrEmpty()) {
+                if (it == null) {
                     _discountResult.value = DiscalEvent(DiscalResource.Empty())
                     return@onSuccess
                 }

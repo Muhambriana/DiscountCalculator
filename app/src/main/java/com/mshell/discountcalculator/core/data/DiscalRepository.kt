@@ -14,18 +14,10 @@ class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
 //    fun getFirstList(count: Int): Result<MutableList<Form>> =
 //        caldisDataSource.createNewList(count)
 
-    fun getDiscountPercentResult(
-        list: MutableList<ShoppingItem>?,
-        discountPercent: Double?,
-        discountMax: Double?
-    ): Result<MutableList<ShoppingItem>?> =
-        caldisDataSource.calculateDiscountPercent(list, discountPercent, discountMax)
-
-    fun getDiscountNominalResult(
-        list: MutableList<ShoppingItem>?,
-        discountNominal: Double?
-    ): Result<MutableList<ShoppingItem>?> =
-        caldisDataSource.calculateDiscountNominal(list, discountNominal)
+    fun getDiscountResult(
+        shoppingDetail: ShoppingDetail?
+    ): Result<ShoppingDetail?> =
+        caldisDataSource.calculateShoppingDetail(shoppingDetail)
 
     fun getShoppingDetail(binding: ActivityHomeBinding): Result<ShoppingDetail?> =
         caldisDataSource.getShoppingDetail(binding)
