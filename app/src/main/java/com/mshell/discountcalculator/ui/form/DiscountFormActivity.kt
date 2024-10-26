@@ -32,6 +32,9 @@ import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class DiscountFormActivity : AppCompatActivity() {
 
+    private val thisActivityContext by lazy {
+        this
+    }
     private val binding by lazy {
         ActivityDiscountFormBinding.inflate(layoutInflater)
     }
@@ -40,10 +43,19 @@ class DiscountFormActivity : AppCompatActivity() {
         CaldisDataSource()
     }
 
+    private val formViewModel by lazy {
+        ViewModelProvider(
+            this,
+            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
+        )[DiscountFormViewModel::class.java]
+    }
+
+    private val formAdapter by lazy {
+        FormAdapter(false)
+    }
+
     private var discountDetail: DiscountDetail? = null
 
-    private lateinit var formViewModel: DiscountFormViewModel
-    private lateinit var formAdapter: FormAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +72,6 @@ class DiscountFormActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        formViewModel = ViewModelProvider(
-            this,
-            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
-        )[DiscountFormViewModel::class.java]
-        formAdapter = FormAdapter()
-
 
         setDataToModels()
         viewInitialization()
@@ -158,8 +163,10 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun showRecycleList() {
-        binding.rvItemForm.layoutManager = LinearLayoutManager(this)
-        binding.rvItemForm.adapter = formAdapter
+        binding.rvItemForm.apply {
+            layoutManager = LinearLayoutManager(thisActivityContext)
+            binding.rvItemForm.adapter = formAdapter
+        }
         formAdapter.onBtnMinusClick = scope@{ model, _ ->
             if (model.itemQuantity == Config.DEFAULT_DOUBLE_VALUE_ONE) {
                 deleteItemConfirmation(model)
