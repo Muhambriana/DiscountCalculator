@@ -4,101 +4,122 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_5sdp"
-    android:background="@drawable/background_outline_black_1dp"
-    android:padding="@dimen/_10sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_item_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:gravity="start|center"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintEnd_toStartOf="@+id/cl_guideline"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/background_outline_black_1dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Dimsum" />
+        app:layout_constraintEnd_toStartOf="@id/btn_delete"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_item_original_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:gravity="start|center"
-        android:textSize="@dimen/_11ssp"
-        app:layout_constraintTop_toBottomOf="@id/tv_item_name"
-        app:layout_constraintStart_toStartOf="@id/tv_item_name"
-        tools:text="Rp. 18.000"/>
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:gravity="start|center"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toStartOf="@+id/cl_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Dimsum" />
 
-    <TextView
-        android:id="@+id/tv_item_discounted_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="end|center"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_item_name"
+        <TextView
+            android:id="@+id/tv_item_original_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="start|center"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintStart_toStartOf="@id/tv_item_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_name"
+            tools:text="Rp. 18.000" />
+
+        <TextView
+            android:id="@+id/tv_item_discounted_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:gravity="end|center"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_item_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_name"
+            tools:text="Rp. 999.600.000" />
+
+        <ImageButton
+            android:id="@+id/btn_plus"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:background="@null"
+            android:backgroundTint="@null"
+            android:backgroundTintMode="@null"
+            android:contentDescription="@string/tambah"
+            android:src="@drawable/ic_plus_black"
+            app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_discounted_price"
+            app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
+            app:layout_constraintVertical_bias="0.333"
+            app:strokeColor="?colorOnBackground" />
+
+        <EditText
+            android:id="@+id/ed_item_quantity"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:background="@null"
+            android:editable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:inputType="number"
+            android:labelFor="@+id/ed_item_quantity"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_original_price"
+            app:layout_constraintEnd_toStartOf="@+id/btn_plus"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_original_price"
+            tools:ignore="Autofill"
+            tools:text="9" />
+
+        <ImageButton
+            android:id="@+id/btn_minus"
+            style="@style/ShapeAppearance.MdcShapeAppearance.SmallComponent.OutlinedCircleButton"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:background="@null"
+            android:backgroundTint="@null"
+            android:backgroundTintMode="@null"
+            android:contentDescription="@string/kurang"
+            android:src="@drawable/ic_minus_black"
+            app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
+            app:layout_constraintEnd_toStartOf="@+id/ed_item_quantity"
+            app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
+            app:layout_constraintVertical_bias="0.333"
+            app:strokeColor="?colorOnBackground" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/cl_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="160dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_55sdp"
+        android:src="@drawable/ic_trash"
+        android:backgroundTint="@color/e37777"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_item_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_name"
-        tools:text="Rp. 999.600.000" />
-
-    <ImageButton
-        android:id="@+id/btn_plus"
-        android:layout_width="@dimen/_18sdp"
-        android:layout_height="@dimen/_18sdp"
-        android:src="@drawable/ic_plus_black"
-        android:background="@null"
-        android:backgroundTint="@null"
-        android:backgroundTintMode="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
-        app:layout_constraintEnd_toEndOf="@+id/tv_item_discounted_price"
-        app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
-        app:layout_constraintVertical_bias="0.333"
-        app:strokeColor="?colorOnBackground"
-        android:contentDescription="@string/tambah"/>
-
-    <EditText
-        android:id="@+id/ed_item_quantity"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:background="@null"
-        android:gravity="center"
-        android:inputType="number"
-        android:labelFor="@+id/ed_item_quantity"
-        android:textSize="@dimen/_12ssp"
-        android:editable="false"
-        android:focusable="false"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_item_original_price"
-        app:layout_constraintEnd_toStartOf="@+id/btn_plus"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_original_price"
-        tools:ignore="Autofill"
-        tools:text="9" />
-
-    <ImageButton
-        android:id="@+id/btn_minus"
-        style="@style/ShapeAppearance.MdcShapeAppearance.SmallComponent.OutlinedCircleButton"
-        android:layout_width="@dimen/_18sdp"
-        android:layout_height="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:src="@drawable/ic_minus_black"
-        android:background="@null"
-        android:backgroundTint="@null"
-        android:backgroundTintMode="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
-        app:layout_constraintEnd_toStartOf="@+id/ed_item_quantity"
-        app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
-        app:layout_constraintVertical_bias="0.333"
-        app:strokeColor="?colorOnBackground"
-        android:contentDescription="@string/kurang"/>
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/cl_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
