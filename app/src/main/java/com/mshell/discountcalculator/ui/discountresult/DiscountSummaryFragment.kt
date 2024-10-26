@@ -24,7 +24,6 @@ class DiscountSummaryFragment : Fragment() {
         FormAdapter(true)
     }
 
-    // TODO: Rename and change types of parameters
     private var listItem: MutableList<Form>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
