@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/view_barrier"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title_total_shopping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins_normal"
+        android:gravity="start|center"
+        android:text="@string/shooping"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toStartOf="@id/cl_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_barrier" />
+
+    <TextView
+        android:id="@+id/tv_title_additional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_normal"
+        android:gravity="start|center"
+        android:text="@string/additional"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toStartOf="@id/cl_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_total_shopping"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_normal"
+        android:gravity="start|center"
+        android:text="@string/total"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toStartOf="@id/cl_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_additional"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_normal"
+        android:gravity="start|center"
+        android:text="@string/discount"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toStartOf="@id/cl_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_total"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_summary_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_normal"
+        android:gravity="start|center"
+        android:textSize="@dimen/_7ssp"
+        app:layout_constraintEnd_toStartOf="@id/cl_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_discount"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Rp 90.000 x 20%\nMax: Rp 25.000"/>
+
+    <TextView
+        android:id="@+id/tv_title_after_discounted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_normal"
+        android:gravity="start|center"
+        android:text="@string/total_after_discount"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toStartOf="@id/cl_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_barrier_2" />
+
+    <TextView
+        android:id="@+id/tv_total_shopping"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="end|center"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_total_shopping"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/cl_guideline"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_total_shopping"
+        tools:text="Rp 90.000" />
+
+    <TextView
+        android:id="@+id/tv_additional"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="end|center"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_additional"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_total_shopping"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_additional"
+        tools:text="Rp 5.000" />
+
+    <TextView
+        android:id="@+id/tv_total"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="end|center"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_total"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_additional"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_total"
+        tools:text="Rp 95.000" />
+
+    <TextView
+        android:id="@+id/tv_discount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="end|center"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_discount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_total"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_discount"
+        tools:text="Rp 18.000" />
+
+    <TextView
+        android:id="@+id/tv_after_discount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="end|center"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_after_discounted"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/cl_guideline"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_after_discounted"
+        tools:text="Rp 77.000" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cl_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="186dp" />
+
+    <View
+        android:id="@+id/view_barrier_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_summary_discount" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
