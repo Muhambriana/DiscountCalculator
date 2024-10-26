@@ -22,22 +22,6 @@ class CaldisDataSource {
         }
     }
 
-
-//    fun createNewList(count: Int): Result<MutableList<Form>> {
-//        return try {
-//            createNewItem().map { form ->
-//                mutableListOf<Form>().apply {
-//                    repeat(count) {
-//                        add(form)
-//                    }
-//                }
-//            }
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            Result.failure(e)
-//        }
-//    }
-
     fun calculateShoppingDetail(shoppingDetail: ShoppingDetail?): Result<ShoppingDetail?> {
         try {
             shoppingDetail?.apply {

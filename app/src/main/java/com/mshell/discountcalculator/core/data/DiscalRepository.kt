@@ -11,9 +11,6 @@ class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
     fun getNewItem(shoppingItem: ShoppingItem? = null) =
         caldisDataSource.createNewItem(shoppingItem)
 
-//    fun getFirstList(count: Int): Result<MutableList<Form>> =
-//        caldisDataSource.createNewList(count)
-
     fun getDiscountResult(
         shoppingDetail: ShoppingDetail?
     ): Result<ShoppingDetail?> =
