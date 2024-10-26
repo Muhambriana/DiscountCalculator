@@ -251,7 +251,7 @@ class DiscountFormActivity : AppCompatActivity() {
     private fun openFragment(list: List<Form>?) {
         if (list.isNullOrEmpty()) return
 
-        val fragment = DiscountSummaryFragment.newInstance(java.util.ArrayList<Form>(list))
+        val fragment = DiscountSummaryFragment.newInstance(java.util.ArrayList<Form>(list), discountDetail)
 
         binding.flFragmentContainer.visibility = View.VISIBLE
         supportFragmentManager
