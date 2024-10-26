@@ -163,10 +163,6 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun showRecycleList() {
-        binding.rvItemForm.apply {
-            layoutManager = LinearLayoutManager(thisActivityContext)
-            binding.rvItemForm.adapter = formAdapter
-        }
         formAdapter.onBtnMinusClick = scope@{ model, _ ->
             if (model.itemQuantity == Config.DEFAULT_DOUBLE_VALUE_ONE) {
                 deleteItemConfirmation(model)
@@ -179,6 +175,10 @@ class DiscountFormActivity : AppCompatActivity() {
         formAdapter.onBtnPlusClick = { model, _ ->
             formViewModel.increaseItemQuantity(model)
             updateQuantity()
+        }
+        binding.rvItemForm.apply {
+            layoutManager = LinearLayoutManager(thisActivityContext)
+            binding.rvItemForm.adapter = formAdapter
         }
     }
 
