@@ -14,6 +14,8 @@ data class ShoppingDetail(
 
     var totalQuantity: Double? = null,
 
-    var totalAfterDiscount: Double? = null
+    var totalAfterDiscount: Double? = null,
+
+    var listItem: MutableList<ShoppingItem>? = null
 
 ) : Parcelable
