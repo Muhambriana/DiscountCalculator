@@ -19,7 +19,7 @@ import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
-import com.mshell.discountcalculator.ui.discountresult.DiscountSummaryFragment
+import com.mshell.discountcalculator.ui.discountsummary.DiscountSummaryFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config
 import com.mshell.discountcalculator.utils.config.DiscountType

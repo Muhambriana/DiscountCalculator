@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.ui.discountresult
+package com.mshell.discountcalculator.ui.discountsummary
 
 import android.os.Build
 import android.os.Bundle
