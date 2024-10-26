@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mshell.discountcalculator.ui.form.DiscountFormActivity"
+            android:name="com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity"
             android:exported="false"
             android:launchMode="singleTask"/>
     </application>

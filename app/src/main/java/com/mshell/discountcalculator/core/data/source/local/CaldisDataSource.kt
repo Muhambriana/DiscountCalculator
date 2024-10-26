@@ -1,7 +1,7 @@
 package com.mshell.discountcalculator.core.data.source.local
 
 import com.mshell.discountcalculator.core.models.DiscountDetail
-import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
@@ -13,9 +13,9 @@ class CaldisDataSource {
 
     private var itemIdAutoIncrement = 0
 
-    fun createNewItem(form: Form? = null): Form {
+    fun createNewItem(shoppingItem: ShoppingItem? = null): ShoppingItem {
         itemIdAutoIncrement += 1
-        val item = form ?: Form()
+        val item = shoppingItem ?: ShoppingItem()
         return item.apply {
             itemId = itemIdAutoIncrement
         }
@@ -38,9 +38,9 @@ class CaldisDataSource {
 //    }
 
     fun calculateDiscountNominal(
-        list: MutableList<Form>?,
+        list: MutableList<ShoppingItem>?,
         discountNominal: Double?
-    ): Result<MutableList<Form>?> {
+    ): Result<MutableList<ShoppingItem>?> {
         return try {
             val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
             val totalQuantity =
@@ -73,10 +73,10 @@ class CaldisDataSource {
     }
 
     fun calculateDiscountPercent(
-        list: MutableList<Form>?,
+        list: MutableList<ShoppingItem>?,
         discountPercent: Double?,
         discountMax: Double?
-    ): Result<MutableList<Form>?> {
+    ): Result<MutableList<ShoppingItem>?> {
         return try {
             var totalAllItem = DEFAULT_DOUBLE_VALUE
             // Calculate total for all items
@@ -146,10 +146,10 @@ class CaldisDataSource {
         }
     }
 
-    fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<Form?> {
+    fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<ShoppingItem?> {
         return try {
             Result.success(
-                Form().apply {
+                ShoppingItem().apply {
                     itemName = binding.edItemName.text.toString()
                     itemPrice = binding.edItemPrice.edCurrency.getCleanText().toDouble()
                     itemQuantity = DEFAULT_DOUBLE_VALUE_ONE

@@ -13,7 +13,7 @@ import com.mshell.discountcalculator.core.adapter.FormAdapter
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.ShoppingDetail
-import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.databinding.FragmentDiscountSummaryBinding
 import com.mshell.discountcalculator.utils.helper.Helper
 
@@ -41,7 +41,7 @@ class DiscountSummaryFragment : Fragment() {
         FormAdapter(true)
     }
 
-    private var listItem: MutableList<Form>? = null
+    private var listItem: MutableList<ShoppingItem>? = null
     private var shoppingDetail: ShoppingDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +58,7 @@ class DiscountSummaryFragment : Fragment() {
                 Build.VERSION_CODES.TIRAMISU,
                 onSdkEqualOrAbove = {
                     shoppingDetail = it.getParcelable(EXTRA_DATA_DISCOUNT_DETAIL, ShoppingDetail::class.java)
-                    listItem = it.getParcelableArrayList(EXTRA_DATA_LIST, Form::class.java)
+                    listItem = it.getParcelableArrayList(EXTRA_DATA_LIST, ShoppingItem::class.java)
                 },
                 onSdkBelow = {
                     shoppingDetail = it.getParcelable(EXTRA_DATA_DISCOUNT_DETAIL)
@@ -90,7 +90,7 @@ class DiscountSummaryFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(list: ArrayList<Form>? = null, discountDetail: ShoppingDetail?) =
+        fun newInstance(list: ArrayList<ShoppingItem>? = null, discountDetail: ShoppingDetail?) =
             DiscountSummaryFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(EXTRA_DATA_LIST, list)

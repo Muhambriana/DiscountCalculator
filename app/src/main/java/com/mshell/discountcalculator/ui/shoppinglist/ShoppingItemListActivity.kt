@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.ui.form
+package com.mshell.discountcalculator.ui.shoppinglist
 
 import android.os.Build
 import android.os.Bundle
@@ -16,7 +16,7 @@ import com.mshell.discountcalculator.core.adapter.FormAdapter
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
-import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.discountsummary.DiscountSummaryFragment
@@ -30,7 +30,7 @@ import com.mshell.discountcalculator.utils.view.CaldisDialog
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 
-class DiscountFormActivity : AppCompatActivity() {
+class ShoppingItemListActivity : AppCompatActivity() {
 
     private val thisActivityContext by lazy {
         this
@@ -47,7 +47,7 @@ class DiscountFormActivity : AppCompatActivity() {
         ViewModelProvider(
             this,
             DiscalViewModelFactory(DiscalRepository(caldisDataSource))
-        )[DiscountFormViewModel::class.java]
+        )[ShoppingItemListViewModel::class.java]
     }
 
     private val formAdapter by lazy {
@@ -101,18 +101,18 @@ class DiscountFormActivity : AppCompatActivity() {
             ItemDetailBottomFragment.KEY_ADD_ITEM,
             this
         ) { _, bundle ->
-            val form: Form? = Helper.returnBasedOnSdkVersion(
+            val shoppingItem: ShoppingItem? = Helper.returnBasedOnSdkVersion(
                 Build.VERSION_CODES.TIRAMISU,
                 onSdkEqualOrAbove = {
                     // Return the result from this lambda
-                    bundle.getParcelable(EXTRA_DATA_ITEM, Form::class.java)
+                    bundle.getParcelable(EXTRA_DATA_ITEM, ShoppingItem::class.java)
                 },
                 onSdkBelow = {
                     // Return the result from this lambda
                     bundle.getParcelable(EXTRA_DATA_ITEM)
                 }
             )
-            addNewItem(form)
+            addNewItem(shoppingItem)
         }
         showRecycleList()
     }
@@ -130,8 +130,8 @@ class DiscountFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun addNewItem(form: Form? = null) {
-        formViewModel.addNewItem(form)
+    private fun addNewItem(shoppingItem: ShoppingItem? = null) {
+        formViewModel.addNewItem(shoppingItem)
         formViewModel.newItem.observeOnce(this) { resource ->
             formAdapter.addItem(resource)
             changeVisibility(false)
@@ -144,7 +144,7 @@ class DiscountFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteItemConfirmation(model: Form) {
+    private fun deleteItemConfirmation(model: ShoppingItem) {
         CaldisDialog(this)
             .setTitle(getString(R.string.delete_item))
             .setSubtitle(getString(R.string.confirmation_delete))
@@ -258,11 +258,11 @@ class DiscountFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun openFragment(list: List<Form>?) {
+    private fun openFragment(list: List<ShoppingItem>?) {
         if (list.isNullOrEmpty()) return
 
         val fragment =
-            DiscountSummaryFragment.newInstance(java.util.ArrayList<Form>(list), shoppingDetail)
+            DiscountSummaryFragment.newInstance(java.util.ArrayList<ShoppingItem>(list), shoppingDetail)
 
         binding.flFragmentContainer.visibility = View.VISIBLE
         supportFragmentManager

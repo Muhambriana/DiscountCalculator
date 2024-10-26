@@ -18,7 +18,7 @@ import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
-import com.mshell.discountcalculator.ui.form.DiscountFormActivity
+import com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
@@ -99,8 +99,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun moveIntent(shoppingDetail: ShoppingDetail?) {
-        val intent = Intent(this, DiscountFormActivity::class.java)
-        intent.putExtra(DiscountFormActivity.EXTRA_DATA, shoppingDetail)
+        val intent = Intent(this, ShoppingItemListActivity::class.java)
+        intent.putExtra(ShoppingItemListActivity.EXTRA_DATA, shoppingDetail)
         startActivity(intent)
         binding.viewLoading.root.visibility = View.GONE
     }

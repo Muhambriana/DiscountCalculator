@@ -13,7 +13,7 @@ import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
-import com.mshell.discountcalculator.ui.form.DiscountFormActivity
+import com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class ItemDetailBottomFragment : BottomSheetDialogFragment() {
@@ -73,7 +73,7 @@ class ItemDetailBottomFragment : BottomSheetDialogFragment() {
                     is DiscalResource.Success -> {
                         val bundle = Bundle()
                         bundle.apply {
-                            putParcelable(DiscountFormActivity.EXTRA_DATA_ITEM, resource.data)
+                            putParcelable(ShoppingItemListActivity.EXTRA_DATA_ITEM, resource.data)
                         }
                         setFragmentResult(KEY_ADD_ITEM, bundle)
                         dismiss()

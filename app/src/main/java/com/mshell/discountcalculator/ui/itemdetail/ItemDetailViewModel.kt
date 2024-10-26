@@ -3,7 +3,7 @@ package com.mshell.discountcalculator.ui.itemdetail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.DiscalEvent
 import com.mshell.discountcalculator.core.data.source.DiscalResource
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class ItemDetailViewModel(private val repository: DiscalRepository) : ViewModel() {
 
-    val itemDetail = MutableLiveData<DiscalEvent<DiscalResource<Form>>>()
+    val itemDetail = MutableLiveData<DiscalEvent<DiscalResource<ShoppingItem>>>()
 
     fun getItemDetail(binding: FragmentItemDetailBottomBinding) {
         itemDetail.postValue(DiscalEvent(DiscalResource.Loading()))

@@ -5,8 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.databinding.ItemListFormBinding
 import com.mshell.discountcalculator.utils.helper.Helper.format
 import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
@@ -14,15 +13,15 @@ import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
 class FormAdapter(private val onlyPreview: Boolean = true) :
     RecyclerView.Adapter<ViewHolder>() {
 
-        private var listForm = mutableListOf<Form>()
-        var onItemClick: ((Form) -> Unit)? = null
-        var onBtnMinusClick: ((Form, Int) -> Unit)? = null
-        var onBtnPlusClick: ((Form, Int) -> Unit)? = null
+        private var listShoppingItem = mutableListOf<ShoppingItem>()
+        var onItemClick: ((ShoppingItem) -> Unit)? = null
+        var onBtnMinusClick: ((ShoppingItem, Int) -> Unit)? = null
+        var onBtnPlusClick: ((ShoppingItem, Int) -> Unit)? = null
 
-        fun setItemList(items: List<Form>?) {
+        fun setItemList(items: List<ShoppingItem>?) {
             if (items == null) return
-            listForm.clear()
-            listForm.addAll(items)
+            listShoppingItem.clear()
+            listShoppingItem.addAll(items)
             notifyItemRangeInserted(0, items.size)
         }
 
@@ -41,7 +40,7 @@ class FormAdapter(private val onlyPreview: Boolean = true) :
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val chat = listForm[position]
+            val chat = listShoppingItem[position]
             if (onlyPreview) {
                 (holder as OnlyPreviewFormViewHolder).bind(chat)
             } else {
@@ -50,82 +49,82 @@ class FormAdapter(private val onlyPreview: Boolean = true) :
         }
 
         override fun getItemCount(): Int {
-            return listForm.size
+            return listShoppingItem.size
         }
 
         inner class FormViewHolder(private val binding: ItemListFormBinding) :
             ViewHolder(binding.root) {
-                fun bind(form: Form?) {
+                fun bind(shoppingItem: ShoppingItem?) {
                     with(binding) {
-                        tvItemName.text = form?.itemName
-                        edItemQuantity.setText(form?.itemQuantity?.format())
-                        tvItemOriginalPrice.text = form?.itemPrice?.toCurrency()
-                        tvItemDiscountedPrice.text = form?.itemPrice?.times(form.itemQuantity ?: 1.0).toCurrency()
+                        tvItemName.text = shoppingItem?.itemName
+                        edItemQuantity.setText(shoppingItem?.itemQuantity?.format())
+                        tvItemOriginalPrice.text = shoppingItem?.itemPrice?.toCurrency()
+                        tvItemDiscountedPrice.text = shoppingItem?.itemPrice?.times(shoppingItem.itemQuantity ?: 1.0).toCurrency()
                     }
                 }
 
                 init {
                     binding.root.setOnClickListener {
-                        onItemClick?.invoke(listForm[adapterPosition])
+                        onItemClick?.invoke(listShoppingItem[adapterPosition])
                     }
                     binding.btnMinus.setOnClickListener {
                         try {
-                            onBtnMinusClick?.invoke(listForm[adapterPosition], adapterPosition)
+                            onBtnMinusClick?.invoke(listShoppingItem[adapterPosition], adapterPosition)
                         } catch (e:Exception) {
                             e.printStackTrace()
                         }
                     }
                     binding.btnPlus.setOnClickListener {
-                        onBtnPlusClick?.invoke(listForm[adapterPosition], adapterPosition)
+                        onBtnPlusClick?.invoke(listShoppingItem[adapterPosition], adapterPosition)
                     }
                 }
         }
 
         inner class OnlyPreviewFormViewHolder(private val binding: ItemListFormBinding) :
             ViewHolder(binding.root) {
-                fun bind(form: Form?) {
+                fun bind(shoppingItem: ShoppingItem?) {
                     with(binding) {
                         btnMinus.visibility = View.GONE
                         btnPlus.visibility = View.GONE
-                        tvItemName.text = form?.itemName
-                        edItemQuantity.setText(form?.itemQuantity?.format())
-                        tvItemOriginalPrice.text = form?.itemPrice?.toCurrency()
-                        tvItemDiscountedPrice.text = form?.afterDiscount?.toCurrency(2)
+                        tvItemName.text = shoppingItem?.itemName
+                        edItemQuantity.setText(shoppingItem?.itemQuantity?.format())
+                        tvItemOriginalPrice.text = shoppingItem?.itemPrice?.toCurrency()
+                        tvItemDiscountedPrice.text = shoppingItem?.afterDiscount?.toCurrency(2)
                     }
                 }
 
             init {
                 binding.root.setOnClickListener {
-                    onItemClick?.invoke(listForm[adapterPosition])
+                    onItemClick?.invoke(listShoppingItem[adapterPosition])
                 }
             }
         }
 
-        fun getList(): MutableList<Form> {
-            return listForm
+        fun getList(): MutableList<ShoppingItem> {
+            return listShoppingItem
         }
 
-        fun updateItem(item: Form?) {
-            listForm.find { it.itemId == item?.itemId }?.apply {
+        fun updateItem(item: ShoppingItem?) {
+            listShoppingItem.find { it.itemId == item?.itemId }?.apply {
                 itemName = item?.itemName
                 itemPrice = item?.itemPrice
                 itemQuantity = item?.itemQuantity
                 itemDiscount = item?.itemDiscount
                 afterDiscount = item?.afterDiscount
             }
-            notifyItemChanged(listForm.indexOf(item))
+            notifyItemChanged(listShoppingItem.indexOf(item))
         }
 
-        fun addItem(item: Form?) {
+        fun addItem(item: ShoppingItem?) {
             if (item == null) return
-            listForm.add(item)
-            notifyItemInserted(listForm.size)
+            listShoppingItem.add(item)
+            notifyItemInserted(listShoppingItem.size)
         }
 
-        fun removeItem(form: Form?) {
-            val index = listForm.indexOf(form)
-            if (form == null) return
-            listForm.remove(form)
+        fun removeItem(shoppingItem: ShoppingItem?) {
+            val index = listShoppingItem.indexOf(shoppingItem)
+            if (shoppingItem == null) return
+            listShoppingItem.remove(shoppingItem)
             notifyItemRemoved(index)
         }
 
