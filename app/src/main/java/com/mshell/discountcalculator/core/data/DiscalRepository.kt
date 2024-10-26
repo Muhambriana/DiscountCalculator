@@ -11,9 +11,7 @@ class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
     fun getNewItem(shoppingItem: ShoppingItem? = null) =
         caldisDataSource.createNewItem(shoppingItem)
 
-    fun getDiscountResult(
-        shoppingDetail: ShoppingDetail?
-    ): Result<ShoppingDetail?> =
+    fun getDiscountResult(shoppingDetail: ShoppingDetail?): Result<ShoppingDetail?> =
         caldisDataSource.calculateShoppingDetail(shoppingDetail)
 
     fun getShoppingDetail(binding: ActivityHomeBinding): Result<ShoppingDetail?> =
