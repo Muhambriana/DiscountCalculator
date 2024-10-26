@@ -26,7 +26,8 @@ class CaldisDataSource {
         try {
             shoppingDetail?.apply {
                 totalQuantity = listItem?.sumOf { it.itemQuantity ?: DEFAULT_DOUBLE_VALUE }
-                total = listItem?.sumOf { it.total ?: DEFAULT_DOUBLE_VALUE }
+                totalShopping = listItem?.sumOf { it.total ?: DEFAULT_DOUBLE_VALUE }
+                total = totalShopping?.plus(additional ?: DEFAULT_DOUBLE_VALUE)
             }
             shoppingDetail?.discountDetail.let {
                 when(it?.discountType) {
@@ -55,7 +56,7 @@ class CaldisDataSource {
             val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
             val totalQuantity = shoppingDetail?.totalQuantity ?: DEFAULT_DOUBLE_VALUE
             val discountPerItem = discountNominal?.div(totalQuantity)
-            val sumAllItems = shoppingDetail?.total ?: DEFAULT_DOUBLE_VALUE
+            val sumAllItems = shoppingDetail?.totalShopping ?: DEFAULT_DOUBLE_VALUE
             shoppingDetail?.listItem?.forEach { shoppingItem ->
                 shoppingItem.apply {
                     itemDiscount = if (sumAllItems < discount) {
@@ -67,6 +68,10 @@ class CaldisDataSource {
                         totalValue - (itemDiscount ?: DEFAULT_DOUBLE_VALUE)
                     }?.takeIf { it > DEFAULT_DOUBLE_VALUE } ?: DEFAULT_DOUBLE_VALUE
                 }
+            }
+            shoppingDetail?.apply {
+                this.discount = listItem?.sumOf { it.itemDiscount ?: DEFAULT_DOUBLE_VALUE }
+                totalAfterDiscount = total?.minus(this.discount ?: DEFAULT_DOUBLE_VALUE)
             }
 
             Result.success(shoppingDetail)
@@ -82,7 +87,7 @@ class CaldisDataSource {
         discountMax: Double?
     ): Result<ShoppingDetail?> {
         return try {
-            val totalAllItem = shoppingDetail?.total ?: DEFAULT_DOUBLE_VALUE
+            val totalAllItem = shoppingDetail?.totalShopping ?: DEFAULT_DOUBLE_VALUE
             // Calculate discount
             val tempDiscount = (discountPercent?.div(100))?.times(totalAllItem) ?: DEFAULT_DOUBLE_VALUE
             val totalDiscount = minOf(tempDiscount, discountMax ?: DEFAULT_DOUBLE_VALUE)
@@ -95,6 +100,10 @@ class CaldisDataSource {
                     this.itemDiscount = itemDiscount
                     afterDiscount = total?.minus(this.itemDiscount ?: DEFAULT_DOUBLE_VALUE)
                 }
+            }
+            shoppingDetail?.apply {
+                discount = listItem?.sumOf { it.itemDiscount ?: DEFAULT_DOUBLE_VALUE }
+                totalAfterDiscount = total?.minus(discount ?: DEFAULT_DOUBLE_VALUE)
             }
             // Return updated list
             Result.success(shoppingDetail)

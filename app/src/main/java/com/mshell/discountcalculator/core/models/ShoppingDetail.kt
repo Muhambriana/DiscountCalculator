@@ -8,11 +8,15 @@ data class ShoppingDetail(
 
     var discountDetail: DiscountDetail? = null,
 
-    var total: Double? = null,
+    var totalShopping: Double? = null,
 
     var additional: Double? = null,
 
+    var total: Double? = null,
+
     var totalQuantity: Double? = null,
+
+    var discount: Double? = null,
 
     var totalAfterDiscount: Double? = null,
 
