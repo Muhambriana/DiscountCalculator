@@ -7,30 +7,39 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.adapter.FormAdapter
+import com.mshell.discountcalculator.core.data.DiscalRepository
+import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
-import com.mshell.discountcalculator.utils.config.DiscountType
-import com.mshell.discountcalculator.core.data.DiscalRepository
-import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
+import com.mshell.discountcalculator.ui.discountresult.DiscountResultFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config
+import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.helper.Helper.observeOnce
 import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
 import com.mshell.discountcalculator.utils.view.CaldisDialog
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
+
 class DiscountFormActivity : AppCompatActivity() {
 
-    private val binding by lazy { ActivityDiscountFormBinding.inflate(layoutInflater) }
-    private val caldisDataSource by lazy { CaldisDataSource() }
+    private val binding by lazy {
+        ActivityDiscountFormBinding.inflate(layoutInflater)
+    }
+
+    private val caldisDataSource by lazy {
+        CaldisDataSource()
+    }
+
     private var discountDetail: DiscountDetail? = null
 
     private lateinit var formViewModel: DiscountFormViewModel
@@ -145,8 +154,7 @@ class DiscountFormActivity : AppCompatActivity() {
 
     private fun checkIfListIsEmpty() {
         if (formAdapter.itemCount > 0) return
-        binding.viewEmpty.root.visibility = View.VISIBLE
-        binding.clgNotEmpty.visibility = View.GONE
+        changeVisibility(true)
     }
 
     private fun showRecycleList() {
@@ -223,7 +231,7 @@ class DiscountFormActivity : AppCompatActivity() {
                     }
                     is DiscalResource.Success -> {
                         val list = resource.data
-                        formAdapter.notifyAllItem(0, list?.size ?: 0)
+                        openFragment(list)
                         binding.viewLoading.root.visibility = View.GONE
                     }
 
@@ -231,6 +239,34 @@ class DiscountFormActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun openFragment(list: List<Form>?) {
+        if (list.isNullOrEmpty()) return
+
+        val fragment = DiscountResultFragment.newInstance(java.util.ArrayList<Form>(list))
+
+        binding.flFragmentContainer.visibility = View.VISIBLE
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.flFragmentContainer.id, fragment, fragment.tag)
+            .addToBackStack(fragment.tag)
+            .commit()
+    }
+
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.",
+        ReplaceWith(
+            "super.onBackPressedDispatcher.onBackPressed()",
+            "androidx.appcompat.app.AppCompatActivity"
+        )
+    )
+    override fun onBackPressed() {
+        if (binding.flFragmentContainer.isVisible) {
+            supportFragmentManager.popBackStack()
+            binding.flFragmentContainer.visibility = View.GONE
+            return
+        }
+        super.onBackPressedDispatcher.onBackPressed()
     }
 
     companion object {
