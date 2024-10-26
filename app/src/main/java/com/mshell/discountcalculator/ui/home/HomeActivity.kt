@@ -14,9 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
-import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.DiscalResource
+import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.ui.form.DiscountFormActivity
 import com.mshell.discountcalculator.utils.config.DiscountType
@@ -73,31 +73,34 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun getDiscountData() {
-        homeViewModel.getDiscountDetail(binding)
-        homeViewModel.discountDetail.observe(this){ event ->
+        homeViewModel.getShoppingDetail(binding)
+        homeViewModel.shoppingDetail.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
-                when(resource) {
+                when (resource) {
                     is DiscalResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
+
                     is DiscalResource.Empty -> {}
                     is DiscalResource.Error -> {
                         binding.viewLoading.root.visibility = View.GONE
                         Log.d(tag, resource.error?.message.toString())
                         resource.error?.printStackTrace()
                     }
+
                     is DiscalResource.Success -> {
                         moveIntent(resource.data)
                     }
+
                     else -> {}
                 }
             }
         }
     }
 
-    private fun moveIntent(discountDetail: DiscountDetail?) {
+    private fun moveIntent(shoppingDetail: ShoppingDetail?) {
         val intent = Intent(this, DiscountFormActivity::class.java)
-        intent.putExtra(DiscountFormActivity.EXTRA_DATA, discountDetail)
+        intent.putExtra(DiscountFormActivity.EXTRA_DATA, shoppingDetail)
         startActivity(intent)
         binding.viewLoading.root.visibility = View.GONE
     }

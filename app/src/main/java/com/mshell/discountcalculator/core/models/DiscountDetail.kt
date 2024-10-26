@@ -15,6 +15,4 @@ data class DiscountDetail(
 
     var discountMax: Double? = null,
 
-    var additional: Double? = null
-
-): Parcelable
+) : Parcelable

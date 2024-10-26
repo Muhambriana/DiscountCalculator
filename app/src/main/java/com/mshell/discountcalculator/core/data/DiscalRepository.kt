@@ -1,8 +1,8 @@
 package com.mshell.discountcalculator.core.data
 
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
-import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 
@@ -27,8 +27,8 @@ class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
     ): Result<MutableList<Form>?> =
         caldisDataSource.calculateDiscountNominal(list, discountNominal)
 
-    fun getDiscountDetail(binding: ActivityHomeBinding): Result<DiscountDetail?> =
-        caldisDataSource.getDiscountDetail(binding)
+    fun getShoppingDetail(binding: ActivityHomeBinding): Result<ShoppingDetail?> =
+        caldisDataSource.getShoppingDetail(binding)
 
     fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<Form?> =
         caldisDataSource.getItemDetail(binding)

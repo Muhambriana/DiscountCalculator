@@ -16,8 +16,8 @@ import com.mshell.discountcalculator.core.adapter.FormAdapter
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
-import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
+import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
 import com.mshell.discountcalculator.ui.discountsummary.DiscountSummaryFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
@@ -54,7 +54,7 @@ class DiscountFormActivity : AppCompatActivity() {
         FormAdapter(false)
     }
 
-    private var discountDetail: DiscountDetail? = null
+    private var shoppingDetail: ShoppingDetail? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,12 +79,12 @@ class DiscountFormActivity : AppCompatActivity() {
 
     @Suppress("DEPRECATION")
     private fun setDataToModels() {
-        discountDetail = intent?.extras?.let {
+        shoppingDetail = intent?.extras?.let {
             Helper.returnBasedOnSdkVersion(
                 Build.VERSION_CODES.TIRAMISU,
                 onSdkEqualOrAbove = {
                     // Return the result from this lambda
-                    it.getParcelable(EXTRA_DATA, DiscountDetail::class.java)
+                    it.getParcelable(EXTRA_DATA, ShoppingDetail::class.java)
                 },
                 onSdkBelow = {
                     // Return the result from this lambda
@@ -126,7 +126,7 @@ class DiscountFormActivity : AppCompatActivity() {
             bottomDialogFragment.show(supportFragmentManager, "")
         }
         binding.btnCalculate.setOnClickListener {
-            calculate(discountDetail?.discountType)
+            calculate(shoppingDetail?.discountDetail?.discountType)
         }
     }
 
@@ -209,12 +209,19 @@ class DiscountFormActivity : AppCompatActivity() {
     }
 
     private fun calculateDiscountNominal() {
-        formViewModel.getResultDiscountNominal(formAdapter.getList(), discountDetail?.discountNominal)
+        formViewModel.getResultDiscountNominal(
+            formAdapter.getList(),
+            shoppingDetail?.discountDetail?.discountNominal
+        )
         observeResult()
     }
 
     private fun calculateDiscountPercent() {
-        formViewModel.getResultDiscountPercent(formAdapter.getList(), discountDetail?.discountPercent?.toDouble(), discountDetail?.discountMax)
+        formViewModel.getResultDiscountPercent(
+            formAdapter.getList(),
+            shoppingDetail?.discountDetail?.discountPercent?.toDouble(),
+            shoppingDetail?.discountDetail?.discountMax
+        )
         observeResult()
     }
 
@@ -226,16 +233,19 @@ class DiscountFormActivity : AppCompatActivity() {
                     is DiscalResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
+
                     is DiscalResource.Empty -> {
                         binding.viewLoading.root.visibility = View.GONE
                         binding.viewEmpty.root.visibility = View.VISIBLE
                         binding.btnCalculate.visibility = View.GONE
                         binding.btnDeleteItem.visibility = View.GONE
                     }
+
                     is DiscalResource.Error -> {
                         showShortToast(resource.error?.message.toString())
                         binding.viewLoading.root.visibility = View.GONE
                     }
+
                     is DiscalResource.Success -> {
                         val list = resource.data
                         openFragment(list)
@@ -251,7 +261,8 @@ class DiscountFormActivity : AppCompatActivity() {
     private fun openFragment(list: List<Form>?) {
         if (list.isNullOrEmpty()) return
 
-        val fragment = DiscountSummaryFragment.newInstance(java.util.ArrayList<Form>(list), discountDetail)
+        val fragment =
+            DiscountSummaryFragment.newInstance(java.util.ArrayList<Form>(list), shoppingDetail)
 
         binding.flFragmentContainer.visibility = View.VISIBLE
         supportFragmentManager
@@ -261,7 +272,8 @@ class DiscountFormActivity : AppCompatActivity() {
             .commit()
     }
 
-    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.",
+    @Deprecated(
+        "This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.",
         ReplaceWith(
             "super.onBackPressedDispatcher.onBackPressed()",
             "androidx.appcompat.app.AppCompatActivity"

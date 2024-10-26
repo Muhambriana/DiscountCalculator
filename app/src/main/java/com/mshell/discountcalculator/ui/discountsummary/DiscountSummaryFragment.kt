@@ -12,7 +12,7 @@ import com.mshell.discountcalculator.core.DiscalViewModelFactory
 import com.mshell.discountcalculator.core.adapter.FormAdapter
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
-import com.mshell.discountcalculator.core.models.DiscountDetail
+import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.FragmentDiscountSummaryBinding
 import com.mshell.discountcalculator.utils.helper.Helper
@@ -42,7 +42,7 @@ class DiscountSummaryFragment : Fragment() {
     }
 
     private var listItem: MutableList<Form>? = null
-    private var discountDetail: DiscountDetail? = null
+    private var shoppingDetail: ShoppingDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +57,11 @@ class DiscountSummaryFragment : Fragment() {
             Helper.executeBasedOnSdkVersion(
                 Build.VERSION_CODES.TIRAMISU,
                 onSdkEqualOrAbove = {
-                    discountDetail = it.getParcelable(EXTRA_DATA_DISCOUNT_DETAIL, DiscountDetail::class.java)
+                    shoppingDetail = it.getParcelable(EXTRA_DATA_DISCOUNT_DETAIL, ShoppingDetail::class.java)
                     listItem = it.getParcelableArrayList(EXTRA_DATA_LIST, Form::class.java)
                 },
                 onSdkBelow = {
-                    discountDetail = it.getParcelable(EXTRA_DATA_DISCOUNT_DETAIL)
+                    shoppingDetail = it.getParcelable(EXTRA_DATA_DISCOUNT_DETAIL)
                     listItem = it.getParcelableArrayList(EXTRA_DATA_LIST)
                 }
             )
@@ -90,7 +90,7 @@ class DiscountSummaryFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(list: ArrayList<Form>? = null, discountDetail: DiscountDetail?) =
+        fun newInstance(list: ArrayList<Form>? = null, discountDetail: ShoppingDetail?) =
             DiscountSummaryFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(EXTRA_DATA_LIST, list)
