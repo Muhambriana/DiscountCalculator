@@ -35,4 +35,7 @@
     <string name="no">No</string>
     <string name="delete_item">Delete Item</string>
     <string name="confirmation_delete">Are you sure want to delete this item?</string>
+    <string name="shopping">Shopping</string>
+    <string name="total">Total</string>
+    <string name="total_after_discount">Total after discount</string>
 </resources>
