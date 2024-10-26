@@ -15,7 +15,10 @@ import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.databinding.FragmentDiscountSummaryBinding
+import com.mshell.discountcalculator.utils.config.Config
+import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
+import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
 
 private const val EXTRA_DATA_LIST = "extra_data_list"
 private const val EXTRA_DATA_DISCOUNT_DETAIL = "extra_data_discount_detail"
@@ -70,6 +73,28 @@ class DiscountSummaryFragment : Fragment() {
 
     private fun viewInitialization() {
         showRecyclerView()
+        shoppingDetail.also {
+            with(binding.layoutSummaryDetail) {
+                tvTotalShopping.text = it?.totalShopping.toCurrency(2)
+                tvAdditional.text = it?.additional.toCurrency(2)
+                tvTotal.text = it?.total.toCurrency(2)
+                tvDiscount.text = it?.discount.toCurrency()
+                tvAfterDiscount.text = it?.totalAfterDiscount.toCurrency(2)
+                tvSummaryDiscount.text = it?.let {
+                    when(it.discountDetail?.discountType) {
+                        DiscountType.NOMINAL -> {
+                            "${it.total.toCurrency(2)} - ${it.discountDetail?.discountNominal.toCurrency(2)}"
+                        }
+                        DiscountType.PERCENT -> {
+                            "${it.total.toCurrency(2)} X ${it.discountDetail?.discountPercent}%" +
+                                    "\n" +
+                                    "Max: ${it.discountDetail?.discountMax?.toCurrency(2)}"
+                        }
+                        else -> Config.EMPTY_STRING
+                    }
+                }
+            }
+        }
     }
 
     private fun showRecyclerView() {
