@@ -21,11 +21,7 @@ class FormAdapter : RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
         if (items == null) return
         listForm.clear()
         listForm.addAll(items)
-        notifyAllItem(items.size)
-    }
-
-    fun notifyAllItem(start: Int = 0, endRange: Int = listForm.size) {
-        notifyItemRangeChanged(start, endRange)
+        notifyItemRangeInserted(0, items.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
