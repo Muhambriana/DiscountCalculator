@@ -56,10 +56,11 @@ class FormAdapter(private val onlyPreview: Boolean = true) :
             ViewHolder(binding.root) {
                 fun bind(shoppingItem: ShoppingItem?) {
                     with(binding) {
+                        shoppingItem?.total = shoppingItem?.itemPrice?.times(shoppingItem.itemQuantity ?: 1.0)
                         tvItemName.text = shoppingItem?.itemName
                         edItemQuantity.setText(shoppingItem?.itemQuantity?.format())
                         tvItemOriginalPrice.text = shoppingItem?.itemPrice?.toCurrency()
-                        tvItemDiscountedPrice.text = shoppingItem?.itemPrice?.times(shoppingItem.itemQuantity ?: 1.0).toCurrency()
+                        tvItemDiscountedPrice.text = shoppingItem?.total?.toCurrency()
                     }
                 }
 
