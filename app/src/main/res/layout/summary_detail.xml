@@ -22,7 +22,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/poppins_normal"
         android:gravity="start|center"
-        android:text="@string/shooping"
+        android:text="@string/shopping"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toStartOf="@id/cl_guideline"
         app:layout_constraintHorizontal_bias="0.0"
