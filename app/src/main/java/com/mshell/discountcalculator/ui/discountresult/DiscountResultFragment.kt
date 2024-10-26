@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.mshell.discountcalculator.core.adapter.FormAdapter
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.FragmentDiscountResultBinding
 import com.mshell.discountcalculator.utils.helper.Helper
@@ -13,8 +15,13 @@ import com.mshell.discountcalculator.utils.helper.Helper
 private const val EXTRA_LIST_DATA = "extra_list_data"
 
 class DiscountResultFragment : Fragment() {
+
     private val binding by lazy {
         FragmentDiscountResultBinding.inflate(layoutInflater)
+    }
+
+    private val formAdapter by lazy {
+        FormAdapter(true)
     }
 
     // TODO: Rename and change types of parameters
@@ -22,6 +29,12 @@ class DiscountResultFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        dataInitialization()
+        viewInitialization()
+    }
+
+    private fun dataInitialization() {
         arguments?.let {
             listItem = it.let {
                 Helper.returnBasedOnSdkVersion(
@@ -37,6 +50,18 @@ class DiscountResultFragment : Fragment() {
                     }
                 )
             }
+        }
+    }
+
+    private fun viewInitialization() {
+        showRecyclerView()
+    }
+
+    private fun showRecyclerView() {
+        formAdapter.setItemList(listItem)
+        binding.rvItemForm.apply {
+            layoutManager = LinearLayoutManager(activity)
+            binding.rvItemForm.adapter = formAdapter
         }
     }
 
