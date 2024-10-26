@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
-import com.mshell.discountcalculator.core.adapter.FormAdapter
+import com.mshell.discountcalculator.core.adapter.ShoppingItemAdapter
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
@@ -49,8 +49,8 @@ class ShoppingItemListActivity : AppCompatActivity() {
         )[ShoppingItemListViewModel::class.java]
     }
 
-    private val formAdapter by lazy {
-        FormAdapter(false)
+    private val shoppingItemAdapter by lazy {
+        ShoppingItemAdapter(false)
     }
 
     private var shoppingDetail: ShoppingDetail? = null
@@ -132,14 +132,14 @@ class ShoppingItemListActivity : AppCompatActivity() {
     private fun addNewItem(shoppingItem: ShoppingItem? = null) {
         formViewModel.addNewItem(shoppingItem)
         formViewModel.newItem.observeOnce(this) { resource ->
-            formAdapter.addItem(resource)
+            shoppingItemAdapter.addItem(resource)
             changeVisibility(false)
         }
     }
 
     private fun updateQuantity() {
         formViewModel.item.observe(this) {
-            formAdapter.updateItem(it)
+            shoppingItemAdapter.updateItem(it)
         }
     }
 
@@ -148,7 +148,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
             .setTitle(getString(R.string.delete_item))
             .setSubtitle(getString(R.string.confirmation_delete))
             .setBtnNegative(getString(R.string.yes), true) {
-                formAdapter.removeItem(model)
+                shoppingItemAdapter.removeItem(model)
                 checkIfListIsEmpty()
             }
             .setBtnPositive(getString(R.string.no), true)
@@ -157,12 +157,12 @@ class ShoppingItemListActivity : AppCompatActivity() {
     }
 
     private fun checkIfListIsEmpty() {
-        if (formAdapter.itemCount > 0) return
+        if (shoppingItemAdapter.itemCount > 0) return
         changeVisibility(true)
     }
 
     private fun showRecycleList() {
-        formAdapter.onBtnMinusClick = scope@{ model, _ ->
+        shoppingItemAdapter.onBtnMinusClick = scope@{ model, _ ->
             if (model.itemQuantity == Config.DEFAULT_DOUBLE_VALUE_ONE) {
                 deleteItemConfirmation(model)
                 return@scope
@@ -171,13 +171,13 @@ class ShoppingItemListActivity : AppCompatActivity() {
             formViewModel.decreaseItemQuantity(model)
             updateQuantity()
         }
-        formAdapter.onBtnPlusClick = { model, _ ->
+        shoppingItemAdapter.onBtnPlusClick = { model, _ ->
             formViewModel.increaseItemQuantity(model)
             updateQuantity()
         }
-        binding.rvItemForm.apply {
+        binding.rvItemShopping.apply {
             layoutManager = LinearLayoutManager(thisActivityContext)
-            binding.rvItemForm.adapter = formAdapter
+            adapter = shoppingItemAdapter
         }
     }
 
@@ -206,7 +206,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
     private fun calculateDiscount() {
         formViewModel.getResultDiscount(
             shoppingDetail?.apply {
-                listItem = formAdapter.getList()
+                listItem = shoppingItemAdapter.getList()
             }
         )
         observeResult()

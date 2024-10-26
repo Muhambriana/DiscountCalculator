@@ -8,7 +8,7 @@
     tools:context=".ui.discountsummary.DiscountSummaryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_item_form"
+        android:id="@+id/rv_item_shopping"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
@@ -19,15 +19,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:itemCount="10"
-        tools:listitem="@layout/item_list_form" />
+        tools:listitem="@layout/item_list_shopping" />
 
     <include
         android:id="@+id/layout_summary_detail"
         layout="@layout/summary_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/rv_item_form"
-        app:layout_constraintStart_toStartOf="@id/rv_item_form"
+        app:layout_constraintEnd_toEndOf="@id/rv_item_shopping"
+        app:layout_constraintStart_toStartOf="@id/rv_item_shopping"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_item_form"
+        android:id="@+id/rv_item_shopping"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         tools:itemCount="3"
-        tools:listitem="@layout/item_list_form" />
+        tools:listitem="@layout/item_list_shopping" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_calculate"
@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         tools:visibility="visible"
-        app:constraint_referenced_ids="rv_item_form, btn_delete_item, btn_calculate"/>
+        app:constraint_referenced_ids="rv_item_shopping, btn_delete_item, btn_calculate"/>
 
     <FrameLayout
         android:id="@+id/fl_fragment_container"

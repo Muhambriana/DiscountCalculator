@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mshell.discountcalculator.core.models.ShoppingItem
-import com.mshell.discountcalculator.databinding.ItemListFormBinding
+import com.mshell.discountcalculator.databinding.ItemListShoppingBinding
 import com.mshell.discountcalculator.utils.helper.Helper.format
 import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
 
-class FormAdapter(private val onlyPreview: Boolean = true) :
+class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
     RecyclerView.Adapter<ViewHolder>() {
 
         private var listShoppingItem = mutableListOf<ShoppingItem>()
@@ -29,12 +29,12 @@ class FormAdapter(private val onlyPreview: Boolean = true) :
             val inflater = LayoutInflater.from(parent.context)
             return when(onlyPreview) {
                 true -> {
-                    val binding = ItemListFormBinding.inflate(inflater, parent, false)
-                    OnlyPreviewFormViewHolder(binding)
+                    val binding = ItemListShoppingBinding.inflate(inflater, parent, false)
+                    OnlyPreviewShoppingItemViewHolder(binding)
                 }
                 false -> {
-                    val binding = ItemListFormBinding.inflate(inflater, parent, false)
-                    FormViewHolder(binding)
+                    val binding = ItemListShoppingBinding.inflate(inflater, parent, false)
+                    ShoppingItemViewHolder(binding)
                 }
             }
         }
@@ -42,9 +42,9 @@ class FormAdapter(private val onlyPreview: Boolean = true) :
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val chat = listShoppingItem[position]
             if (onlyPreview) {
-                (holder as OnlyPreviewFormViewHolder).bind(chat)
+                (holder as OnlyPreviewShoppingItemViewHolder).bind(chat)
             } else {
-                (holder as FormViewHolder).bind(chat)
+                (holder as ShoppingItemViewHolder).bind(chat)
             }
         }
 
@@ -52,7 +52,7 @@ class FormAdapter(private val onlyPreview: Boolean = true) :
             return listShoppingItem.size
         }
 
-        inner class FormViewHolder(private val binding: ItemListFormBinding) :
+        inner class ShoppingItemViewHolder(private val binding: ItemListShoppingBinding) :
             ViewHolder(binding.root) {
                 fun bind(shoppingItem: ShoppingItem?) {
                     with(binding) {
@@ -81,7 +81,7 @@ class FormAdapter(private val onlyPreview: Boolean = true) :
                 }
         }
 
-        inner class OnlyPreviewFormViewHolder(private val binding: ItemListFormBinding) :
+        inner class OnlyPreviewShoppingItemViewHolder(private val binding: ItemListShoppingBinding) :
             ViewHolder(binding.root) {
                 fun bind(shoppingItem: ShoppingItem?) {
                     with(binding) {

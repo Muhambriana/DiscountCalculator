@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.core.DiscalViewModelFactory
-import com.mshell.discountcalculator.core.adapter.FormAdapter
+import com.mshell.discountcalculator.core.adapter.ShoppingItemAdapter
 import com.mshell.discountcalculator.core.data.DiscalRepository
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.ShoppingDetail
@@ -37,8 +37,8 @@ class DiscountSummaryFragment : Fragment() {
         )[DiscountSummaryViewModel::class.java]
     }
 
-    private val formAdapter by lazy {
-        FormAdapter(true)
+    private val shoppingItemAdapter by lazy {
+        ShoppingItemAdapter(true)
     }
 
     private var listItem: MutableList<ShoppingItem>? = null
@@ -73,10 +73,10 @@ class DiscountSummaryFragment : Fragment() {
     }
 
     private fun showRecyclerView() {
-        formAdapter.setItemList(listItem)
-        binding.rvItemForm.apply {
+        shoppingItemAdapter.setItemList(listItem)
+        binding.rvItemShopping.apply {
             layoutManager = LinearLayoutManager(activity)
-            binding.rvItemForm.adapter = formAdapter
+            adapter = shoppingItemAdapter
         }
     }
 
