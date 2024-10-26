@@ -9,15 +9,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.core.adapter.FormAdapter
 import com.mshell.discountcalculator.core.models.Form
-import com.mshell.discountcalculator.databinding.FragmentDiscountResultBinding
+import com.mshell.discountcalculator.databinding.FragmentDiscountSummaryBinding
 import com.mshell.discountcalculator.utils.helper.Helper
 
 private const val EXTRA_LIST_DATA = "extra_list_data"
 
-class DiscountResultFragment : Fragment() {
+class DiscountSummaryFragment : Fragment() {
 
     private val binding by lazy {
-        FragmentDiscountResultBinding.inflate(layoutInflater)
+        FragmentDiscountSummaryBinding.inflate(layoutInflater)
     }
 
     private val formAdapter by lazy {
@@ -76,7 +76,7 @@ class DiscountResultFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(list: ArrayList<Form>? = null) =
-            DiscountResultFragment().apply {
+            DiscountSummaryFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(EXTRA_LIST_DATA, list)
                 }

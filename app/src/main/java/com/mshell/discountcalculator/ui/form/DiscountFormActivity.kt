@@ -19,7 +19,7 @@ import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.Form
 import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
-import com.mshell.discountcalculator.ui.discountresult.DiscountResultFragment
+import com.mshell.discountcalculator.ui.discountresult.DiscountSummaryFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config
 import com.mshell.discountcalculator.utils.config.DiscountType
@@ -251,7 +251,7 @@ class DiscountFormActivity : AppCompatActivity() {
     private fun openFragment(list: List<Form>?) {
         if (list.isNullOrEmpty()) return
 
-        val fragment = DiscountResultFragment.newInstance(java.util.ArrayList<Form>(list))
+        val fragment = DiscountSummaryFragment.newInstance(java.util.ArrayList<Form>(list))
 
         binding.flFragmentContainer.visibility = View.VISIBLE
         supportFragmentManager
