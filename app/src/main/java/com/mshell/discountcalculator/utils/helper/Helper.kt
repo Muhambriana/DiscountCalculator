@@ -114,5 +114,10 @@ object Helper {
             }
         })
     }
+
+    fun takeZeroIfNegative(value: Double?): Double? {
+        if (value == null) return null
+        return if (value < 0) 0.0 else value
+    }
 }
 
