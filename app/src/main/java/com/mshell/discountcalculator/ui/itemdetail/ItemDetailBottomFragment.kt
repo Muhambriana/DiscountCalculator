@@ -18,25 +18,34 @@ import com.mshell.discountcalculator.utils.view.setSingleClickListener
 
 class ItemDetailBottomFragment : BottomSheetDialogFragment() {
 
-    private val binding by lazy { FragmentItemDetailBottomBinding.inflate(layoutInflater) }
-    private val caldisDataSource by lazy { CaldisDataSource() }
+    private val binding by lazy {
+        FragmentItemDetailBottomBinding.inflate(layoutInflater)
+    }
 
-    private lateinit var itemDetailViewModel: ItemDetailViewModel
+    private val caldisDataSource by lazy {
+        CaldisDataSource()
+    }
+
+    private val itemDetailViewModel by lazy {
+        ViewModelProvider(
+            this,
+            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
+        )[ItemDetailViewModel::class.java]
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
-
-        itemDetailViewModel = ViewModelProvider(
-            this,
-            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
-        )[ItemDetailViewModel::class.java]
         initialization()
     }
 

@@ -234,7 +234,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
 
                     is DiscalResource.Success -> {
                         val result = resource.data
-                        openFragment(result?.listItem)
+                        openFragment(result)
                         binding.viewLoading.root.visibility = View.GONE
                     }
 
@@ -244,11 +244,10 @@ class ShoppingItemListActivity : AppCompatActivity() {
         }
     }
 
-    private fun openFragment(list: List<ShoppingItem>?) {
-        if (list.isNullOrEmpty()) return
+    private fun openFragment(shoppingDetail: ShoppingDetail?) {
+        if (shoppingDetail == null) return
 
-        val fragment =
-            DiscountSummaryFragment.newInstance(java.util.ArrayList<ShoppingItem>(list), shoppingDetail)
+        val fragment = DiscountSummaryFragment.newInstance(shoppingDetail)
 
         binding.flFragmentContainer.visibility = View.VISIBLE
         supportFragmentManager
