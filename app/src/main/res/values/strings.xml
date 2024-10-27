@@ -42,4 +42,5 @@
     <string name="total_discount_for_this_item">Total Discount for\nthis item</string>
     <string name="quantity">Quantity</string>
     <string name="discount_per_item">Discount per item</string>
+    <string name="price_per_item_after_discount">Price per item\nafter discount</string>
 </resources>
