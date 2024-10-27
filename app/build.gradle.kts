@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.devtools.ksp)
 }
 
 android {
@@ -67,4 +68,17 @@ dependencies {
     implementation(libs.ssp.android)
     implementation(libs.sdp.android)
     implementation(libs.lifecycle.viewmodel.ktx)
+
+    // Room
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    androidTestImplementation(libs.room.testing)
+
+    // SQLCipher and SQLite
+    implementation(libs.sqlcipher)
+    implementation(libs.sqlite.ktx)
+
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }
