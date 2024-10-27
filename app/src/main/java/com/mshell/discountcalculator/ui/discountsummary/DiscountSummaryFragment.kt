@@ -50,7 +50,6 @@ class DiscountSummaryFragment : Fragment() {
 
     private fun initialization() {
         dataInitialization()
-        viewInitialization()
     }
 
     private fun dataInitialization() {
@@ -67,10 +66,12 @@ class DiscountSummaryFragment : Fragment() {
             )
             listItem = shoppingDetail?.listItem
         }
+
+        showRecyclerView()
+        setDataToViews()
     }
 
-    private fun viewInitialization() {
-        showRecyclerView()
+    private fun setDataToViews() {
         shoppingDetail.also {
             with(binding.layoutSummaryDetail) {
                 tvTotalShopping.text = it?.totalShopping.toCurrency(2)
