@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toStartOf="@+id/cl_guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Dimsum" />
+        tools:text="Tea" />
 
     <TextView
         android:id="@+id/tv_price_per_unit"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toTopOf="@+id/ed_quantity"
         app:layout_constraintVertical_bias="0.333"
         app:strokeColor="?colorOnBackground"
-        android:contentDescription="@string/tambah"/>
+        android:contentDescription="@string/plus"/>
 
     <EditText
         android:id="@+id/ed_quantity"
@@ -69,8 +69,9 @@
         android:inputType="number"
         android:labelFor="@+id/ed_quantity"
         android:textSize="@dimen/_12ssp"
-        android:editable="false"
         android:focusable="false"
+        android:clickable="false"
+        android:cursorVisible="false"
         app:layout_constraintBottom_toBottomOf="@+id/tv_price_per_unit"
         app:layout_constraintEnd_toStartOf="@+id/btn_plus"
         app:layout_constraintTop_toTopOf="@+id/tv_price_per_unit"
@@ -92,7 +93,7 @@
         app:layout_constraintTop_toTopOf="@+id/ed_quantity"
         app:layout_constraintVertical_bias="0.333"
         app:strokeColor="?colorOnBackground"
-        android:contentDescription="@string/kurang"/>
+        android:contentDescription="@string/minus"/>
 
 
     <androidx.constraintlayout.widget.Guideline

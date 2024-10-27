@@ -10,8 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.databinding.FragmentDiscountSummaryPerItemBinding
-import com.mshell.discountcalculator.utils.config.Config
-import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.helper.Helper.format
 import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
