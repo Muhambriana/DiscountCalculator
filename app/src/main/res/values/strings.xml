@@ -38,9 +38,9 @@
     <string name="shopping">Shopping</string>
     <string name="total">Total</string>
     <string name="total_after_discount">Total after discount</string>
-    <string name="price_per_item">Price per item</string>
+    <string name="price_per_unit">Price per unit</string>
     <string name="total_discount_for_this_item">Total Discount for\nthis item</string>
     <string name="quantity">Quantity</string>
-    <string name="discount_per_item">Discount per item</string>
-    <string name="price_per_item_after_discount">Price per item\nafter discount</string>
+    <string name="discount_per_unit">Discount per unit</string>
+    <string name="price_per_unit_after_discount">Price per unit\nafter discount</string>
 </resources>
