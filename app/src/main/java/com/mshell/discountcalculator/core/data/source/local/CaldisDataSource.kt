@@ -17,15 +17,15 @@ class CaldisDataSource {
         itemIdAutoIncrement += 1
         val item = shoppingItem ?: ShoppingItem()
         return item.apply {
-            itemId = itemIdAutoIncrement
-            totalPrice = itemQuantity?.times(itemPrice ?: DEFAULT_DOUBLE_VALUE)
+            id = itemIdAutoIncrement
+            totalPrice = quantity?.times(pricePerUnit ?: DEFAULT_DOUBLE_VALUE)
         }
     }
 
     fun calculateShoppingDetail(shoppingDetail: ShoppingDetail?): Result<ShoppingDetail?> {
         try {
             shoppingDetail?.apply {
-                totalQuantity = listItem?.sumOf { it.itemQuantity ?: DEFAULT_DOUBLE_VALUE }
+                totalQuantity = listItem?.sumOf { it.quantity ?: DEFAULT_DOUBLE_VALUE }
                 totalShopping = listItem?.sumOf { it.totalPrice ?: DEFAULT_DOUBLE_VALUE }
                 total = totalShopping?.plus(additional ?: DEFAULT_DOUBLE_VALUE)
             }
@@ -62,9 +62,9 @@ class CaldisDataSource {
                     totalDiscount = if (sumAllItems < discount) {
                         totalPrice
                     } else {
-                        discountPerItem?.times(itemQuantity ?: DEFAULT_DOUBLE_VALUE)
+                        discountPerItem?.times(quantity ?: DEFAULT_DOUBLE_VALUE)
                     }
-                    totalAfterDiscount = totalPrice?.let { totalValue ->
+                    totalPriceAfterDiscount = totalPrice?.let { totalValue ->
                         totalValue - (totalDiscount ?: DEFAULT_DOUBLE_VALUE)
                     }?.takeIf { it > DEFAULT_DOUBLE_VALUE } ?: DEFAULT_DOUBLE_VALUE
                 }
@@ -98,7 +98,7 @@ class CaldisDataSource {
                 val itemDiscount = (proportion * totalDiscount)
                 shoppingItem.apply {
                     this.totalDiscount = itemDiscount
-                    totalAfterDiscount = totalPrice?.minus(this.totalDiscount ?: DEFAULT_DOUBLE_VALUE)
+                    totalPriceAfterDiscount = totalPrice?.minus(this.totalDiscount ?: DEFAULT_DOUBLE_VALUE)
                 }
             }
             shoppingDetail?.apply {
@@ -157,8 +157,8 @@ class CaldisDataSource {
             Result.success(
                 ShoppingItem().apply {
                     itemName = binding.edItemName.text.toString()
-                    itemPrice = binding.edItemPrice.edCurrency.getCleanText().toDouble()
-                    itemQuantity = DEFAULT_DOUBLE_VALUE_ONE
+                    pricePerUnit = binding.edPricePerUnit.edCurrency.getCleanText().toDouble()
+                    quantity = DEFAULT_DOUBLE_VALUE_ONE
                 }
             )
         } catch (e: Exception) {

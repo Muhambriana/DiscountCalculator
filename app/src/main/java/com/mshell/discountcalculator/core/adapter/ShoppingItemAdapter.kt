@@ -56,11 +56,11 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
             ViewHolder(binding.root) {
                 fun bind(shoppingItem: ShoppingItem?) {
                     with(binding) {
-                        shoppingItem?.totalPrice = shoppingItem?.itemPrice?.times(shoppingItem.itemQuantity ?: 1.0)
+                        shoppingItem?.totalPrice = shoppingItem?.pricePerUnit?.times(shoppingItem.quantity ?: 1.0)
                         tvItemName.text = shoppingItem?.itemName
-                        edItemQuantity.setText(shoppingItem?.itemQuantity?.format())
-                        tvItemOriginalPrice.text = shoppingItem?.itemPrice?.toCurrency()
-                        tvItemDiscountedPrice.text = shoppingItem?.totalPrice?.toCurrency()
+                        edQuantity.setText(shoppingItem?.quantity?.format())
+                        tvPricePerUnit.text = shoppingItem?.pricePerUnit?.toCurrency()
+                        tvTotalPrice.text = shoppingItem?.totalPrice?.toCurrency()
                     }
                 }
 
@@ -88,9 +88,9 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
                         btnMinus.visibility = View.GONE
                         btnPlus.visibility = View.GONE
                         tvItemName.text = shoppingItem?.itemName
-                        edItemQuantity.setText(shoppingItem?.itemQuantity?.format())
-                        tvItemOriginalPrice.text = shoppingItem?.itemPrice?.toCurrency()
-                        tvItemDiscountedPrice.text = shoppingItem?.totalAfterDiscount?.toCurrency(2)
+                        edQuantity.setText(shoppingItem?.quantity?.format())
+                        tvPricePerUnit.text = shoppingItem?.pricePerUnit?.toCurrency()
+                        tvTotalPrice.text = shoppingItem?.totalPriceAfterDiscount?.toCurrency(2)
                     }
                 }
 
@@ -106,12 +106,12 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
         }
 
         fun updateItem(item: ShoppingItem?) {
-            listShoppingItem.find { it.itemId == item?.itemId }?.apply {
+            listShoppingItem.find { it.id == item?.id }?.apply {
                 itemName = item?.itemName
-                itemPrice = item?.itemPrice
-                itemQuantity = item?.itemQuantity
+                pricePerUnit = item?.pricePerUnit
+                quantity = item?.quantity
                 totalDiscount = item?.totalDiscount
-                totalAfterDiscount = item?.totalAfterDiscount
+                totalPriceAfterDiscount = item?.totalPriceAfterDiscount
             }
             notifyItemChanged(listShoppingItem.indexOf(item))
         }

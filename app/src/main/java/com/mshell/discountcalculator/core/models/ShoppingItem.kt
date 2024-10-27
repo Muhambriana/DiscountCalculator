@@ -6,21 +6,21 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ShoppingItem(
 
-    var itemId: Int? = 0,
+    var id: Int? = 0,
 
     var itemName: String? = null,
 
-    var itemPrice: Double? = null,
+    var pricePerUnit: Double? = null,
 
-    var itemQuantity: Double? = null,
+    var quantity: Double? = null,
 
     var totalPrice: Double? = null,
 
     var totalDiscount: Double? = null,
 
-    var discountPerItem: Double? = null,
+    var discountPerUnit: Double? = null,
 
-    var pricePerItemAfterDiscount: Double? = null,
+    var pricePerUnitAfterDiscount: Double? = null,
 
-    var totalAfterDiscount: Double? = null
+    var totalPriceAfterDiscount: Double? = null
 ) : Parcelable

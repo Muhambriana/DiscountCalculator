@@ -18,7 +18,7 @@ import com.mshell.discountcalculator.core.data.source.DiscalResource
 import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
-import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
+import com.mshell.discountcalculator.databinding.ActivityShoppingItemListBinding
 import com.mshell.discountcalculator.ui.discountsummary.DiscountSummaryFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config
@@ -35,7 +35,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
         this
     }
     private val binding by lazy {
-        ActivityDiscountFormBinding.inflate(layoutInflater)
+        ActivityShoppingItemListBinding.inflate(layoutInflater)
     }
 
     private val caldisDataSource by lazy {
@@ -163,7 +163,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
 
     private fun showRecycleList() {
         shoppingItemAdapter.onBtnMinusClick = scope@{ model, _ ->
-            if (model.itemQuantity == Config.DEFAULT_DOUBLE_VALUE_ONE) {
+            if (model.quantity == Config.DEFAULT_DOUBLE_VALUE_ONE) {
                 deleteItemConfirmation(model)
                 return@scope
             }

@@ -21,7 +21,7 @@
         tools:text="Dimsum" />
 
     <TextView
-        android:id="@+id/tv_item_original_price"
+        android:id="@+id/tv_price_per_unit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
@@ -32,7 +32,7 @@
         tools:text="Rp. 18.000"/>
 
     <TextView
-        android:id="@+id/tv_item_discounted_price"
+        android:id="@+id/tv_total_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="end|center"
@@ -52,28 +52,28 @@
         android:background="@null"
         android:backgroundTint="@null"
         android:backgroundTintMode="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
-        app:layout_constraintEnd_toEndOf="@+id/tv_item_discounted_price"
-        app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_quantity"
+        app:layout_constraintEnd_toEndOf="@+id/tv_total_price"
+        app:layout_constraintTop_toTopOf="@+id/ed_quantity"
         app:layout_constraintVertical_bias="0.333"
         app:strokeColor="?colorOnBackground"
         android:contentDescription="@string/tambah"/>
 
     <EditText
-        android:id="@+id/ed_item_quantity"
+        android:id="@+id/ed_quantity"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_2sdp"
         android:background="@null"
         android:gravity="center"
         android:inputType="number"
-        android:labelFor="@+id/ed_item_quantity"
+        android:labelFor="@+id/ed_quantity"
         android:textSize="@dimen/_12ssp"
         android:editable="false"
         android:focusable="false"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_item_original_price"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_price_per_unit"
         app:layout_constraintEnd_toStartOf="@+id/btn_plus"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_original_price"
+        app:layout_constraintTop_toTopOf="@+id/tv_price_per_unit"
         tools:ignore="Autofill"
         tools:text="9" />
 
@@ -87,9 +87,9 @@
         android:background="@null"
         android:backgroundTint="@null"
         android:backgroundTintMode="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/ed_item_quantity"
-        app:layout_constraintEnd_toStartOf="@+id/ed_item_quantity"
-        app:layout_constraintTop_toTopOf="@+id/ed_item_quantity"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_quantity"
+        app:layout_constraintEnd_toStartOf="@+id/ed_quantity"
+        app:layout_constraintTop_toTopOf="@+id/ed_quantity"
         app:layout_constraintVertical_bias="0.333"
         app:strokeColor="?colorOnBackground"
         android:contentDescription="@string/kurang"/>

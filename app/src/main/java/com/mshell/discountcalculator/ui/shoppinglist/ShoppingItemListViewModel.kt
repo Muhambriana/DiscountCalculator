@@ -32,14 +32,14 @@ class ShoppingItemListViewModel(private val repository: DiscalRepository) : View
 
     fun increaseItemQuantity(model: ShoppingItem) {
         viewModelScope.launch {
-            model.itemQuantity = (model.itemQuantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
+            model.quantity = (model.quantity?.plus(DEFAULT_DOUBLE_VALUE_ONE)) ?: DEFAULT_DOUBLE_VALUE_ONE
             _item.value = model
         }
     }
 
     fun decreaseItemQuantity(model: ShoppingItem) {
         viewModelScope.launch {
-            model.itemQuantity = model.itemQuantity?.minus(DEFAULT_DOUBLE_VALUE_ONE)
+            model.quantity = model.quantity?.minus(DEFAULT_DOUBLE_VALUE_ONE)
             _item.value = model
         }
     }

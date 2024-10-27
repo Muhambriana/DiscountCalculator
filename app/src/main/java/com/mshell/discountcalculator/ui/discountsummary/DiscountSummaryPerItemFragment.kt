@@ -2,12 +2,10 @@ package com.mshell.discountcalculator.ui.discountsummary
 
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.databinding.FragmentDiscountSummaryPerItemBinding
@@ -70,7 +68,31 @@ class DiscountSummaryPerItemFragment : BottomSheetDialogFragment() {
     }
 
     private fun setDataToViews() {
-
+//        shoppingItem.also {
+//            with(binding.layoutSummaryDetailPerItem) {
+//                tvItemName.text = it?.itemName
+//                tvQuantity.text = it?.itemQuantity.toCurrency()
+//                tvPricePerItem.text = it?.itemPrice.toCurrency(2)
+//                tvTotal.text = it?.totalPrice.toCurrency(2)
+//                tvTotalDiscount.text = it?.totalDiscount.toCurrency(2)
+//                tvDiscountPerItem.text = it?.discountPerUnit.toCurrency(2)
+//                tvPricePerItemAfterDiscount.text = it?.pricePerItemAfterDiscount.toCurrency(2)
+//                tvAfterDiscount.text = it?.totalAfterDiscount.toCurrency(2)
+//                tvSummaryDiscount.text = it?.let {
+//                    when(it.discountDetail?.discountType) {
+//                        DiscountType.NOMINAL -> {
+//                            "${it.totalPrice.toCurrency(2)} - ${it.discountDetail?.discountNominal.toCurrency(2)}"
+//                        }
+//                        DiscountType.PERCENT -> {
+//                            "${it.totalPrice.toCurrency(2)} X ${it.discountDetail?.discountPercent}%" +
+//                                    "\n" +
+//                                    "Max: ${it.discountDetail?.discountMax?.toCurrency(2)}"
+//                        }
+//                        else -> Config.EMPTY_STRING
+//                    }
+//                }
+//            }
+//        }
     }
 
 
