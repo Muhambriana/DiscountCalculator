@@ -98,10 +98,18 @@ class DiscountSummaryFragment : Fragment() {
 
     private fun showRecyclerView() {
         shoppingItemAdapter.setItemList(listItem)
+        shoppingItemAdapter.onItemClick = {
+            openSummaryPerItemFragment(it)
+        }
         binding.rvItemShopping.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = shoppingItemAdapter
         }
+    }
+
+    private fun openSummaryPerItemFragment(shoppingItem: ShoppingItem) {
+        val bottomDialogFragment = DiscountSummaryPerItemFragment.newInstance(shoppingDetail, shoppingItem)
+        activity?.supportFragmentManager?.also { bottomDialogFragment.show(it, bottomDialogFragment.tag) }
     }
 
     companion object {
