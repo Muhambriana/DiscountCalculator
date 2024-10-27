@@ -12,7 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        layout="@layout/toolbar_discal"/>
+        layout="@layout/toolbar_cal_dis"/>
 
     <TextView
         android:id="@+id/tv_title"

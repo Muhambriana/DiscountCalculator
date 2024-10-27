@@ -5,23 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mshell.discountcalculator.core.models.ShoppingItem
-import com.mshell.discountcalculator.core.data.DiscalRepository
-import com.mshell.discountcalculator.core.DiscalEvent
-import com.mshell.discountcalculator.core.data.source.DiscalResource
+import com.mshell.discountcalculator.core.data.CalDisRepository
+import com.mshell.discountcalculator.core.CalDisEvent
+import com.mshell.discountcalculator.core.data.source.CalDisResource
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ShoppingItemListViewModel(private val repository: DiscalRepository) : ViewModel() {
+class ShoppingItemListViewModel(private val repository: CalDisRepository) : ViewModel() {
 
     private val _newItem = MutableLiveData<ShoppingItem>()
     private val _item = MutableLiveData<ShoppingItem>()
-    private val _discountResult = MutableLiveData<DiscalEvent<DiscalResource<ShoppingDetail>>>()
+    private val _discountResult = MutableLiveData<CalDisEvent<CalDisResource<ShoppingDetail>>>()
 
     val newItem: LiveData<ShoppingItem> get() = _newItem
     val item: LiveData<ShoppingItem> get() = _item
-    val discountResult:  LiveData<DiscalEvent<DiscalResource<ShoppingDetail>>> = _discountResult
+    val discountResult:  LiveData<CalDisEvent<CalDisResource<ShoppingDetail>>> = _discountResult
 
     fun addNewItem(shoppingItem: ShoppingItem? = null) {
         viewModelScope.launch {
@@ -45,17 +45,17 @@ class ShoppingItemListViewModel(private val repository: DiscalRepository) : View
     }
 
     fun getResultDiscount(shoppingDetail: ShoppingDetail?) {
-        _discountResult.value = DiscalEvent(DiscalResource.Loading())
+        _discountResult.value = CalDisEvent(CalDisResource.Loading())
         viewModelScope.launch {
             val result = async { repository.getDiscountResult(shoppingDetail) }.await()
             result.onSuccess {
                 if (it == null) {
-                    _discountResult.value = DiscalEvent(DiscalResource.Empty())
+                    _discountResult.value = CalDisEvent(CalDisResource.Empty())
                     return@onSuccess
                 }
-                _discountResult.value = DiscalEvent(DiscalResource.Success(it))
+                _discountResult.value = CalDisEvent(CalDisResource.Success(it))
             }.onFailure {
-                _discountResult.value = DiscalEvent(DiscalResource.Error(null, it))
+                _discountResult.value = CalDisEvent(CalDisResource.Error(null, it))
             }
         }
     }

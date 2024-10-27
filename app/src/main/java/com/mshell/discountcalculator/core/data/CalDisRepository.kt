@@ -1,12 +1,12 @@
 package com.mshell.discountcalculator.core.data
 
-import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
+import com.mshell.discountcalculator.core.data.source.local.CalDisDataSource
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 
-class DiscalRepository(private val caldisDataSource: CaldisDataSource) {
+class CalDisRepository(private val caldisDataSource: CalDisDataSource) {
 
     fun getNewItem(shoppingItem: ShoppingItem? = null) =
         caldisDataSource.createNewItem(shoppingItem)

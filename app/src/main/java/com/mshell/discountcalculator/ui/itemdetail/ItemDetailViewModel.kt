@@ -4,27 +4,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mshell.discountcalculator.core.models.ShoppingItem
-import com.mshell.discountcalculator.core.data.DiscalRepository
-import com.mshell.discountcalculator.core.DiscalEvent
-import com.mshell.discountcalculator.core.data.source.DiscalResource
+import com.mshell.discountcalculator.core.data.CalDisRepository
+import com.mshell.discountcalculator.core.CalDisEvent
+import com.mshell.discountcalculator.core.data.source.CalDisResource
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ItemDetailViewModel(private val repository: DiscalRepository) : ViewModel() {
+class ItemDetailViewModel(private val repository: CalDisRepository) : ViewModel() {
 
-    val itemDetail = MutableLiveData<DiscalEvent<DiscalResource<ShoppingItem>>>()
+    val itemDetail = MutableLiveData<CalDisEvent<CalDisResource<ShoppingItem>>>()
 
     fun getItemDetail(binding: FragmentItemDetailBottomBinding) {
-        itemDetail.postValue(DiscalEvent(DiscalResource.Loading()))
+        itemDetail.postValue(CalDisEvent(CalDisResource.Loading()))
         viewModelScope.launch {
             val result = async { repository.getItemDetail(binding) }.await()
             result.onSuccess {
-                itemDetail.postValue(DiscalEvent(DiscalResource.Success(it)))
+                itemDetail.postValue(CalDisEvent(CalDisResource.Success(it)))
             }.onFailure {
                 itemDetail.postValue(
-                    DiscalEvent(
-                        DiscalResource.Error(
+                    CalDisEvent(
+                        CalDisResource.Error(
                             null, it
                         )
                     )

@@ -10,7 +10,7 @@ import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ON
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper.takeZeroIfNegative
 
-class CaldisDataSource {
+class CalDisDataSource {
 
     private var itemIdAutoIncrement = 0
 

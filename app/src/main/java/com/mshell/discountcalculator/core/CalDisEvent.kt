@@ -1,6 +1,6 @@
 package com.mshell.discountcalculator.core
 
-class DiscalEvent<out T> (private val content: T) {
+class CalDisEvent<out T> (private val content: T) {
     private var hasBeenHandled = false
 
     // If want to use one time live data, its prevent to use again

@@ -11,11 +11,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.DiscalViewModelFactory
+import com.mshell.discountcalculator.core.CalDisViewModelFactory
 import com.mshell.discountcalculator.core.adapter.ShoppingItemAdapter
-import com.mshell.discountcalculator.core.data.DiscalRepository
-import com.mshell.discountcalculator.core.data.source.DiscalResource
-import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
+import com.mshell.discountcalculator.core.data.CalDisRepository
+import com.mshell.discountcalculator.core.data.source.CalDisResource
+import com.mshell.discountcalculator.core.data.source.local.CalDisDataSource
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityShoppingItemListBinding
@@ -39,13 +39,13 @@ class ShoppingItemListActivity : AppCompatActivity() {
     }
 
     private val caldisDataSource by lazy {
-        CaldisDataSource()
+        CalDisDataSource()
     }
 
     private val formViewModel by lazy {
         ViewModelProvider(
             this,
-            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
+            CalDisViewModelFactory(CalDisRepository(caldisDataSource))
         )[ShoppingItemListViewModel::class.java]
     }
 
@@ -216,23 +216,23 @@ class ShoppingItemListActivity : AppCompatActivity() {
         formViewModel.discountResult.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
-                    is DiscalResource.Loading -> {
+                    is CalDisResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
 
-                    is DiscalResource.Empty -> {
+                    is CalDisResource.Empty -> {
                         binding.viewLoading.root.visibility = View.GONE
                         binding.viewEmpty.root.visibility = View.VISIBLE
                         binding.btnCalculate.visibility = View.GONE
                         binding.btnDeleteItem.visibility = View.GONE
                     }
 
-                    is DiscalResource.Error -> {
+                    is CalDisResource.Error -> {
                         showShortToast(resource.error?.message.toString())
                         binding.viewLoading.root.visibility = View.GONE
                     }
 
-                    is DiscalResource.Success -> {
+                    is CalDisResource.Success -> {
                         val result = resource.data
                         openFragment(result)
                         binding.viewLoading.root.visibility = View.GONE

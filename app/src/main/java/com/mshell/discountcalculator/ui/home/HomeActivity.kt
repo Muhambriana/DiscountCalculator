@@ -12,10 +12,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.DiscalViewModelFactory
-import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
-import com.mshell.discountcalculator.core.data.DiscalRepository
-import com.mshell.discountcalculator.core.data.source.DiscalResource
+import com.mshell.discountcalculator.core.CalDisViewModelFactory
+import com.mshell.discountcalculator.core.data.source.local.CalDisDataSource
+import com.mshell.discountcalculator.core.data.CalDisRepository
+import com.mshell.discountcalculator.core.data.source.CalDisResource
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity
@@ -28,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
     private val thisContext = this
     private val tag = this.javaClass.simpleName
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
-    private val caldisDataSource by lazy { CaldisDataSource() }
+    private val caldisDataSource by lazy { CalDisDataSource() }
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
 
         homeViewModel = ViewModelProvider(
             this,
-            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
+            CalDisViewModelFactory(CalDisRepository(caldisDataSource))
         )[HomeViewModel::class.java]
         viewInitialization()
     }
@@ -77,18 +77,18 @@ class HomeActivity : AppCompatActivity() {
         homeViewModel.shoppingDetail.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
-                    is DiscalResource.Loading -> {
+                    is CalDisResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
 
-                    is DiscalResource.Empty -> {}
-                    is DiscalResource.Error -> {
+                    is CalDisResource.Empty -> {}
+                    is CalDisResource.Error -> {
                         binding.viewLoading.root.visibility = View.GONE
                         Log.d(tag, resource.error?.message.toString())
                         resource.error?.printStackTrace()
                     }
 
-                    is DiscalResource.Success -> {
+                    is CalDisResource.Success -> {
                         moveIntent(resource.data)
                     }
 

@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.mshell.discountcalculator.core.DiscalViewModelFactory
-import com.mshell.discountcalculator.core.data.source.local.CaldisDataSource
-import com.mshell.discountcalculator.core.data.DiscalRepository
-import com.mshell.discountcalculator.core.data.source.DiscalResource
+import com.mshell.discountcalculator.core.CalDisViewModelFactory
+import com.mshell.discountcalculator.core.data.source.local.CalDisDataSource
+import com.mshell.discountcalculator.core.data.CalDisRepository
+import com.mshell.discountcalculator.core.data.source.CalDisResource
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 import com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
@@ -23,13 +23,13 @@ class ItemDetailBottomFragment : BottomSheetDialogFragment() {
     }
 
     private val caldisDataSource by lazy {
-        CaldisDataSource()
+        CalDisDataSource()
     }
 
     private val itemDetailViewModel by lazy {
         ViewModelProvider(
             this,
-            DiscalViewModelFactory(DiscalRepository(caldisDataSource))
+            CalDisViewModelFactory(CalDisRepository(caldisDataSource))
         )[ItemDetailViewModel::class.java]
     }
 
@@ -68,18 +68,18 @@ class ItemDetailBottomFragment : BottomSheetDialogFragment() {
         itemDetailViewModel.itemDetail.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
-                    is DiscalResource.Loading -> {
+                    is CalDisResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
                     }
 
-                    is DiscalResource.Empty -> {}
-                    is DiscalResource.Error -> {
+                    is CalDisResource.Empty -> {}
+                    is CalDisResource.Error -> {
                         binding.viewLoading.root.visibility = View.GONE
                         Log.d(tag, resource.error?.message.toString())
                         resource.error?.printStackTrace()
                     }
 
-                    is DiscalResource.Success -> {
+                    is CalDisResource.Success -> {
                         val bundle = Bundle()
                         bundle.apply {
                             putParcelable(ShoppingItemListActivity.EXTRA_DATA_ITEM, resource.data)
