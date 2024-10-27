@@ -1,5 +1,6 @@
 package com.mshell.discountcalculator.ui.discountsummary
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.mshell.discountcalculator.databinding.FragmentDiscountSummaryPerItemB
 import com.mshell.discountcalculator.utils.config.Config
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
+import com.mshell.discountcalculator.utils.helper.Helper.format
 import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
 
 
@@ -67,32 +69,22 @@ class DiscountSummaryPerItemFragment : BottomSheetDialogFragment() {
         setDataToViews()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setDataToViews() {
-//        shoppingItem.also {
-//            with(binding.layoutSummaryDetailPerItem) {
-//                tvItemName.text = it?.itemName
-//                tvQuantity.text = it?.itemQuantity.toCurrency()
-//                tvPricePerItem.text = it?.itemPrice.toCurrency(2)
-//                tvTotal.text = it?.totalPrice.toCurrency(2)
-//                tvTotalDiscount.text = it?.totalDiscount.toCurrency(2)
-//                tvDiscountPerItem.text = it?.discountPerUnit.toCurrency(2)
-//                tvPricePerItemAfterDiscount.text = it?.pricePerItemAfterDiscount.toCurrency(2)
-//                tvAfterDiscount.text = it?.totalAfterDiscount.toCurrency(2)
-//                tvSummaryDiscount.text = it?.let {
-//                    when(it.discountDetail?.discountType) {
-//                        DiscountType.NOMINAL -> {
-//                            "${it.totalPrice.toCurrency(2)} - ${it.discountDetail?.discountNominal.toCurrency(2)}"
-//                        }
-//                        DiscountType.PERCENT -> {
-//                            "${it.totalPrice.toCurrency(2)} X ${it.discountDetail?.discountPercent}%" +
-//                                    "\n" +
-//                                    "Max: ${it.discountDetail?.discountMax?.toCurrency(2)}"
-//                        }
-//                        else -> Config.EMPTY_STRING
-//                    }
-//                }
-//            }
-//        }
+        shoppingItem.also {
+            with(binding.layoutSummaryDetailPerItem) {
+                tvItemName.text = it?.itemName
+                tvQuantity.text = "${it?.quantity?.format()} Unit"
+                tvPricePerUnit.text = it?.pricePerUnit.toCurrency(2)
+                tvTotal.text = it?.totalPrice.toCurrency(2)
+                tvTotalDiscount.text = it?.totalDiscount.toCurrency(2)
+                tvDiscountPerUnit.text = it?.discountPerUnit.toCurrency(2)
+                tvPricePerUnitAfterDiscount.text = it?.pricePerUnitAfterDiscount.toCurrency(2)
+                tvTotalPriceAfterDiscount.text = it?.totalPriceAfterDiscount.toCurrency(2)
+                tvSummaryDiscount.visibility = View.GONE
+                tvSummaryDiscountPerItem.visibility = View.GONE
+            }
+        }
     }
 
 

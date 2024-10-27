@@ -89,7 +89,7 @@
         tools:text="Rp 90.000 x 20%\nMax: Rp 25.000"/>
 
     <TextView
-        android:id="@+id/tv_title_after_discounted"
+        android:id="@+id/tv_title_after_discount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
@@ -166,11 +166,11 @@
         android:fontFamily="@font/poppins_bold"
         android:gravity="end|center"
         android:textSize="@dimen/_12ssp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title_after_discounted"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_after_discount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/cl_guideline"
-        app:layout_constraintTop_toTopOf="@+id/tv_title_after_discounted"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_after_discount"
         tools:text="Rp 77.000" />
 
     <androidx.constraintlayout.widget.Guideline
