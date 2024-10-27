@@ -56,11 +56,11 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
             ViewHolder(binding.root) {
                 fun bind(shoppingItem: ShoppingItem?) {
                     with(binding) {
-                        shoppingItem?.total = shoppingItem?.itemPrice?.times(shoppingItem.itemQuantity ?: 1.0)
+                        shoppingItem?.totalPrice = shoppingItem?.itemPrice?.times(shoppingItem.itemQuantity ?: 1.0)
                         tvItemName.text = shoppingItem?.itemName
                         edItemQuantity.setText(shoppingItem?.itemQuantity?.format())
                         tvItemOriginalPrice.text = shoppingItem?.itemPrice?.toCurrency()
-                        tvItemDiscountedPrice.text = shoppingItem?.total?.toCurrency()
+                        tvItemDiscountedPrice.text = shoppingItem?.totalPrice?.toCurrency()
                     }
                 }
 
@@ -90,7 +90,7 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
                         tvItemName.text = shoppingItem?.itemName
                         edItemQuantity.setText(shoppingItem?.itemQuantity?.format())
                         tvItemOriginalPrice.text = shoppingItem?.itemPrice?.toCurrency()
-                        tvItemDiscountedPrice.text = shoppingItem?.afterDiscount?.toCurrency(2)
+                        tvItemDiscountedPrice.text = shoppingItem?.totalAfterDiscount?.toCurrency(2)
                     }
                 }
 
@@ -110,8 +110,8 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
                 itemName = item?.itemName
                 itemPrice = item?.itemPrice
                 itemQuantity = item?.itemQuantity
-                itemDiscount = item?.itemDiscount
-                afterDiscount = item?.afterDiscount
+                totalDiscount = item?.totalDiscount
+                totalAfterDiscount = item?.totalAfterDiscount
             }
             notifyItemChanged(listShoppingItem.indexOf(item))
         }

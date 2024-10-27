@@ -14,9 +14,13 @@ data class ShoppingItem(
 
     var itemQuantity: Double? = null,
 
-    var total: Double? = null,
+    var totalPrice: Double? = null,
 
-    var itemDiscount: Double? = null,
+    var totalDiscount: Double? = null,
 
-    var afterDiscount: Double? = null
+    var discountPerItem: Double? = null,
+
+    var pricePerItemAfterDiscount: Double? = null,
+
+    var totalAfterDiscount: Double? = null
 ) : Parcelable
