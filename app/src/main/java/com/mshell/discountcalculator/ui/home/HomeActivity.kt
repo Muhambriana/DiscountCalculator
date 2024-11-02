@@ -158,6 +158,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun getColor(flag: Boolean): Int {
-        return if (flag) R.color.my_light_primary else R.color.my_background_primary
+        return if (flag) R.color.my_light_primary else R.color.adaptive_primary_color
     }
 }
