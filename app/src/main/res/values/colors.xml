@@ -6,4 +6,5 @@
     <color name="_7f000000">#7F000000</color>
     <color name="e37777">#E37777</color>
     <color name="adaptive_primary_color">@color/black</color>
+    <color name="adaptive_background_color">@color/white</color>
 </resources>
