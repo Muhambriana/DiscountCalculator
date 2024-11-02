@@ -6,7 +6,9 @@ import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 
-class CalDisRepository(private val caldisDataSource: CalDisDataSource) {
+class CalDisRepository(
+    private val caldisDataSource: CalDisDataSource
+) {
 
     fun getNewItem(shoppingItem: ShoppingItem? = null) =
         caldisDataSource.createNewItem(shoppingItem)

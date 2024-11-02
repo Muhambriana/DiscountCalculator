@@ -10,11 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.CalDisViewModelFactory
 import com.mshell.discountcalculator.core.data.source.local.CalDisDataSource
-import com.mshell.discountcalculator.core.data.CalDisRepository
 import com.mshell.discountcalculator.core.data.source.CalDisResource
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
@@ -22,15 +19,15 @@ import com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
 
     private val thisContext = this
     private val tag = this.javaClass.simpleName
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
-    private val caldisDataSource by lazy { CalDisDataSource() }
+    private val homeViewModel: HomeViewModel by viewModel()
 
-    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +44,6 @@ class HomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        homeViewModel = ViewModelProvider(
-            this,
-            CalDisViewModelFactory(CalDisRepository(caldisDataSource))
-        )[HomeViewModel::class.java]
-        viewInitialization()
     }
 
     private fun viewInitialization() {
