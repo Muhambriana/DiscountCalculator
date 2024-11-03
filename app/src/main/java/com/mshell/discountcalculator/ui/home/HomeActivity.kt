@@ -11,13 +11,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.data.source.local.CalDisDataSource
 import com.mshell.discountcalculator.core.data.source.CalDisResource
-import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
+import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,6 +43,8 @@ class HomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        viewInitialization()
     }
 
     private fun viewInitialization() {
@@ -64,34 +65,38 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun getDiscountData() {
-        homeViewModel.getShoppingDetail(binding)
-        homeViewModel.shoppingDetail.observe(this) { event ->
-            event.getContentIfNotHandled().let { resource ->
-                when (resource) {
-                    is CalDisResource.Loading -> {
-                        binding.viewLoading.root.visibility = View.VISIBLE
-                    }
-
+        homeViewModel.shoppingId.observe(this) { event ->
+            event.getContentIfNotHandled().also { resource ->
+                when(resource) {
                     is CalDisResource.Empty -> {}
                     is CalDisResource.Error -> {
                         binding.viewLoading.root.visibility = View.GONE
-                        Log.d(tag, resource.error?.message.toString())
-                        resource.error?.printStackTrace()
+                        showShortToast(resource.exceptionTypeEnum?.codeAsString)
                     }
-
+                    is CalDisResource.Loading -> {
+                        binding.viewLoading.root.visibility = View.VISIBLE
+                    }
                     is CalDisResource.Success -> {
-                        moveIntent(resource.data)
-                    }
+                        resource.data.also {
+                            binding.viewLoading.root.visibility = View.GONE
+                            if (it == null) {
+                                showShortToast("Failed")
+                                return@observe
+                            }
 
-                    else -> {}
+                            moveIntent(it)
+                        }
+                    }
+                    null -> {}
                 }
             }
         }
+        homeViewModel.insertShoppingDetail(binding)
     }
 
-    private fun moveIntent(shoppingDetail: ShoppingDetail?) {
+    private fun moveIntent(shoppingId: Long) {
         val intent = Intent(this, ShoppingItemListActivity::class.java)
-        intent.putExtra(ShoppingItemListActivity.EXTRA_DATA, shoppingDetail)
+        intent.putExtra(ShoppingItemListActivity.EXTRA_SHOPPING_ID, shoppingId)
         startActivity(intent)
         binding.viewLoading.root.visibility = View.GONE
     }
