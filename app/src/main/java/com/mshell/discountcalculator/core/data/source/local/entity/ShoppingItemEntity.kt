@@ -1,15 +1,30 @@
 package com.mshell.discountcalculator.core.data.source.local.entity
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "shopping_item")
+@Entity(
+    tableName = "shopping_item",
+    foreignKeys = [ForeignKey(
+        entity = ShoppingEntity::class,
+        parentColumns = ["shopping_id"],
+        childColumns = ["shopping_id"],
+        onDelete = ForeignKey.CASCADE
+    )],
+    indices = [Index(
+        value = ["shopping_item_id", "shopping_id"]
+    )]
+)
 data class ShoppingItemEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int = 0,
+    @ColumnInfo(name = "shopping_item_id")
+    var shoppingItemId: Long = 0,
+
+    @ColumnInfo(name = "shopping_id")
+    var shoppingId: Long = 0,
 
     @ColumnInfo(name = "item_name")
     var itemName: String? = null,
