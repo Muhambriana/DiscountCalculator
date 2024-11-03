@@ -6,7 +6,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ShoppingDetail(
 
-    var discountDetail: DiscountDetail? = null,
+    var shoppingId: Long = 0,
+
+    var discountDetail: DiscountDetail,
 
     var totalShopping: Double? = null,
 
