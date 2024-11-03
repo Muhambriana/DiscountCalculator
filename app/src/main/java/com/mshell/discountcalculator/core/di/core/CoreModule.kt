@@ -1,6 +1,7 @@
 package com.mshell.discountcalculator.core.di.core
 
 import androidx.room.Room
+import com.mshell.discountcalculator.BuildConfig
 import com.mshell.discountcalculator.core.data.CalDisRepository2
 import com.mshell.discountcalculator.core.data.source.local.LocalDataSource
 import com.mshell.discountcalculator.core.data.source.local.room.CalDisDatabase
@@ -14,12 +15,17 @@ import org.koin.dsl.module
 val databaseModule = module {
     factory { get<CalDisDatabase>().calDisDao() }
     single {
-        val passphrase: ByteArray = SQLiteDatabase.getBytes("garuda".toCharArray())
-        val factory = SupportFactory(passphrase)
+        val passphrase: ByteArray? = if (BuildConfig.ENABLE_DATABASE_ENCRYPTION) {
+            SQLiteDatabase.getBytes(BuildConfig.DATABASE_KEY.toCharArray())
+        } else null
+        val factory = passphrase?.let { SupportFactory(it) }
+
         Room.databaseBuilder(
             androidContext(),
             CalDisDatabase::class.java, "Caldis.db"
-        ).fallbackToDestructiveMigration().openHelperFactory(factory).build()
+        ).apply {
+            if (factory != null) openHelperFactory(factory)
+        }.fallbackToDestructiveMigration().build()
     }
 }
 

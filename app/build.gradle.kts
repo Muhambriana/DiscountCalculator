@@ -1,8 +1,19 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.devtools.ksp)
+}
+
+// Load the API key from local.properties
+val databaseKey: String by lazy {
+    rootProject.file("local.properties").let { propertiesFile ->
+        Properties().apply {
+            if (propertiesFile.exists()) load(propertiesFile.inputStream())
+        }.getProperty("databaseKey", "")
+    }
 }
 
 android {
@@ -15,12 +26,13 @@ android {
         targetSdk = 35
         versionCode = 9
         versionName = "1.3.1"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "DATABASE_KEY", databaseKey)
     }
 
     buildTypes {
         release {
+            buildConfigField("Boolean", "ENABLE_DATABASE_ENCRYPTION", "true")
             isDebuggable = false
             isShrinkResources = true
             isMinifyEnabled = true
@@ -30,6 +42,7 @@ android {
             )
         }
         debug {
+            buildConfigField("Boolean", "ENABLE_DATABASE_ENCRYPTION", "false")
             isDebuggable = true
             isShrinkResources = true
             isMinifyEnabled = true
@@ -47,6 +60,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
 }
