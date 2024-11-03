@@ -7,5 +7,14 @@ enum class ExceptionTypeEnum(val code: Int, val key: String, val defaultMessage:
 
     EMPTY_FORM(802, "Form can't be empty", null as String?),
 
-    UNEXPECTED_ERROR(-9999, "error.unexpected", "Unexpected error")
+    RESULT_EMPTY(803, "Result is empty", null as String?),
+
+    RESULT_ERROR(804, "Error from view model", null as String?),
+
+    RESULT_ERROR_2(805, "Error from repository", null as String?),
+
+    UNEXPECTED_ERROR(-9999, "error.unexpected", "Unexpected error");
+
+    val codeAsString: String
+        get() = "Code: $code"
 }
