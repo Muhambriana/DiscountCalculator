@@ -275,6 +275,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
+        const val EXTRA_SHOPPING_ID = "extra_shopping_id"
         const val EXTRA_DATA_ITEM = "extra_data_item"
     }
 }
