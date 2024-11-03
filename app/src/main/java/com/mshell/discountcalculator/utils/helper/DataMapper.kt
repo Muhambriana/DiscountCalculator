@@ -1,6 +1,10 @@
 package com.mshell.discountcalculator.utils.helper
 
+import com.mshell.discountcalculator.core.data.source.local.entity.DiscountDetailEntity
+import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingEntity
 import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingItemEntity
+import com.mshell.discountcalculator.core.models.DiscountDetail
+import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.core.models.ShoppingItem
 
 object DataMapper {
@@ -9,15 +13,14 @@ object DataMapper {
         val entityList = ArrayList<ShoppingItemEntity>()
         input.map {
             val itemEntity = ShoppingItemEntity(
-                id = it.id ?: 0,
-                itemName = it.itemName ?: "",
-                pricePerUnit = it.pricePerUnit ?: 0.0,
-                quantity = it.quantity ?: 0.0,
-                totalPrice = it.totalPrice ?: 0.0,
-                totalDiscount = it.totalDiscount ?: 0.0,
-                discountPerUnit = it.discountPerUnit ?: 0.0,
-                pricePerUnitAfterDiscount = it.pricePerUnitAfterDiscount ?: 0.0,
-                totalPriceAfterDiscount = it.totalPriceAfterDiscount ?: 0.0
+                itemName = it.itemName,
+                pricePerUnit = it.pricePerUnit,
+                quantity = it.quantity,
+                totalPrice = it.totalPrice,
+                totalDiscount = it.totalDiscount,
+                discountPerUnit = it.discountPerUnit,
+                pricePerUnitAfterDiscount = it.pricePerUnitAfterDiscount,
+                totalPriceAfterDiscount = it.totalPriceAfterDiscount
             )
             entityList.add(itemEntity)
         }
@@ -27,7 +30,7 @@ object DataMapper {
     fun mapEntitiesToDomain(input: List<ShoppingItemEntity>): List<ShoppingItem> =
         input.map {
             ShoppingItem(
-                id = it.id,
+                id = it.shoppingItemId,
                 itemName = it.itemName,
                 pricePerUnit = it.pricePerUnit,
                 quantity = it.quantity,
@@ -39,16 +42,23 @@ object DataMapper {
             )
         }
 
-    fun mapDomainToEntity(input: ShoppingItem) = ShoppingItemEntity(
-        id = input.id ?: 0,
-        itemName = input.itemName ?: "",
-        pricePerUnit = input.pricePerUnit ?: 0.0,
-        quantity = input.quantity ?: 0.0,
-        totalPrice = input.totalPrice ?: 0.0,
-        totalDiscount = input.totalDiscount ?: 0.0,
-        discountPerUnit = input.discountPerUnit ?: 0.0,
-        pricePerUnitAfterDiscount = input.pricePerUnitAfterDiscount ?: 0.0,
-        totalPriceAfterDiscount = input.totalPriceAfterDiscount ?: 0.0
+
+    fun mapDomainToEntity(input: ShoppingDetail) = ShoppingEntity(
+        totalShopping = input.totalShopping,
+        additional = input.additional,
+        total = input.total,
+        totalQuantity = input.totalQuantity,
+        discount = input.discount,
+        totalAfterDiscount = input.totalAfterDiscount
+    )
+
+    fun mapDomainToEntity(input: DiscountDetail) = DiscountDetailEntity(
+        discountDetailId = input.discountDetailId ?: 0,
+        shoppingId = input.shoppingId,
+        discountType = input.discountType,
+        discountNominal = input.discountNominal,
+        discountPercent = input.discountPercent,
+        discountMax = input.discountMax
     )
 
 }
