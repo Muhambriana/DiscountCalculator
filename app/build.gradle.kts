@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.ssp.android)
     implementation(libs.sdp.android)
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.g.toasty)
 
     // Room
     implementation(libs.room.runtime)
