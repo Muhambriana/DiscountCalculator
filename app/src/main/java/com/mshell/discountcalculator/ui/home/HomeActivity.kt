@@ -2,7 +2,6 @@ package com.mshell.discountcalculator.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,7 +15,7 @@ import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.ui.shoppinglist.ShoppingItemListActivity
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
-import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
+import com.mshell.discountcalculator.utils.helper.Helper.showErrorToast
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -71,7 +70,7 @@ class HomeActivity : AppCompatActivity() {
                     is CalDisResource.Empty -> {}
                     is CalDisResource.Error -> {
                         binding.viewLoading.root.visibility = View.GONE
-                        showShortToast(resource.exceptionTypeEnum?.codeAsString)
+                        showErrorToast(resource.exceptionTypeEnum?.codeAsString.toString())
                     }
                     is CalDisResource.Loading -> {
                         binding.viewLoading.root.visibility = View.VISIBLE
@@ -80,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
                         resource.data.also {
                             binding.viewLoading.root.visibility = View.GONE
                             if (it == null) {
-                                showShortToast("Failed")
+                                showErrorToast("Failed")
                                 return@observe
                             }
 
