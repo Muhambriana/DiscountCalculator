@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.mshell.discountcalculator.utils.config.Config.EMPTY_STRING
 import com.mshell.discountcalculator.utils.config.Config.LOCALE
+import es.dmoral.toasty.Toasty
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
@@ -25,6 +26,10 @@ object Helper {
 
     fun Activity.showShortToast(text: String?) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    fun Activity.showErrorToast(text: String) {
+        Toasty.error(this, text).show()
     }
 
     fun setColorVectorDrawable(context: Context, drawableResId: Int, colorResId: Int): Drawable? {
