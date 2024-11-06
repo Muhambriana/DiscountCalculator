@@ -12,13 +12,9 @@ import com.mshell.discountcalculator.utils.helper.Helper.takeZeroIfNegative
 
 class CalDisDataSource {
 
-    private var itemIdAutoIncrement = 0
-
     fun createNewItem(shoppingItem: ShoppingItem? = null): ShoppingItem {
-        itemIdAutoIncrement += 1
         val item = shoppingItem ?: ShoppingItem()
         return item.apply {
-            id = itemIdAutoIncrement
             totalPrice = quantity?.times(pricePerUnit ?: DEFAULT_DOUBLE_VALUE)
         }
     }
@@ -168,10 +164,10 @@ class CalDisDataSource {
                 }
             }
             Result.success(
-                ShoppingDetail().apply {
-                    this.discountDetail = discountDetail
+                ShoppingDetail(
+                    discountDetail = discountDetail,
                     additional = binding.edAdditional.edCurrency.getCleanText().toDouble()
-                }
+                )
             )
         } catch (e: Exception) {
             Result.failure(e)
