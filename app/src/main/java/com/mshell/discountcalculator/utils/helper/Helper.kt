@@ -3,8 +3,10 @@ package com.mshell.discountcalculator.utils.helper
 import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -29,7 +31,20 @@ object Helper {
     }
 
     fun Activity.showErrorToast(text: String) {
+        setGravityForToast(Gravity.CENTER)
         Toasty.error(this, text).show()
+    }
+
+    private fun setGravityForToast(gravity: Int? = null) {
+        Toasty.Config.getInstance()
+            .tintIcon(true) // Set to `true` to tint icons
+            .setToastTypeface(Typeface.DEFAULT_BOLD) // Set a custom Typeface
+            .setTextSize(14) // Text size in sp
+            .allowQueue(true) // Allow multiple Toasty to queue
+            .setGravity(gravity ?: Gravity.BOTTOM, 0, 0) // Center the toast on the screen
+            .supportDarkTheme(true) // Enable dark theme support
+            .setRTL(false) // Set RTL for right-to-left languages
+            .apply() // Apply the configuration
     }
 
     fun setColorVectorDrawable(context: Context, drawableResId: Int, colorResId: Int): Drawable? {
