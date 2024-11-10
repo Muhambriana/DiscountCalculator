@@ -1,5 +1,6 @@
 package com.mshell.discountcalculator.ui.shoppinglist
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -53,6 +54,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
         ShoppingItemAdapter(false)
     }
 
+    private var shoppingId: Int? = null
     private var shoppingDetail: ShoppingDetail? = null
 
 
@@ -76,21 +78,8 @@ class ShoppingItemListActivity : AppCompatActivity() {
         viewInitialization()
     }
 
-    @Suppress("DEPRECATION")
     private fun setDataToModels() {
-        shoppingDetail = intent?.extras?.let {
-            Helper.returnBasedOnSdkVersion(
-                Build.VERSION_CODES.TIRAMISU,
-                onSdkEqualOrAbove = {
-                    // Return the result from this lambda
-                    it.getParcelable(EXTRA_DATA, ShoppingDetail::class.java)
-                },
-                onSdkBelow = {
-                    // Return the result from this lambda
-                    it.getParcelable(EXTRA_DATA)
-                }
-            )
-        }
+        shoppingId = intent?.extras?.getInt(EXTRA_SHOPPING_ID)
     }
 
     @Suppress("DEPRECATION")
@@ -257,6 +246,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
             .commit()
     }
 
+    @SuppressLint("MissingSuperCall")
     @Deprecated(
         "This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.",
         ReplaceWith(
@@ -270,7 +260,6 @@ class ShoppingItemListActivity : AppCompatActivity() {
             binding.flFragmentContainer.visibility = View.GONE
             return
         }
-        super.onBackPressedDispatcher.onBackPressed()
     }
 
     companion object {
