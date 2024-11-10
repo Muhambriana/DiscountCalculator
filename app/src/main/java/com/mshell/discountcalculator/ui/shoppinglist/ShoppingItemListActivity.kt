@@ -54,7 +54,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
         ShoppingItemAdapter(false)
     }
 
-    private var shoppingId: Int? = null
+    private var shoppingId: Long? = null
     private var shoppingDetail: ShoppingDetail? = null
 
 
@@ -79,7 +79,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
     }
 
     private fun setDataToModels() {
-        shoppingId = intent?.extras?.getInt(EXTRA_SHOPPING_ID)
+        shoppingId = intent?.extras?.getLong(EXTRA_SHOPPING_ID)
     }
 
     @Suppress("DEPRECATION")
