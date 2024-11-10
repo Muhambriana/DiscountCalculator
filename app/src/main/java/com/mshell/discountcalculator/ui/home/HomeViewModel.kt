@@ -18,8 +18,10 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val calDisUseCase: CalDisUseCase) : ViewModel() {
 
     private var _shoppingId = MutableLiveData<CalDisEvent<CalDisResource<Long>>>()
+    private var _transactionResult = MutableLiveData<CalDisEvent<CalDisResource<Boolean>>>()
 
     val shoppingId: LiveData<CalDisEvent<CalDisResource<Long>>> = _shoppingId
+    val transactionResult: LiveData<CalDisEvent<CalDisResource<Boolean>>> = _transactionResult
     val listItem = calDisUseCase.getAllShoppingItem().asLiveData()
 
     fun insertShoppingDetail(binding: ActivityHomeBinding) {
@@ -65,4 +67,44 @@ class HomeViewModel(private val calDisUseCase: CalDisUseCase) : ViewModel() {
         }
     }
 
+    fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail, discountDetail: DiscountDetail, binding: ActivityHomeBinding) {
+        _transactionResult.value = CalDisEvent(CalDisResource.Loading())
+        viewModelScope.launch {
+            try {
+                discountDetail.apply {
+                    when (binding.radioGroupDiscount.checkedRadioButtonId) {
+                        binding.rbPercent.id -> {
+                            discountType = DiscountType.PERCENT
+                            discountPercent = binding.layoutFormDiscountPercent
+                                .edPercent
+                                .text
+                                ?.toString()
+                                ?.toInt()
+                            discountMax = binding.layoutFormDiscountPercent
+                                .edMaxDiscount
+                                .edCurrency
+                                .getCleanText()
+                                .toDouble()
+                        }
+
+                        binding.rbNominal.id -> {
+                            discountType = DiscountType.NOMINAL
+                            discountNominal = binding.layoutFormDiscountNominal
+                                .edDiscount
+                                .edCurrency
+                                .getCleanText()
+                                .toDouble()
+                        }
+                    }
+                }
+
+                shoppingDetail.apply {
+                    additional = binding.edAdditional.edCurrency.getCleanText().toDouble()
+                }
+                _transactionResult.value = calDisUseCase.updateShoppingAndDiscount(shoppingDetail, discountDetail)
+            } catch (e: Exception) {
+                _transactionResult.value = CalDisEvent(CalDisResource.Error(null, e, ExceptionTypeEnum.RESULT_ERROR))
+            }
+        }
+    }
 }
