@@ -13,12 +13,6 @@ class CalDisViewModelFactory(private val calDisRepository: CalDisRepository) :
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(ShoppingItemListViewModel::class.java) -> {
-                ShoppingItemListViewModel(this.calDisRepository) as T
-            }
-//            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-//                HomeViewModel(this.calDisRepository) as T
-//            }
             modelClass.isAssignableFrom(ItemDetailViewModel::class.java) -> {
                 ItemDetailViewModel(this.calDisRepository) as T
             }
