@@ -98,6 +98,7 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra(ShoppingItemListActivity.EXTRA_SHOPPING_ID, shoppingId)
         startActivity(intent)
         binding.viewLoading.root.visibility = View.GONE
+        finish()
     }
 
     private fun stateChecked(discountType: DiscountType) {
