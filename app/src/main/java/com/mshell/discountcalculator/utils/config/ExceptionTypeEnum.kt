@@ -16,5 +16,5 @@ enum class ExceptionTypeEnum(val code: Int, val key: String, val defaultMessage:
     UNEXPECTED_ERROR(-9999, "error.unexpected", "Unexpected error");
 
     val codeAsString: String
-        get() = "Code: $code"
+        get() = "Code: EC${code}XF"
 }
