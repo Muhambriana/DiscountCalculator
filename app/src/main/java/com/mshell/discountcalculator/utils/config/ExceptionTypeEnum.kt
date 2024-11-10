@@ -13,6 +13,8 @@ enum class ExceptionTypeEnum(val code: Int, val key: String, val defaultMessage:
 
     RESULT_ERROR_2(805, "Error from repository", null as String?),
 
+    RESULT_ERROR_TRANSACTION(806, "Error transaction", null as String?),
+
     UNEXPECTED_ERROR(-9999, "error.unexpected", "Unexpected error");
 
     val codeAsString: String
