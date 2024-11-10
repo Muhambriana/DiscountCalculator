@@ -14,9 +14,10 @@ import androidx.room.PrimaryKey
         childColumns = ["shopping_id"],
         onDelete = ForeignKey.CASCADE
     )],
-    indices = [Index(
-        value = ["shopping_item_id", "shopping_id"]
-    )]
+    indices = [
+        Index(value = ["shopping_item_id"]),    // Index on primary key for fast lookups
+        Index(value = ["shopping_id"])            // Separate index on foreign key column to prevent full table scans
+    ]
 )
 data class ShoppingItemEntity(
     @PrimaryKey(autoGenerate = true)

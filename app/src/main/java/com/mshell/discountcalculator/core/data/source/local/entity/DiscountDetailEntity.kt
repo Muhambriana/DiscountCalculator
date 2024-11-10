@@ -15,9 +15,10 @@ import com.mshell.discountcalculator.utils.config.DiscountType
         childColumns = ["shopping_id"],
         onDelete = ForeignKey.CASCADE
     )],
-    indices = [Index(
-        value = ["discount_detail_id", "shopping_id"]
-    )]
+    indices = [
+        Index(value = ["discount_detail_id"]),    // Index on primary key for fast lookups
+        Index(value = ["shopping_id"])            // Separate index on foreign key column to prevent full table scans
+    ]
 )
 data class DiscountDetailEntity(
 
