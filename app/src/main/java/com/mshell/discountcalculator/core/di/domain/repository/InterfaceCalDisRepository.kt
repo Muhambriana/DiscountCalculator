@@ -13,7 +13,7 @@ interface InterfaceCalDisRepository {
 
     suspend fun insertShoppingDetail(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Long>>
 
-    suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail, discountDetail: DiscountDetail): CalDisEvent<CalDisResource<Boolean>>
+    suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Boolean>>
 
     fun getAllShoppingItem(): Flow<List<ShoppingItem>>
 

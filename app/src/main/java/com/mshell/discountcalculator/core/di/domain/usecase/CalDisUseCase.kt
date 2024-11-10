@@ -10,6 +10,6 @@ import kotlinx.coroutines.flow.Flow
 interface CalDisUseCase {
     suspend fun insertListShoppingItem(list: List<ShoppingItem>)
     suspend fun insertShoppingDetail(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Long>>
-    suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail, discountDetail: DiscountDetail): CalDisEvent<CalDisResource<Boolean>>
+    suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Boolean>>
     fun getAllShoppingItem(): Flow<List<ShoppingItem>>
 }

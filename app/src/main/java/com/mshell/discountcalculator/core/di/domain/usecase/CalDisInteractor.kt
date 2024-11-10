@@ -16,8 +16,8 @@ class CalDisInteractor(private val iCalDisRepository: InterfaceCalDisRepository)
     override suspend fun insertShoppingDetail(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Long>> =
         iCalDisRepository.insertShoppingDetail(shoppingDetail)
 
-    override suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail, discountDetail: DiscountDetail): CalDisEvent<CalDisResource<Boolean>> =
-        iCalDisRepository.updateShoppingAndDiscount(shoppingDetail, discountDetail)
+    override suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Boolean>> =
+        iCalDisRepository.updateShoppingAndDiscount(shoppingDetail)
 
     override fun getAllShoppingItem() =
         iCalDisRepository.getAllShoppingItem()

@@ -67,41 +67,48 @@ class HomeViewModel(private val calDisUseCase: CalDisUseCase) : ViewModel() {
         }
     }
 
-    fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail, discountDetail: DiscountDetail, binding: ActivityHomeBinding) {
+    fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail, binding: ActivityHomeBinding) {
         _transactionResult.value = CalDisEvent(CalDisResource.Loading())
         viewModelScope.launch {
             try {
-                discountDetail.apply {
-                    when (binding.radioGroupDiscount.checkedRadioButtonId) {
-                        binding.rbPercent.id -> {
-                            discountType = DiscountType.PERCENT
-                            discountPercent = binding.layoutFormDiscountPercent
-                                .edPercent
-                                .text
-                                ?.toString()
-                                ?.toInt()
-                            discountMax = binding.layoutFormDiscountPercent
-                                .edMaxDiscount
-                                .edCurrency
-                                .getCleanText()
-                                .toDouble()
-                        }
+                shoppingDetail.apply {
+                    discountDetail.apply {
+                        when (binding.radioGroupDiscount.checkedRadioButtonId) {
+                            binding.rbPercent.id -> {
+                                discountType = DiscountType.PERCENT
+                                discountPercent = binding.layoutFormDiscountPercent
+                                    .edPercent
+                                    .text
+                                    ?.toString()
+                                    ?.toInt()
+                                discountMax = binding.layoutFormDiscountPercent
+                                    .edMaxDiscount
+                                    .edCurrency
+                                    .getCleanText()
+                                    .toDouble()
 
-                        binding.rbNominal.id -> {
-                            discountType = DiscountType.NOMINAL
-                            discountNominal = binding.layoutFormDiscountNominal
-                                .edDiscount
-                                .edCurrency
-                                .getCleanText()
-                                .toDouble()
+                                //Reset
+                                discountNominal = null
+                            }
+
+                            binding.rbNominal.id -> {
+                                discountType = DiscountType.NOMINAL
+                                discountNominal = binding.layoutFormDiscountNominal
+                                    .edDiscount
+                                    .edCurrency
+                                    .getCleanText()
+                                    .toDouble()
+
+                                //Reset
+                                discountPercent = null
+                                discountMax = null
+                            }
                         }
                     }
-                }
 
-                shoppingDetail.apply {
                     additional = binding.edAdditional.edCurrency.getCleanText().toDouble()
                 }
-                _transactionResult.value = calDisUseCase.updateShoppingAndDiscount(shoppingDetail, discountDetail)
+                _transactionResult.value = calDisUseCase.updateShoppingAndDiscount(shoppingDetail)
             } catch (e: Exception) {
                 _transactionResult.value = CalDisEvent(CalDisResource.Error(null, e, ExceptionTypeEnum.RESULT_ERROR))
             }

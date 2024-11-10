@@ -39,10 +39,10 @@ class CalDisRepository2(
         }
     }
 
-    override suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail, discountDetail: DiscountDetail): CalDisEvent<CalDisResource<Boolean>> {
+    override suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Boolean>> {
         return try {
             val shoppingEntity = DataMapper.mapDomainToEntity(shoppingDetail)
-            val discountDetailEntity = DataMapper.mapDomainToEntity(discountDetail)
+            val discountDetailEntity = DataMapper.mapDomainToEntity(shoppingDetail.discountDetail)
             val success = localDataSource.updateShoppingAndDiscount(shoppingEntity, discountDetailEntity)
 
             if (success.not()) {
