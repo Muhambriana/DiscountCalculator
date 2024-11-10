@@ -16,6 +16,10 @@ class LocalDataSource(private val calDisDao: CalDisDao) {
 
     suspend fun updateShoppingAndDiscount(shoppingEntity: ShoppingEntity, discountDetailEntity: DiscountDetailEntity) = calDisDao.updateShoppingAndDiscount(shoppingEntity, discountDetailEntity)
 
+    fun getDiscountDetailByShoppingId(shoppingId: Long) = calDisDao.getDiscountDetailByShoppingId(shoppingId)
+
+    fun getShoppingDetailById(shoppingId: Long) = calDisDao.getShoppingById(shoppingId)
+
     fun getAllShoppingItem(): Flow<List<ShoppingItemEntity>> = calDisDao.getAllShoppingItem()
 
 }
