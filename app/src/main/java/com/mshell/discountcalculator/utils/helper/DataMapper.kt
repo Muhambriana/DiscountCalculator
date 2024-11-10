@@ -61,4 +61,13 @@ object DataMapper {
         discountMax = input.discountMax
     )
 
+    fun mapEntityToDomain(input: DiscountDetailEntity) = DiscountDetail(
+        discountDetailId = input.discountDetailId,
+        shoppingId = input.shoppingId,
+        discountType = input.discountType,
+        discountNominal = input.discountNominal,
+        discountPercent = input.discountPercent,
+        discountMax = input.discountMax
+    )
+
 }
