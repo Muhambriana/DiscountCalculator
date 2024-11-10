@@ -21,9 +21,39 @@ interface CalDisDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDiscountDetail(entity: DiscountDetailEntity)
 
+    @Query("SELECT * FROM discount_detail where shopping_id = :shoppingId")
+    fun getDiscountDetailByShoppingId(shoppingId: Long): DiscountDetailEntity?
+
+    @Query("SELECT * FROM shopping where shopping_id = :shoppingId")
+    fun getShoppingById(shoppingId: Long): ShoppingEntity?
+
+    @Update
+    suspend fun updateDiscountDetail(entity: DiscountDetailEntity): Int
+
+    @Update
+    suspend fun updateShopping(entity: ShoppingEntity): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertListShoppingItem(list: List<ShoppingItemEntity>)
 
-    @Update
-    fun updateShopping(shoppingItem: ShoppingItemEntity)
+    @Transaction
+    suspend fun updateShoppingAndDiscount(shoppingEntity: ShoppingEntity, discountDetailEntity: DiscountDetailEntity): Boolean {
+        return try {
+            // Perform operations inside the transaction
+            val rowAffected = updateShopping(shoppingEntity)
+            val rowAffected2 = updateDiscountDetail(discountDetailEntity)
+
+            if (rowAffected <= 0 || rowAffected2 <= 0) {
+                return false
+            }
+
+            // If no exception is thrown, return true (success)
+            true
+        } catch (e: Exception) {
+            // If an exception occurs, Room automatically rolls back the transaction
+            e.printStackTrace()
+            false // Indicate failure
+        }
+    }
+
 }
