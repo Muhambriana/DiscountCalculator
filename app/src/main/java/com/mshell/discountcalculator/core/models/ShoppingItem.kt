@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ShoppingItem(
 
-    var id: Long? = 0,
+    var id: Long = 0,
 
     var itemName: String? = null,
 
