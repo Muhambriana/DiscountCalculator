@@ -22,6 +22,6 @@ class LocalDataSource(private val calDisDao: CalDisDao) {
 
     fun getShoppingDetailById(shoppingId: Long) = calDisDao.getShoppingById(shoppingId)
 
-    fun getAllShoppingItem(): Flow<List<ShoppingItemEntity>> = calDisDao.getAllShoppingItem()
+    fun getAllShoppingItem() = calDisDao.getAllShoppingItem()
 
 }

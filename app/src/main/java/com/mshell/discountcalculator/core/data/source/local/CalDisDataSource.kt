@@ -22,8 +22,8 @@ class CalDisDataSource {
     fun calculateShoppingDetail(shoppingDetail: ShoppingDetail?): Result<ShoppingDetail?> {
         try {
             shoppingDetail?.apply {
-                totalQuantity = listItem?.sumOf { it.quantity ?: DEFAULT_DOUBLE_VALUE }
-                totalShopping = listItem?.sumOf { it.totalPrice ?: DEFAULT_DOUBLE_VALUE }
+                totalQuantity = listItem.sumOf { it.quantity ?: DEFAULT_DOUBLE_VALUE }
+                totalShopping = listItem.sumOf { it.totalPrice ?: DEFAULT_DOUBLE_VALUE }
                 total = totalShopping?.plus(additional ?: DEFAULT_DOUBLE_VALUE)
             }
             shoppingDetail?.discountDetail.let {
@@ -81,7 +81,7 @@ class CalDisDataSource {
                 }
             }
             shoppingDetail?.apply {
-                this.discount = listItem?.sumOf { it.totalDiscount ?: DEFAULT_DOUBLE_VALUE }
+                this.discount = listItem.sumOf { it.totalDiscount ?: DEFAULT_DOUBLE_VALUE }
                 totalAfterDiscount = total?.minus(this.discount ?: DEFAULT_DOUBLE_VALUE)
             }
 
@@ -124,7 +124,7 @@ class CalDisDataSource {
                 }
             }
             shoppingDetail?.apply {
-                discount = listItem?.sumOf { it.totalDiscount ?: DEFAULT_DOUBLE_VALUE }
+                discount = listItem.sumOf { it.totalDiscount ?: DEFAULT_DOUBLE_VALUE }
                 totalAfterDiscount = total?.minus(discount ?: DEFAULT_DOUBLE_VALUE)
             }
             // Return updated list

@@ -9,18 +9,14 @@ import com.mshell.discountcalculator.core.models.ShoppingItem
 
 class CalDisInteractor(private val iCalDisRepository: InterfaceCalDisRepository): CalDisUseCase {
 
-    override suspend fun insertListShoppingItem(list: List<ShoppingItem>) =
-        iCalDisRepository.insertListShoppingItem(list)
+    override suspend fun insertListShoppingItem(list: List<ShoppingItem>) = iCalDisRepository.insertListShoppingItem(list)
 
-    override suspend fun insertShoppingDetail(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Long>> =
-        iCalDisRepository.insertShoppingDetail(shoppingDetail)
+    override suspend fun insertShoppingDetail(shoppingDetail: ShoppingDetail) = iCalDisRepository.insertShoppingDetail(shoppingDetail)
 
-    override suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Boolean>> =
-        iCalDisRepository.updateShoppingAndDiscount(shoppingDetail)
+    override suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail) = iCalDisRepository.updateShoppingAndDiscount(shoppingDetail)
 
     override fun getShoppingDetailById(shoppingId: Long) = iCalDisRepository.getShoppingDetailById(shoppingId)
 
-    override fun getAllShoppingItem() =
-        iCalDisRepository.getAllShoppingItem()
+    override fun getAllShoppingItem() = iCalDisRepository.getAllShoppingItem()
 
 }
