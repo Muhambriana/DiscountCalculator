@@ -98,7 +98,7 @@ object DataMapper {
         totalAfterDiscount = input.totalAfterDiscount
     )
 
-    fun mapEntityToDomain(input: ShoppingWithDiscountDetailAndItems) = ShoppingDetail(
+    fun mapRelationEntityToDomain(input: ShoppingWithDiscountDetailAndItems) = ShoppingDetail(
         shoppingId = input.shopping.shoppingId,
         discountDetail = mapEntityToDomain(input.discountDetail),
         totalShopping = input.shopping.totalShopping,

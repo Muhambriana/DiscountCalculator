@@ -1,6 +1,5 @@
 package com.mshell.discountcalculator.core.data
 
-import android.util.Log
 import com.mshell.discountcalculator.core.CalDisEvent
 import com.mshell.discountcalculator.core.data.source.CalDisResource
 import com.mshell.discountcalculator.core.data.source.local.LocalDataSource
@@ -10,8 +9,6 @@ import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.utils.AppExecutors
 import com.mshell.discountcalculator.utils.config.ExceptionTypeEnum
 import com.mshell.discountcalculator.utils.helper.DataMapper
-import com.mshell.discountcalculator.utils.helper.Helper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.resume
@@ -64,7 +61,7 @@ class CalDisRepository2(
     override suspend fun getShoppingDetailById(shoppingId: Long): CalDisEvent<CalDisResource<ShoppingDetail>> {
         return try {
             val shopping = getFromDiskIO { localDataSource.getShoppingWithDiscountDetailAndItems(shoppingId) }
-            val shoppingDetail = DataMapper.mapEntityToDomain(shopping)
+            val shoppingDetail = DataMapper.mapRelationEntityToDomain(shopping)
 
             CalDisEvent(CalDisResource.Success(shoppingDetail))
         } catch (e: Exception) {
