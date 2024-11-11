@@ -9,12 +9,14 @@ import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingItemE
 data class ShoppingWithDiscountDetailAndItems(
     @Embedded val shopping: ShoppingEntity,
 
+    // 1 to 1 relation
     @Relation(
         parentColumn = "shopping_id",
         entityColumn = "shopping_id"
     )
     val discountDetail: DiscountDetailEntity,
 
+    // 1 to many relation
     @Relation(
         parentColumn = "shopping_id",
         entityColumn = "shopping_id"
