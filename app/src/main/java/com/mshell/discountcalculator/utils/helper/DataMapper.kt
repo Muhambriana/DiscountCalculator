@@ -3,6 +3,7 @@ package com.mshell.discountcalculator.utils.helper
 import com.mshell.discountcalculator.core.data.source.local.entity.DiscountDetailEntity
 import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingEntity
 import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingItemEntity
+import com.mshell.discountcalculator.core.data.source.local.entity.relation.ShoppingWithDiscountDetailAndItems
 import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.core.models.ShoppingItem
@@ -31,6 +32,21 @@ object DataMapper {
         input.map {
             ShoppingItem(
                 id = it.shoppingItemId,
+                itemName = it.itemName,
+                pricePerUnit = it.pricePerUnit,
+                quantity = it.quantity,
+                totalPrice = it.totalPrice,
+                totalDiscount = it.totalDiscount,
+                discountPerUnit = it.discountPerUnit,
+                pricePerUnitAfterDiscount = it.pricePerUnitAfterDiscount,
+                totalPriceAfterDiscount = it.totalPriceAfterDiscount
+            )
+        }
+
+    fun mapDomainToEntities(input: List<ShoppingItem>): List<ShoppingItemEntity> =
+        input.map {
+            ShoppingItemEntity(
+                shoppingItemId = it.id,
                 itemName = it.itemName,
                 pricePerUnit = it.pricePerUnit,
                 quantity = it.quantity,
@@ -80,6 +96,24 @@ object DataMapper {
         totalQuantity = input.totalQuantity,
         discount = input.discount,
         totalAfterDiscount = input.totalAfterDiscount
+    )
+
+    fun mapEntityToDomain(input: ShoppingWithDiscountDetailAndItems) = ShoppingDetail(
+        shoppingId = input.shopping.shoppingId,
+        discountDetail = mapEntityToDomain(input.discountDetail),
+        totalShopping = input.shopping.totalShopping,
+        additional = input.shopping.additional,
+        total = input.shopping.total,
+        totalQuantity = input.shopping.totalQuantity,
+        discount = input.shopping.discount,
+        totalAfterDiscount = input.shopping.totalAfterDiscount,
+        listItem = mapEntitiesToDomain(input.shoppingItems).toMutableList()
+    )
+
+    fun mapDomainToRelationEntity(input: ShoppingDetail) = ShoppingWithDiscountDetailAndItems(
+        shopping = mapDomainToEntity(input),
+        discountDetail = mapDomainToEntity(input.discountDetail),
+        shoppingItems = mapDomainToEntities(input.listItem)
     )
 
 }
