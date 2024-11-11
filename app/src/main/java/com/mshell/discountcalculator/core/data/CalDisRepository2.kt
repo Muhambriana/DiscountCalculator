@@ -10,6 +10,9 @@ import com.mshell.discountcalculator.utils.AppExecutors
 import com.mshell.discountcalculator.utils.config.ExceptionTypeEnum
 import com.mshell.discountcalculator.utils.helper.DataMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -58,17 +61,20 @@ class CalDisRepository2(
         }
     }
 
-    override suspend fun getShoppingDetailById(shoppingId: Long): CalDisEvent<CalDisResource<ShoppingDetail>> {
-        return try {
-            val shopping = getFromDiskIO { localDataSource.getShoppingWithDiscountDetailAndItems(shoppingId) }
-            val shoppingDetail = DataMapper.mapRelationEntityToDomain(shopping)
-
-            CalDisEvent(CalDisResource.Success(shoppingDetail))
-        } catch (e: Exception) {
+    override fun getShoppingDetailById(shoppingId: Long): Flow<CalDisResource<ShoppingDetail>> {
+        return flow {
+            emit(CalDisResource.Loading())
+            emitAll(
+                localDataSource.getShoppingWithDiscountDetailAndItems(shoppingId).map {
+                    CalDisResource.Success(DataMapper.mapRelationEntityToDomain(it))
+                }
+            )
+        }.catch { e ->
             e.printStackTrace()
-            CalDisEvent(CalDisResource.Error(error = e, exceptionTypeEnum =  ExceptionTypeEnum.RESULT_ERROR_2))
+            emit(CalDisResource.Error(""))
         }
     }
+
 
     override fun getAllShoppingItem(): Flow<List<ShoppingItem>> =
         localDataSource.getAllShoppingItem().map {

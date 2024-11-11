@@ -27,7 +27,7 @@ interface CalDisDao {
 
     @Transaction
     @Query("SELECT * FROM shopping WHERE shopping_id = :shoppingId")
-    fun getShoppingWithDiscountDetailAndItems(shoppingId: Long): ShoppingWithDiscountDetailAndItems
+    fun getShoppingWithDiscountDetailAndItems(shoppingId: Long): Flow<ShoppingWithDiscountDetailAndItems>
 
     @Update
     suspend fun updateDiscountDetail(entity: DiscountDetailEntity): Int
