@@ -18,6 +18,8 @@ class LocalDataSource(private val calDisDao: CalDisDao) {
 
     fun getDiscountDetailByShoppingId(shoppingId: Long) = calDisDao.getDiscountDetailByShoppingId(shoppingId)
 
+    fun getShoppingWithDiscountDetailAndItems(shoppingId: Long) = calDisDao.getShoppingWithDiscountDetailAndItems(shoppingId)
+
     fun getShoppingDetailById(shoppingId: Long) = calDisDao.getShoppingById(shoppingId)
 
     fun getAllShoppingItem(): Flow<List<ShoppingItemEntity>> = calDisDao.getAllShoppingItem()

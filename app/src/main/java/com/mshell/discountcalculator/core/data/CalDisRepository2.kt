@@ -10,17 +10,18 @@ import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.utils.AppExecutors
 import com.mshell.discountcalculator.utils.config.ExceptionTypeEnum
 import com.mshell.discountcalculator.utils.helper.DataMapper
+import com.mshell.discountcalculator.utils.helper.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class CalDisRepository2(
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ): InterfaceCalDisRepository {
-
-    private val dispatchersIO = Dispatchers.IO
 
     override suspend fun insertListShoppingItem(list: List<ShoppingItem>) {
         val shoppingItemList = DataMapper.mapItemsToEntities(list)
@@ -62,18 +63,8 @@ class CalDisRepository2(
 
     override suspend fun getShoppingDetailById(shoppingId: Long): CalDisEvent<CalDisResource<ShoppingDetail>> {
         return try {
-            val shoppingEntity = withContext(dispatchersIO) { localDataSource.getShoppingDetailById(shoppingId) }
-            val discountDetailEntity = withContext(dispatchersIO) { localDataSource.getDiscountDetailByShoppingId(shoppingId) }
-
-            // If can't find record in DB
-            if (shoppingEntity == null || discountDetailEntity == null) {
-                return CalDisEvent(CalDisResource.Error(exceptionTypeEnum = ExceptionTypeEnum.RESULT_ERROR_TRANSACTION))
-            }
-            Log.i("kocak", shoppingEntity.shoppingId.toString())
-
-            val shoppingDetail = DataMapper.mapEntityToDomain(shoppingEntity, discountDetailEntity)
-            Log.i("kocak2", shoppingDetail.shoppingId.toString())
-
+            val shopping = getFromDiskIO { localDataSource.getShoppingWithDiscountDetailAndItems(shoppingId) }
+            val shoppingDetail = DataMapper.mapEntityToDomain(shopping)
 
             CalDisEvent(CalDisResource.Success(shoppingDetail))
         } catch (e: Exception) {
@@ -88,5 +79,14 @@ class CalDisRepository2(
         }
 
 
-
+    // Helper function to run a suspend block on diskIO
+    private suspend fun <T> getFromDiskIO(block: () -> T): T = suspendCoroutine { continuation ->
+        appExecutors.diskIO().execute {
+            try {
+                continuation.resume(block())
+            } catch (e: Exception) {
+                continuation.resumeWithException(e)
+            }
+        }
+    }
 }

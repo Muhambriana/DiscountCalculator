@@ -4,9 +4,7 @@ import androidx.room.*
 import com.mshell.discountcalculator.core.data.source.local.entity.DiscountDetailEntity
 import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingEntity
 import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingItemEntity
-import com.mshell.discountcalculator.core.models.DiscountDetail
-import com.mshell.discountcalculator.core.models.ShoppingDetail
-import com.mshell.discountcalculator.core.models.ShoppingItem
+import com.mshell.discountcalculator.core.data.source.local.entity.relation.ShoppingWithDiscountDetailAndItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,6 +24,10 @@ interface CalDisDao {
 
     @Query("SELECT * FROM shopping where shopping_id = :shoppingId")
     fun getShoppingById(shoppingId: Long): ShoppingEntity?
+
+    @Transaction
+    @Query("SELECT * FROM shopping WHERE shopping_id = :shoppingId")
+    fun getShoppingWithDiscountDetailAndItems(shoppingId: Long): ShoppingWithDiscountDetailAndItems
 
     @Update
     suspend fun updateDiscountDetail(entity: DiscountDetailEntity): Int
