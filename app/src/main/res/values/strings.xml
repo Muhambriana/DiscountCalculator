@@ -28,6 +28,7 @@
     <string name="x">X</string>
     <string name="del_item">Del Item</string>
     <string name="add_item">Add Item</string>
+    <string name="edit_item">Edit Item</string>
     <string name="plus">Plus</string>
     <string name="minus">Minus</string>
     <string name="percent_icon">%</string>
