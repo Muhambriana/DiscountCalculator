@@ -22,7 +22,6 @@ import com.mshell.discountcalculator.utils.config.Config
 import com.mshell.discountcalculator.utils.config.DataEvent
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.helper.Helper.showErrorToast
-import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
 import com.mshell.discountcalculator.utils.view.CaldisDialog
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -95,7 +94,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
                             binding.viewLoading.root.visibility = View.GONE
                         }
                     }
-                    null -> {}
+                    else -> {}
                 }
             }
         }
@@ -161,6 +160,23 @@ class ShoppingItemListActivity : AppCompatActivity() {
             )
             addNewItem(shoppingItem)
         }
+        supportFragmentManager.setFragmentResultListener(
+            ItemDetailBottomFragment.KEY_UPDATE_ITEM,
+            this
+        ) { _, bundle ->
+            val shoppingItem: ShoppingItem? = Helper.returnBasedOnSdkVersion(
+                Build.VERSION_CODES.TIRAMISU,
+                onSdkEqualOrAbove = {
+                    // Return the result from this lambda
+                    bundle.getParcelable(EXTRA_DATA_ITEM, ShoppingItem::class.java)
+                },
+                onSdkBelow = {
+                    // Return the result from this lambda
+                    bundle.getParcelable(EXTRA_DATA_ITEM)
+                }
+            )
+            updateItem(shoppingItem)
+        }
         showRecycleList()
     }
 
@@ -169,12 +185,16 @@ class ShoppingItemListActivity : AppCompatActivity() {
 
         }
         binding.btnAddItem.setSingleClickListener {
-            val bottomDialogFragment = ItemDetailBottomFragment()
-            bottomDialogFragment.show(supportFragmentManager, "")
+            openItemDetailFragment()
         }
 //        binding.btnCalculate.setOnClickListener {
 //            calculate()
 //        }
+    }
+
+    private fun openItemDetailFragment(shoppingItem: ShoppingItem? = null) {
+        val bottomDialogFragment = ItemDetailBottomFragment.newInstance(shoppingItem)
+        bottomDialogFragment.show(supportFragmentManager, "")
     }
 
     private fun addNewItem(shoppingItem: ShoppingItem? = null) {
@@ -215,16 +235,15 @@ class ShoppingItemListActivity : AppCompatActivity() {
                 return@scope
             }
 
-            model.apply {
-                quantity =  quantity?.minus(1)
-            }
+            model.quantity = model.quantity?.minus(1)
             updateItem(model)
         }
         shoppingItemAdapter.onBtnPlusClick = { model, _ ->
-            model.apply {
-                quantity =  quantity?.plus(1)
-            }
+            model.quantity = model.quantity?.plus(1)
             updateItem(model)
+        }
+        shoppingItemAdapter.onItemClick = { model ->
+            openItemDetailFragment(model)
         }
         binding.rvItemShopping.apply {
             layoutManager = LinearLayoutManager(thisActivityContext)
@@ -232,7 +251,9 @@ class ShoppingItemListActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateItem(model: ShoppingItem) {
+    private fun updateItem(model: ShoppingItem?) {
+        if (model == null) return
+
         dataEvent = DataEvent.UPDATE.withId(model.id)
         shoppingItemListViewModel.updateShoppingItem(model)
     }
