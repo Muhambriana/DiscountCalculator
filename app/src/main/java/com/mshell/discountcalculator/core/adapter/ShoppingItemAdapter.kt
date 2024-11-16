@@ -22,7 +22,6 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
             if (items == null) return
             listShoppingItem.clear()
             listShoppingItem.addAll(items)
-            notifyItemRangeInserted(0, items.size)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ViewHolder {
@@ -122,11 +121,14 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
             notifyItemInserted(listShoppingItem.size)
         }
 
-        fun removeItem(shoppingItem: ShoppingItem?) {
-            val index = listShoppingItem.indexOf(shoppingItem)
-            if (shoppingItem == null) return
-            listShoppingItem.remove(shoppingItem)
-            notifyItemRemoved(index)
-        }
+    fun removeItem(shoppingItemId: Long) {
+        listShoppingItem.indexOfFirst { it.id == shoppingItemId }
+            .takeIf { it >= 0 }
+            ?.let {
+                listShoppingItem.removeAt(it)
+                notifyItemRemoved(it)
+            }
+    }
+
 
 }
