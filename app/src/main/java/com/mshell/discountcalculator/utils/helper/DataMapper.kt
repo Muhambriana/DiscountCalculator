@@ -32,6 +32,7 @@ object DataMapper {
         input.map {
             ShoppingItem(
                 id = it.shoppingItemId,
+                shoppingId = it.shoppingId,
                 itemName = it.itemName,
                 pricePerUnit = it.pricePerUnit,
                 quantity = it.quantity,
@@ -57,6 +58,19 @@ object DataMapper {
                 totalPriceAfterDiscount = it.totalPriceAfterDiscount
             )
         }
+
+    fun mapDomainToEntity(input: ShoppingItem) = ShoppingItemEntity (
+        shoppingItemId = input.id,
+        shoppingId = input.shoppingId,
+        itemName = input.itemName,
+        pricePerUnit = input.pricePerUnit,
+        quantity = input.quantity,
+        totalPrice = input.totalPrice,
+        totalDiscount = input.totalDiscount,
+        discountPerUnit = input.discountPerUnit,
+        pricePerUnitAfterDiscount = input.pricePerUnitAfterDiscount,
+        totalPriceAfterDiscount = input.totalPriceAfterDiscount
+    )
 
 
     fun mapDomainToEntity(input: ShoppingDetail) = ShoppingEntity(
