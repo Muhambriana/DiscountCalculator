@@ -81,6 +81,21 @@ class CalDisRepository2(
             DataMapper.mapEntitiesToDomain(it)
         }
 
+    override fun insertShoppingItem(shoppingItem: ShoppingItem) {
+        val shoppingItemEntity = DataMapper.mapDomainToEntity(shoppingItem)
+        appExecutors.diskIO().execute { localDataSource.insertShoppingItem(shoppingItemEntity) }
+    }
+
+    override fun updateShoppingItem(shoppingItem: ShoppingItem) {
+        val shoppingItemEntity = DataMapper.mapDomainToEntity(shoppingItem)
+        appExecutors.diskIO().execute { localDataSource.updateShoppingItem(shoppingItemEntity) }
+    }
+
+    override fun deleteShoppingItem(shoppingItem: ShoppingItem) {
+        val shoppingItemEntity = DataMapper.mapDomainToEntity(shoppingItem)
+        appExecutors.diskIO().execute { localDataSource.deleteShoppingItem(shoppingItemEntity) }
+    }
+
 
     // Helper function to run a suspend block on diskIO
     private suspend fun <T> getFromDiskIO(block: () -> T): T = suspendCoroutine { continuation ->

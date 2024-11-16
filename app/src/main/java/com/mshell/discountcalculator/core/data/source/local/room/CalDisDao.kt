@@ -38,6 +38,15 @@ interface CalDisDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertListShoppingItem(list: List<ShoppingItemEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertShoppingItem(entity: ShoppingItemEntity): Long
+
+    @Update
+    fun updateShoppingItem(entity: ShoppingItemEntity): Int
+
+    @Delete
+    fun deleteShoppingItem(entity: ShoppingItemEntity): Int
+
     @Transaction
     suspend fun updateShoppingAndDiscount(shoppingEntity: ShoppingEntity, discountDetailEntity: DiscountDetailEntity): Boolean {
         return try {

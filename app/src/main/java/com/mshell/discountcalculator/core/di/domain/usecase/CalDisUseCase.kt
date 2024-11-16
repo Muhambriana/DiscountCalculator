@@ -13,4 +13,7 @@ interface CalDisUseCase {
     suspend fun updateShoppingAndDiscount(shoppingDetail: ShoppingDetail): CalDisEvent<CalDisResource<Boolean>>
     fun getShoppingDetailById(shoppingId: Long): Flow<CalDisResource<ShoppingDetail>>
     fun getAllShoppingItem(): Flow<List<ShoppingItem>>
+    fun insertShoppingItem(shoppingItem: ShoppingItem)
+    fun updateShoppingItem(shoppingItem: ShoppingItem)
+    fun deleteShoppingItem(shoppingItem: ShoppingItem)
 }

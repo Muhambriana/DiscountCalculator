@@ -19,4 +19,10 @@ interface InterfaceCalDisRepository {
 
     fun getAllShoppingItem(): Flow<List<ShoppingItem>>
 
+    fun insertShoppingItem(shoppingItem: ShoppingItem)
+
+    fun updateShoppingItem(shoppingItem: ShoppingItem)
+
+    fun deleteShoppingItem(shoppingItem: ShoppingItem)
+
 }

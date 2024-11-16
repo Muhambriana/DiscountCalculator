@@ -24,4 +24,10 @@ class LocalDataSource(private val calDisDao: CalDisDao) {
 
     fun getAllShoppingItem() = calDisDao.getAllShoppingItem()
 
+    fun insertShoppingItem(entity: ShoppingItemEntity) = calDisDao.insertShoppingItem(entity)
+
+    fun updateShoppingItem(entity: ShoppingItemEntity) = calDisDao.updateShoppingItem(entity)
+
+    fun deleteShoppingItem(entity: ShoppingItemEntity) = calDisDao.deleteShoppingItem(entity)
+
 }

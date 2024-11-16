@@ -9,25 +9,23 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.CalDisViewModelFactory
 import com.mshell.discountcalculator.core.adapter.ShoppingItemAdapter
-import com.mshell.discountcalculator.core.data.CalDisRepository
 import com.mshell.discountcalculator.core.data.source.CalDisResource
-import com.mshell.discountcalculator.core.data.source.local.CalDisDataSource
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityShoppingItemListBinding
 import com.mshell.discountcalculator.ui.discountsummary.DiscountSummaryFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config
+import com.mshell.discountcalculator.utils.config.DataEvent
 import com.mshell.discountcalculator.utils.helper.Helper
-import com.mshell.discountcalculator.utils.helper.Helper.observeOnce
+import com.mshell.discountcalculator.utils.helper.Helper.showErrorToast
 import com.mshell.discountcalculator.utils.helper.Helper.showShortToast
 import com.mshell.discountcalculator.utils.view.CaldisDialog
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ShoppingItemListActivity : AppCompatActivity() {
@@ -39,23 +37,14 @@ class ShoppingItemListActivity : AppCompatActivity() {
         ActivityShoppingItemListBinding.inflate(layoutInflater)
     }
 
-    private val caldisDataSource by lazy {
-        CalDisDataSource()
-    }
-
-    private val formViewModel by lazy {
-        ViewModelProvider(
-            this,
-            CalDisViewModelFactory(CalDisRepository(caldisDataSource))
-        )[ShoppingItemListViewModel::class.java]
-    }
-
     private val shoppingItemAdapter by lazy {
         ShoppingItemAdapter(false)
     }
 
+    private val shoppingItemListViewModel: ShoppingItemListViewModel by viewModel()
     private var shoppingId: Long? = null
     private var shoppingDetail: ShoppingDetail? = null
+    private var dataEvent: DataEvent? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +69,76 @@ class ShoppingItemListActivity : AppCompatActivity() {
 
     private fun setDataToModels() {
         shoppingId = intent?.extras?.getLong(EXTRA_SHOPPING_ID)
+        getShoppingDetail()
+    }
+
+    private fun getShoppingDetail() {
+        shoppingId?.let { id ->
+            shoppingItemListViewModel.getShoppingDetail(id).observe(this) { resource ->
+                when (resource) {
+                    is CalDisResource.Empty -> {}
+                    is CalDisResource.Error -> {
+                        binding.viewLoading.root.visibility = View.GONE
+                        showErrorToast(resource.exceptionTypeEnum?.codeAsString.toString())
+                    }
+                    is CalDisResource.Loading -> {
+                        binding.viewLoading.root.visibility = View.VISIBLE
+                    }
+                    is CalDisResource.Success -> {
+                        resource.data.also {
+                            if (it == null) {
+                                showErrorToast("Failed")
+                                return@observe
+                            }
+
+                            handlingData(it)
+                            binding.viewLoading.root.visibility = View.GONE
+                        }
+                    }
+                    null -> {}
+                }
+            }
+        }
+    }
+
+    private fun handlingData(shoppingDetail: ShoppingDetail?) {
+
+        this.shoppingDetail = shoppingDetail
+
+        shoppingDetail?.listItem?.also { list ->
+            if (binding.clgNotEmpty.isVisible.not() && list.isEmpty().not()) changeVisibility(false)
+
+            when(dataEvent) {
+                DataEvent.INSERT -> {
+                    eventInserted(list.last())
+                }
+                DataEvent.UPDATE -> {
+                    val item = list.find { it.id == DataEvent.UPDATE.id }
+                    if (item == null) return
+
+                    eventUpdated(item)
+                }
+                DataEvent.DELETE -> {
+                    val shoppingItemId = DataEvent.DELETE.id
+                    eventDeleted(shoppingItemId)
+                }
+                null -> {}
+            }
+
+        }
+    }
+
+    private fun eventInserted(shoppingItem: ShoppingItem) {
+        shoppingItemAdapter.addItem(shoppingItem)
+    }
+
+    private fun eventUpdated(shoppingItem: ShoppingItem) {
+        shoppingItemAdapter.updateItem(shoppingItem)
+    }
+
+    private fun eventDeleted(shoppingItemId: Long) {
+        shoppingItemAdapter.removeItem(shoppingItemId)
+        checkIfListIsEmpty()
     }
 
     @Suppress("DEPRECATION")
@@ -113,22 +172,17 @@ class ShoppingItemListActivity : AppCompatActivity() {
             val bottomDialogFragment = ItemDetailBottomFragment()
             bottomDialogFragment.show(supportFragmentManager, "")
         }
-        binding.btnCalculate.setOnClickListener {
-            calculate()
-        }
+//        binding.btnCalculate.setOnClickListener {
+//            calculate()
+//        }
     }
 
     private fun addNewItem(shoppingItem: ShoppingItem? = null) {
-        formViewModel.addNewItem(shoppingItem)
-        formViewModel.newItem.observeOnce(this) { resource ->
-            shoppingItemAdapter.addItem(resource)
-            changeVisibility(false)
-        }
-    }
-
-    private fun updateQuantity() {
-        formViewModel.item.observe(this) {
-            shoppingItemAdapter.updateItem(it)
+        shoppingId?.also {
+            if (shoppingItem == null) return
+            dataEvent = DataEvent.INSERT
+            shoppingItem.shoppingId = it
+            shoppingItemListViewModel.insertShoppingItem(shoppingItem)
         }
     }
 
@@ -137,12 +191,16 @@ class ShoppingItemListActivity : AppCompatActivity() {
             .setTitle(getString(R.string.delete_item))
             .setSubtitle(getString(R.string.confirmation_delete))
             .setBtnNegative(getString(R.string.yes), true) {
-                shoppingItemAdapter.removeItem(model)
-                checkIfListIsEmpty()
+                deleteItem(model)
             }
             .setBtnPositive(getString(R.string.no), true)
             .setOutsideTouchable(false)
             .show()
+    }
+
+    private fun deleteItem(model: ShoppingItem) {
+        dataEvent = DataEvent.DELETE.withId(model.id)
+        shoppingItemListViewModel.deleteShoppingItem(model)
     }
 
     private fun checkIfListIsEmpty() {
@@ -157,17 +215,26 @@ class ShoppingItemListActivity : AppCompatActivity() {
                 return@scope
             }
 
-            formViewModel.decreaseItemQuantity(model)
-            updateQuantity()
+            model.apply {
+                quantity =  quantity?.minus(1)
+            }
+            updateItem(model)
         }
         shoppingItemAdapter.onBtnPlusClick = { model, _ ->
-            formViewModel.increaseItemQuantity(model)
-            updateQuantity()
+            model.apply {
+                quantity =  quantity?.plus(1)
+            }
+            updateItem(model)
         }
         binding.rvItemShopping.apply {
             layoutManager = LinearLayoutManager(thisActivityContext)
             adapter = shoppingItemAdapter
         }
+    }
+
+    private fun updateItem(model: ShoppingItem) {
+        dataEvent = DataEvent.UPDATE.withId(model.id)
+        shoppingItemListViewModel.updateShoppingItem(model)
     }
 
     private fun changeVisibility(isEmpty: Boolean) {
@@ -184,54 +251,54 @@ class ShoppingItemListActivity : AppCompatActivity() {
     }
 
 
-    private fun calculate() {
-        if (shoppingDetail?.discountDetail == null) {
-            showShortToast("Please choose discount type")
-            return
-        }
-        calculateDiscount()
-    }
-
-    private fun calculateDiscount() {
-        formViewModel.getResultDiscount(
-            shoppingDetail?.apply {
-                listItem = shoppingItemAdapter.getList()
-            }
-        )
-        observeResult()
-    }
-
-    private fun observeResult() {
-        formViewModel.discountResult.observe(this) { event ->
-            event.getContentIfNotHandled().let { resource ->
-                when (resource) {
-                    is CalDisResource.Loading -> {
-                        binding.viewLoading.root.visibility = View.VISIBLE
-                    }
-
-                    is CalDisResource.Empty -> {
-                        binding.viewLoading.root.visibility = View.GONE
-                        binding.viewEmpty.root.visibility = View.VISIBLE
-                        binding.btnCalculate.visibility = View.GONE
-                        binding.btnDeleteItem.visibility = View.GONE
-                    }
-
-                    is CalDisResource.Error -> {
-                        showShortToast(resource.error?.message.toString())
-                        binding.viewLoading.root.visibility = View.GONE
-                    }
-
-                    is CalDisResource.Success -> {
-                        val result = resource.data
-                        openFragment(result)
-                        binding.viewLoading.root.visibility = View.GONE
-                    }
-
-                    else -> {}
-                }
-            }
-        }
-    }
+//    private fun calculate() {
+//        if (shoppingDetail?.discountDetail == null) {
+//            showShortToast("Please choose discount type")
+//            return
+//        }
+//        calculateDiscount()
+//    }
+//
+//    private fun calculateDiscount() {
+//        formViewModel.getResultDiscount(
+//            shoppingDetail?.apply {
+//                listItem = shoppingItemAdapter.getList()
+//            }
+//        )
+//        observeResult()
+//    }
+//
+//    private fun observeResult() {
+//        formViewModel.discountResult.observe(this) { event ->
+//            event.getContentIfNotHandled().let { resource ->
+//                when (resource) {
+//                    is CalDisResource.Loading -> {
+//                        binding.viewLoading.root.visibility = View.VISIBLE
+//                    }
+//
+//                    is CalDisResource.Empty -> {
+//                        binding.viewLoading.root.visibility = View.GONE
+//                        binding.viewEmpty.root.visibility = View.VISIBLE
+//                        binding.btnCalculate.visibility = View.GONE
+//                        binding.btnDeleteItem.visibility = View.GONE
+//                    }
+//
+//                    is CalDisResource.Error -> {
+//                        showShortToast(resource.error?.message.toString())
+//                        binding.viewLoading.root.visibility = View.GONE
+//                    }
+//
+//                    is CalDisResource.Success -> {
+//                        val result = resource.data
+//                        openFragment(result)
+//                        binding.viewLoading.root.visibility = View.GONE
+//                    }
+//
+//                    else -> {}
+//                }
+//            }
+//        }
+//    }
 
     private fun openFragment(shoppingDetail: ShoppingDetail?) {
         if (shoppingDetail == null) return

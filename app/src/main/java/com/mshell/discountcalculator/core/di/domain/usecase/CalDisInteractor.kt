@@ -19,4 +19,10 @@ class CalDisInteractor(private val iCalDisRepository: InterfaceCalDisRepository)
 
     override fun getAllShoppingItem() = iCalDisRepository.getAllShoppingItem()
 
+    override fun insertShoppingItem(shoppingItem: ShoppingItem) = iCalDisRepository.insertShoppingItem(shoppingItem)
+
+    override fun updateShoppingItem(shoppingItem: ShoppingItem) = iCalDisRepository.updateShoppingItem(shoppingItem)
+
+    override fun deleteShoppingItem(shoppingItem: ShoppingItem) = iCalDisRepository.deleteShoppingItem(shoppingItem)
+
 }
