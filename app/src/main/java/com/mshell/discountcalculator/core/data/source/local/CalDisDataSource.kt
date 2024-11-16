@@ -174,13 +174,13 @@ class CalDisDataSource {
         }
     }
 
-    fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<ShoppingItem?> {
+    fun getItemDetail(binding: FragmentItemDetailBottomBinding, shoppingItem: ShoppingItem): Result<ShoppingItem?> {
         return try {
             Result.success(
-                ShoppingItem().apply {
+                shoppingItem.apply {
                     itemName = binding.edItemName.text.toString()
                     pricePerUnit = binding.edPricePerUnit.edCurrency.getCleanText().toDouble()
-                    quantity = DEFAULT_DOUBLE_VALUE_ONE
+                    if (quantity == null) quantity = DEFAULT_DOUBLE_VALUE_ONE
                 }
             )
         } catch (e: Exception) {

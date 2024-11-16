@@ -19,7 +19,7 @@ class CalDisRepository(
     fun getShoppingDetail(binding: ActivityHomeBinding): Result<ShoppingDetail?> =
         caldisDataSource.getShoppingDetail(binding)
 
-    fun getItemDetail(binding: FragmentItemDetailBottomBinding): Result<ShoppingItem?> =
-        caldisDataSource.getItemDetail(binding)
+    fun getItemDetail(binding: FragmentItemDetailBottomBinding, shoppingItem: ShoppingItem): Result<ShoppingItem?> =
+        caldisDataSource.getItemDetail(binding, shoppingItem)
 
 }
