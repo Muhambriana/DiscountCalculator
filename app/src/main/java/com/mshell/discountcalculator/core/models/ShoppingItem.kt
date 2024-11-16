@@ -8,6 +8,8 @@ data class ShoppingItem(
 
     var id: Long = 0,
 
+    var shoppingId: Long = 0,
+
     var itemName: String? = null,
 
     var pricePerUnit: Double? = null,
