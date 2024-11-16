@@ -83,7 +83,7 @@ object Helper {
     fun Double.format(digits: Int = 0) =
         String.format(LOCALE, "%1$.${digits}f", this)
 
-    fun Double?.toCurrency(digits: Int = 0): String {
+    fun Double?.toCurrency(digits: Int = 0, outputNumbersOnly: Boolean = false): String {
         if (this == null) return EMPTY_STRING
 
         val pattern = if (digits > 0) {
@@ -99,7 +99,11 @@ object Helper {
                 decimalSeparator = ','  // Decimal separator
             }
         }
-        return "Rp. ${format.format(this)}"
+
+        return if (outputNumbersOnly)
+            format.format(this)
+        else
+            "Rp. ${format.format(this)}"
     }
 
     fun executeBasedOnSdkVersion(
