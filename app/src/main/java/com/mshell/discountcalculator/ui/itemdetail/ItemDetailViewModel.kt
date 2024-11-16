@@ -15,10 +15,10 @@ class ItemDetailViewModel(private val repository: CalDisRepository) : ViewModel(
 
     val itemDetail = MutableLiveData<CalDisEvent<CalDisResource<ShoppingItem>>>()
 
-    fun getItemDetail(binding: FragmentItemDetailBottomBinding) {
+    fun getItemDetail(binding: FragmentItemDetailBottomBinding, shoppingItem: ShoppingItem) {
         itemDetail.postValue(CalDisEvent(CalDisResource.Loading()))
         viewModelScope.launch {
-            val result = async { repository.getItemDetail(binding) }.await()
+            val result = async { repository.getItemDetail(binding, shoppingItem) }.await()
             result.onSuccess {
                 itemDetail.postValue(CalDisEvent(CalDisResource.Success(it)))
             }.onFailure {
