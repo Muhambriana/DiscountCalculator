@@ -23,7 +23,7 @@
 
     <include
         android:id="@+id/layout_summary_detail"
-        layout="@layout/summary_detail"
+        layout="@layout/view_summary_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/rv_item_shopping"

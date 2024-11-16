@@ -72,7 +72,7 @@
 
     <include
         android:id="@+id/ed_max_discount"
-        layout="@layout/edit_text_currency"
+        layout="@layout/view_edit_text_currency"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
