@@ -235,11 +235,11 @@ class ShoppingItemListActivity : AppCompatActivity() {
                 return@scope
             }
 
-            model.quantity = model.quantity?.minus(1)
+            model.quantity = model.quantity.minus(1)
             updateItem(model)
         }
         shoppingItemAdapter.onBtnPlusClick = { model, _ ->
-            model.quantity = model.quantity?.plus(1)
+            model.quantity = model.quantity.plus(1)
             updateItem(model)
         }
         shoppingItemAdapter.onItemClick = { model ->

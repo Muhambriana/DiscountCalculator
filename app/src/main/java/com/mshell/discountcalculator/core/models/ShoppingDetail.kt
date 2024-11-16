@@ -10,17 +10,17 @@ data class ShoppingDetail(
 
     var discountDetail: DiscountDetail,
 
-    var totalShopping: Double? = null,
+    var totalShopping: Double = 0.0,
 
-    var additional: Double? = null,
+    var additional: Double = 0.0,
 
-    var total: Double? = null,
+    var total: Double = 0.0,
 
-    var totalQuantity: Double? = null,
+    var totalQuantity: Double = 0.0,
 
-    var discount: Double? = null,
+    var discount: Double = 0.0,
 
-    var totalAfterDiscount: Double? = null,
+    var totalAfterDiscount: Double = 0.0,
 
     var listItem: MutableList<ShoppingItem> = mutableListOf()
 

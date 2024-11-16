@@ -11,7 +11,7 @@ import com.mshell.discountcalculator.core.data.source.local.entity.ShoppingItemE
         ShoppingEntity::class,
         DiscountDetailEntity::class,
         ShoppingItemEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class CalDisDatabase : RoomDatabase() {

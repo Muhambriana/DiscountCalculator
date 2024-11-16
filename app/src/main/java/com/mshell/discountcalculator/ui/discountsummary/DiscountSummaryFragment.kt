@@ -80,14 +80,14 @@ class DiscountSummaryFragment : Fragment() {
                 tvDiscount.text = it?.discount.toCurrency()
                 tvAfterDiscount.text = it?.totalAfterDiscount.toCurrency(2)
                 tvSummaryDiscount.text = it?.let {
-                    when(it.discountDetail?.discountType) {
+                    when(it.discountDetail.discountType) {
                         DiscountType.NOMINAL -> {
-                            "${it.total.toCurrency(2)} - ${it.discountDetail?.discountNominal.toCurrency(2)}"
+                            "${it.total.toCurrency(2)} - ${it.discountDetail.discountNominal.toCurrency(2)}"
                         }
                         DiscountType.PERCENT -> {
-                            "${it.total.toCurrency(2)} X ${it.discountDetail?.discountPercent}%" +
+                            "${it.total.toCurrency(2)} X ${it.discountDetail.discountPercent}%" +
                                     "\n" +
-                                    "Max: ${it.discountDetail?.discountMax?.toCurrency(2)}"
+                                    "Max: ${it.discountDetail.discountMax?.toCurrency(2)}"
                         }
                         else -> Config.EMPTY_STRING
                     }

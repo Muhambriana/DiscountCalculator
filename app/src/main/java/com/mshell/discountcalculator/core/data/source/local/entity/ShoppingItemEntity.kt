@@ -31,23 +31,23 @@ data class ShoppingItemEntity(
     var itemName: String? = null,
 
     @ColumnInfo(name = "price_per_unit")
-    var pricePerUnit: Double? = null,
+    var pricePerUnit: Double = 0.0,
 
     @ColumnInfo(name = "quantity")
-    var quantity: Double? = null,
+    var quantity: Double = 0.0,
 
     @ColumnInfo(name = "total_price")
-    var totalPrice: Double? = null,
+    var totalPrice: Double = 0.0,
 
     @ColumnInfo(name = "total_discount")
-    var totalDiscount: Double? = null,
+    var totalDiscount: Double = 0.0,
 
     @ColumnInfo(name = "discount_per_unit")
-    var discountPerUnit: Double? = null,
+    var discountPerUnit: Double = 0.0,
 
     @ColumnInfo(name = "price_per_unit_after_discount")
-    var pricePerUnitAfterDiscount: Double? = null,
+    var pricePerUnitAfterDiscount: Double = 0.0,
 
     @ColumnInfo(name = "total_price_after_discount")
-    var totalPriceAfterDiscount: Double? = null
+    var totalPriceAfterDiscount: Double = 0.0
 )

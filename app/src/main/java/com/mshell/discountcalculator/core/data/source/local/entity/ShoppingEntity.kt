@@ -17,21 +17,21 @@ data class ShoppingEntity(
     var shoppingId: Long = 0,
 
     @ColumnInfo(name = "total_shopping")
-    var totalShopping: Double? = null,
+    var totalShopping: Double = 0.0,
 
     @ColumnInfo(name = "additional")
-    var additional: Double? = null,
+    var additional: Double = 0.0,
 
     @ColumnInfo(name = "total")
-    var total: Double? = null,
+    var total: Double = 0.0,
 
     @ColumnInfo(name = "total_quantity")
-    var totalQuantity: Double? = null,
+    var totalQuantity: Double = 0.0,
 
     @ColumnInfo(name = "discount")
-    var discount: Double? = null,
+    var discount: Double = 0.0,
 
     @ColumnInfo(name = "total_after_discount")
-    var totalAfterDiscount: Double? = null
+    var totalAfterDiscount: Double = 0.0
 )
 

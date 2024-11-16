@@ -53,13 +53,13 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
 
         inner class ShoppingItemViewHolder(private val binding: ItemListShoppingBinding) :
             ViewHolder(binding.root) {
-                fun bind(shoppingItem: ShoppingItem?) {
+                fun bind(shoppingItem: ShoppingItem) {
                     with(binding) {
-                        shoppingItem?.totalPrice = shoppingItem?.pricePerUnit?.times(shoppingItem.quantity ?: 1.0)
-                        tvItemName.text = shoppingItem?.itemName
-                        edQuantity.setText(shoppingItem?.quantity?.format())
-                        tvPricePerUnit.text = shoppingItem?.pricePerUnit?.toCurrency()
-                        tvTotalPrice.text = shoppingItem?.totalPrice?.toCurrency()
+                        shoppingItem.totalPrice = shoppingItem.pricePerUnit.times(shoppingItem.quantity)
+                        tvItemName.text = shoppingItem.itemName
+                        edQuantity.setText(shoppingItem.quantity.format())
+                        tvPricePerUnit.text = shoppingItem.pricePerUnit.toCurrency()
+                        tvTotalPrice.text = shoppingItem.totalPrice.toCurrency()
                     }
                 }
 
@@ -104,19 +104,18 @@ class ShoppingItemAdapter(private val onlyPreview: Boolean = true) :
             return listShoppingItem
         }
 
-        fun updateItem(item: ShoppingItem?) {
-            listShoppingItem.find { it.id == item?.id }?.apply {
-                itemName = item?.itemName
-                pricePerUnit = item?.pricePerUnit
-                quantity = item?.quantity
-                totalDiscount = item?.totalDiscount
-                totalPriceAfterDiscount = item?.totalPriceAfterDiscount
+        fun updateItem(item: ShoppingItem) {
+            listShoppingItem.find { it.id == item.id }?.apply {
+                itemName = item.itemName
+                pricePerUnit = item.pricePerUnit
+                quantity = item.quantity
+                totalDiscount = item.totalDiscount
+                totalPriceAfterDiscount = item.totalPriceAfterDiscount
             }
             notifyItemChanged(listShoppingItem.indexOf(item))
         }
 
-        fun addItem(item: ShoppingItem?) {
-            if (item == null) return
+        fun addItem(item: ShoppingItem) {
             listShoppingItem.add(item)
             notifyItemInserted(listShoppingItem.size)
         }

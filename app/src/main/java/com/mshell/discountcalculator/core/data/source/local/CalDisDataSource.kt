@@ -6,7 +6,6 @@ import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.databinding.ActivityHomeBinding
 import com.mshell.discountcalculator.databinding.FragmentItemDetailBottomBinding
 import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE
-import com.mshell.discountcalculator.utils.config.Config.DEFAULT_DOUBLE_VALUE_ONE
 import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper.takeZeroIfNegative
 
@@ -15,21 +14,21 @@ class CalDisDataSource {
     fun createNewItem(shoppingItem: ShoppingItem? = null): ShoppingItem {
         val item = shoppingItem ?: ShoppingItem()
         return item.apply {
-            totalPrice = quantity?.times(pricePerUnit ?: DEFAULT_DOUBLE_VALUE)
+            totalPrice = quantity.times(pricePerUnit)
         }
     }
 
-    fun calculateShoppingDetail(shoppingDetail: ShoppingDetail?): Result<ShoppingDetail?> {
+    fun calculateShoppingDetail(shoppingDetail: ShoppingDetail): Result<ShoppingDetail?> {
         try {
-            shoppingDetail?.apply {
-                totalQuantity = listItem.sumOf { it.quantity ?: DEFAULT_DOUBLE_VALUE }
-                totalShopping = listItem.sumOf { it.totalPrice ?: DEFAULT_DOUBLE_VALUE }
-                total = totalShopping?.plus(additional ?: DEFAULT_DOUBLE_VALUE)
+            shoppingDetail.apply {
+                totalQuantity = listItem.sumOf { it.quantity }
+                totalShopping = listItem.sumOf { it.totalPrice }
+                total = totalShopping.plus(additional)
             }
-            shoppingDetail?.discountDetail.let {
-                when (it?.discountType) {
+            shoppingDetail.discountDetail.let {
+                when (it.discountType) {
                     DiscountType.NOMINAL -> {
-                        return calculateDiscountNominal(shoppingDetail, it.discountNominal)
+                        return calculateDiscountNominal(shoppingDetail, it.discountNominal ?: DEFAULT_DOUBLE_VALUE)
                     }
 
                     DiscountType.PERCENT -> {
@@ -52,37 +51,32 @@ class CalDisDataSource {
     }
 
     private fun calculateDiscountNominal(
-        shoppingDetail: ShoppingDetail?,
-        discountNominal: Double?
+        shoppingDetail: ShoppingDetail,
+        discountNominal: Double
     ): Result<ShoppingDetail?> {
         return try {
-            val discount = discountNominal ?: DEFAULT_DOUBLE_VALUE
-            val totalQuantity = shoppingDetail?.totalQuantity ?: DEFAULT_DOUBLE_VALUE
-            val discountPerUnit = discountNominal?.div(totalQuantity)
-            val sumAllItems = shoppingDetail?.totalShopping ?: DEFAULT_DOUBLE_VALUE
-            shoppingDetail?.listItem?.forEach { shoppingItem ->
+            val totalQuantity = shoppingDetail.totalQuantity
+            val discountPerUnit = discountNominal.div(totalQuantity)
+            val sumAllItems = shoppingDetail.totalShopping
+            shoppingDetail.listItem.forEach { shoppingItem ->
                 shoppingItem.apply {
-                    totalDiscount = if (sumAllItems < discount) {
+                    totalDiscount = if (sumAllItems < discountNominal) {
                         totalPrice
                     } else {
-                        discountPerUnit?.times(quantity ?: DEFAULT_DOUBLE_VALUE)
+                        discountPerUnit.times(quantity)
                     }
-                    this.discountPerUnit = totalDiscount?.div(quantity ?: DEFAULT_DOUBLE_VALUE)
+                    this.discountPerUnit = totalDiscount.div(quantity)
                     this.pricePerUnitAfterDiscount = takeZeroIfNegative(
-                        this.pricePerUnit?.minus(
-                            this.discountPerUnit ?: DEFAULT_DOUBLE_VALUE
-                        )
+                        this.pricePerUnit.minus(this.discountPerUnit)
                     )
                     totalPriceAfterDiscount = takeZeroIfNegative(
-                        totalPrice?.minus(
-                            totalDiscount ?: DEFAULT_DOUBLE_VALUE
-                        )
+                        totalPrice.minus(totalDiscount)
                     )
                 }
             }
-            shoppingDetail?.apply {
-                this.discount = listItem.sumOf { it.totalDiscount ?: DEFAULT_DOUBLE_VALUE }
-                totalAfterDiscount = total?.minus(this.discount ?: DEFAULT_DOUBLE_VALUE)
+            shoppingDetail.apply {
+                this.discount = listItem.sumOf { it.totalDiscount }
+                totalAfterDiscount = total.minus(this.discount)
             }
 
             Result.success(shoppingDetail)
@@ -106,26 +100,22 @@ class CalDisDataSource {
 
             // Apply discount to each item
             shoppingDetail?.listItem?.forEach { shoppingItem ->
-                val proportion = shoppingItem.totalPrice?.div(totalAllItem) ?: DEFAULT_DOUBLE_VALUE
+                val proportion = shoppingItem.totalPrice.div(totalAllItem)
                 val itemDiscount = (proportion * totalDiscount)
                 shoppingItem.apply {
                     this.totalDiscount = itemDiscount
-                    this.discountPerUnit = this.totalDiscount?.div(quantity ?: DEFAULT_DOUBLE_VALUE)
+                    this.discountPerUnit = this.totalDiscount.div(quantity)
                     this.pricePerUnitAfterDiscount = takeZeroIfNegative(
-                        this.pricePerUnit?.minus(
-                            this.discountPerUnit ?: DEFAULT_DOUBLE_VALUE
-                        )
+                        this.pricePerUnit.minus(this.discountPerUnit)
                     )
                     totalPriceAfterDiscount = takeZeroIfNegative(
-                        totalPrice?.minus(
-                            this.totalDiscount ?: DEFAULT_DOUBLE_VALUE
-                        )
+                        totalPrice.minus(this.totalDiscount)
                     )
                 }
             }
             shoppingDetail?.apply {
-                discount = listItem.sumOf { it.totalDiscount ?: DEFAULT_DOUBLE_VALUE }
-                totalAfterDiscount = total?.minus(discount ?: DEFAULT_DOUBLE_VALUE)
+                discount = listItem.sumOf { it.totalDiscount }
+                totalAfterDiscount = total.minus(discount)
             }
             // Return updated list
             Result.success(shoppingDetail)
@@ -180,7 +170,6 @@ class CalDisDataSource {
                 shoppingItem.apply {
                     itemName = binding.edItemName.text.toString()
                     pricePerUnit = binding.edPricePerUnit.edCurrency.getCleanText().toDouble()
-                    if (quantity == null) quantity = DEFAULT_DOUBLE_VALUE_ONE
                 }
             )
         } catch (e: Exception) {
