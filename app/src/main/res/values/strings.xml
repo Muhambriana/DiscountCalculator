@@ -44,4 +44,8 @@
     <string name="quantity">Quantity</string>
     <string name="discount_per_unit">Discount per unit</string>
     <string name="price_per_unit_after_discount">Price per unit\nafter discount</string>
+    <string name="discount_type">Discount Type</string>
+    <string name="click_to_see_detail">Click To See Detail</string>
+    <string name="three_dots">...</string>
+    <string name="edit_discount">Edit Discount</string>
 </resources>
