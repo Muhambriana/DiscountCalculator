@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.adapter.ShoppingItemAdapter
 import com.mshell.discountcalculator.core.data.source.CalDisResource
-import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityShoppingItemListBinding
@@ -66,17 +65,17 @@ class ShoppingItemListActivity : AppCompatActivity() {
             insets
         }
 
-        setDataToModels()
-        viewInitialization()
+        setUpData()
+        setUpView()
     }
 
-    private fun setDataToModels() {
+    private fun setUpData() {
         shoppingId = intent?.extras?.getLong(EXTRA_SHOPPING_ID)
         getShoppingDetail()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setUpValueToView() {
+    private fun setDataValueToView() {
         binding.layoutDetailDiscount.apply {
             tvAdditional.text = shoppingDetail?.additional?.toCurrency()
             shoppingDetail?.discountDetail?.also {
@@ -125,7 +124,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
                                 return@observe
                             }
                             handlingData(it)
-                            setUpValueToView()
+                            setDataValueToView()
                             binding.viewLoading.root.visibility = View.GONE
                         }
                     }
@@ -176,7 +175,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
-    private fun viewInitialization() {
+    private fun setUpView() {
         initButton()
         supportFragmentManager.setFragmentResultListener(
             ItemDetailBottomFragment.KEY_ADD_ITEM,

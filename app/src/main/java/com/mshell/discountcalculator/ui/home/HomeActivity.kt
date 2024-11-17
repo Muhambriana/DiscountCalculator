@@ -43,10 +43,10 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        viewInitialization()
+        setUpView()
     }
 
-    private fun viewInitialization() {
+    private fun setUpView() {
         binding.radioGroupDiscount.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 binding.rbPercent.id -> {

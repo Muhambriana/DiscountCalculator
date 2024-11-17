@@ -59,11 +59,11 @@ class ItemDetailBottomFragment : BottomSheetDialogFragment() {
     }
 
     private fun initialization() {
-        dataInitialization()
-        viewInitialization()
+        setUpData()
+        setUpView()
     }
 
-    private fun dataInitialization() {
+    private fun setUpData() {
         arguments?.let {
             @Suppress("DEPRECATION")
             shoppingItem = Helper.returnBasedOnSdkVersion(
@@ -84,7 +84,7 @@ class ItemDetailBottomFragment : BottomSheetDialogFragment() {
         binding.edPricePerUnit.edCurrency.setText(shoppingItem?.pricePerUnit.toCurrency(outputNumbersOnly = true))
     }
 
-    private fun viewInitialization() {
+    private fun setUpView() {
         binding.btnCancel.setSingleClickListener {
             dismiss()
         }

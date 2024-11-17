@@ -49,10 +49,10 @@ class DiscountSummaryFragment : Fragment() {
     }
 
     private fun initialization() {
-        dataInitialization()
+        setUpData()
     }
 
-    private fun dataInitialization() {
+    private fun setUpData() {
         arguments?.let {
             @Suppress("DEPRECATION")
             shoppingDetail = Helper.returnBasedOnSdkVersion(
@@ -68,10 +68,10 @@ class DiscountSummaryFragment : Fragment() {
         }
 
         showRecyclerView()
-        setDataToViews()
+        setDataValueToView()
     }
 
-    private fun setDataToViews() {
+    private fun setDataValueToView() {
         shoppingDetail.also {
             with(binding.layoutSummaryDetail) {
                 tvTotalShopping.text = it?.totalShopping.toCurrency(2)
