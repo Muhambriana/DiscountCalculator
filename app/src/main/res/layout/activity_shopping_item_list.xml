@@ -15,19 +15,60 @@
         layout="@layout/toolbar_cal_dis"/>
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_title_discount_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center"
+        android:textSize="@dimen/_12ssp"
+        android:text="@string/detail_discount"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <include
+        android:id="@+id/layout_detail_discount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        layout="@layout/view_detail_discount"
+        app:layout_constraintStart_toStartOf="@id/tv_title_discount_detail"
+        app:layout_constraintEnd_toEndOf="@id/tv_title_discount_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_discount_detail"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_edit_discount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/background_filled_rounded_primary_color"
+        android:fontFamily="@font/poppins_normal"
+        android:text="@string/edit_discount"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/layout_detail_discount" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/poppins_normal"
         android:gravity="start|center"
         android:text="@string/your_item_list"
         android:textSize="@dimen/_20ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintEnd_toEndOf="@id/layout_detail_discount"
+        app:layout_constraintStart_toStartOf="@id/layout_detail_discount"
+        app:layout_constraintTop_toBottomOf="@id/btn_edit_discount" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item_shopping"
@@ -98,6 +139,8 @@
 
     <include
         android:id="@+id/view_empty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         layout="@layout/view_empty"
         android:elevation="@dimen/_5sdp"
         tools:visibility="gone"

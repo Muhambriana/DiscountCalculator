@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mshell.discountcalculator.R
 import com.mshell.discountcalculator.core.adapter.ShoppingItemAdapter
 import com.mshell.discountcalculator.core.data.source.CalDisResource
+import com.mshell.discountcalculator.core.models.DiscountDetail
 import com.mshell.discountcalculator.core.models.ShoppingItem
 import com.mshell.discountcalculator.core.models.ShoppingDetail
 import com.mshell.discountcalculator.databinding.ActivityShoppingItemListBinding
@@ -20,8 +22,10 @@ import com.mshell.discountcalculator.ui.discountsummary.DiscountSummaryFragment
 import com.mshell.discountcalculator.ui.itemdetail.ItemDetailBottomFragment
 import com.mshell.discountcalculator.utils.config.Config
 import com.mshell.discountcalculator.utils.config.DataEvent
+import com.mshell.discountcalculator.utils.config.DiscountType
 import com.mshell.discountcalculator.utils.helper.Helper
 import com.mshell.discountcalculator.utils.helper.Helper.showErrorToast
+import com.mshell.discountcalculator.utils.helper.Helper.toCurrency
 import com.mshell.discountcalculator.utils.view.CaldisDialog
 import com.mshell.discountcalculator.utils.view.setSingleClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -71,6 +75,37 @@ class ShoppingItemListActivity : AppCompatActivity() {
         getShoppingDetail()
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun setUpValueToView() {
+        binding.layoutDetailDiscount.apply {
+            tvAdditional.text = shoppingDetail?.additional?.toCurrency()
+            shoppingDetail?.discountDetail?.also {
+                tvDiscountType.text = it.discountType?.name
+                hideOrShowDiscountMax(it.discountType)
+                when(it.discountType) {
+                    DiscountType.NOMINAL -> {
+                        tvDiscount.text = it.discountNominal?.toCurrency()
+                    }
+                    DiscountType.PERCENT -> {
+                        tvDiscount.text = "${it.discountPercent}%"
+                        tvMaxDiscount.text = it.discountMax.toCurrency()
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun hideOrShowDiscountMax(discountType: DiscountType?) {
+        if (discountType == null) return
+
+        val visibility = if (discountType == DiscountType.NOMINAL) View.GONE else View.VISIBLE
+        binding.layoutDetailDiscount.apply {
+            tvTitleMaxDiscount.visibility = visibility
+            tvMaxDiscount.visibility = visibility
+        }
+    }
+
     private fun getShoppingDetail() {
         shoppingId?.let { id ->
             shoppingItemListViewModel.getShoppingDetail(id).observe(this) { resource ->
@@ -89,8 +124,8 @@ class ShoppingItemListActivity : AppCompatActivity() {
                                 showErrorToast("Failed")
                                 return@observe
                             }
-
                             handlingData(it)
+                            setUpValueToView()
                             binding.viewLoading.root.visibility = View.GONE
                         }
                     }
@@ -190,7 +225,26 @@ class ShoppingItemListActivity : AppCompatActivity() {
 //        binding.btnCalculate.setOnClickListener {
 //            calculate()
 //        }
+        binding.layoutDetailDiscount.btnDetail.setOnClickListener {
+            toggleDetailVisibility(binding.layoutDetailDiscount.clgDetailDiscount.isVisible)
+        }
+
     }
+
+    private fun toggleDetailVisibility(isVisible: Boolean) {
+        val drawableRes = if (isVisible) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up
+        val seeMoreVisibility = if (isVisible) View.VISIBLE else View.GONE
+        val detailVisibility = if (isVisible) View.GONE else View.VISIBLE
+
+        binding.layoutDetailDiscount.apply {
+            btnDetail.setImageDrawable(ContextCompat.getDrawable(thisActivityContext, drawableRes))
+            tvSeeMore.visibility = seeMoreVisibility
+            clgDetailDiscount.visibility = detailVisibility
+            binding.btnEditDiscount.visibility = detailVisibility
+            hideOrShowDiscountMax(shoppingDetail?.discountDetail?.discountType)
+        }
+    }
+
 
     private fun openItemDetailFragment(shoppingItem: ShoppingItem? = null) {
         val bottomDialogFragment = ItemDetailBottomFragment.newInstance(shoppingItem)
