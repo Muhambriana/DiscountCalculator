@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.utils.helper
+package com.mshell.caldis.utils.helper
 
 import android.app.Activity
 import android.content.Context

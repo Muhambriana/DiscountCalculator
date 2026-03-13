@@ -1,13 +1,13 @@
-package com.mshell.discountcalculator.core.adapter
+package com.mshell.caldis.core.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
-import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.models.Form
-import com.mshell.discountcalculator.databinding.ItemListFormBinding
+import com.mshell.caldis.R
+import com.mshell.caldis.core.models.Form
+import com.mshell.caldis.databinding.ItemListFormBinding
 
 class FormAdapter: RecyclerView.Adapter<FormAdapter.FormViewHolder>() {
 

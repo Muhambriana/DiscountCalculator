@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.ui.home
+package com.mshell.caldis.ui.home
 
 import android.os.Bundle
 import android.view.View
@@ -8,10 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.databinding.ActivityHomeBinding
-import com.mshell.discountcalculator.utils.config.DiscountType
-import com.mshell.discountcalculator.utils.helper.Helper
+import com.mshell.caldis.R
+import com.mshell.caldis.databinding.ActivityHomeBinding
+import com.mshell.caldis.utils.config.DiscountType
+import com.mshell.caldis.utils.helper.Helper
 
 class HomeActivity : AppCompatActivity() {
 

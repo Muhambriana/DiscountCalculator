@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.ui.form
+package com.mshell.caldis.ui.form
 
 import android.os.Bundle
 import android.view.View
@@ -8,13 +8,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mshell.discountcalculator.R
-import com.mshell.discountcalculator.core.DiscalViewModelFactory
-import com.mshell.discountcalculator.core.adapter.FormAdapter
-import com.mshell.discountcalculator.utils.config.DiscountType
-import com.mshell.discountcalculator.core.repository.DiscalRepository
-import com.mshell.discountcalculator.core.resource.DiscalResource
-import com.mshell.discountcalculator.databinding.ActivityDiscountFormBinding
+import com.mshell.caldis.R
+import com.mshell.caldis.core.DiscalViewModelFactory
+import com.mshell.caldis.core.adapter.FormAdapter
+import com.mshell.caldis.utils.config.DiscountType
+import com.mshell.caldis.core.repository.DiscalRepository
+import com.mshell.caldis.core.resource.DiscalResource
+import com.mshell.caldis.databinding.ActivityDiscountFormBinding
 
 class DiscountFormActivity : AppCompatActivity() {
 

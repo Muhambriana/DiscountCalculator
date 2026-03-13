@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.core.resource
+package com.mshell.caldis.core.resource
 
 class DiscalEvent<out T> (private val content: T) {
     private var hasBeenHandled = false

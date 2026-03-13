@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.utils.config
+package com.mshell.caldis.utils.config
 
 enum class DiscountType {
     PERCENT,

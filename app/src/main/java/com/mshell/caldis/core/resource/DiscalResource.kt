@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.core.resource
+package com.mshell.caldis.core.resource
 
 sealed class DiscalResource<T>(val data: T? = null, val message: String? = null) {
     class Loading<T> :DiscalResource<T>()

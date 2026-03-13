@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.mshell.discountcalculator.utils.view.CurrencyEditText
+    <com.mshell.caldis.utils.view.CurrencyEditText
         android:id="@+id/ed_discount"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"

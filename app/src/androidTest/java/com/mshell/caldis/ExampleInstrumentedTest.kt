@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator
+package com.mshell.caldis
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.mshell.discountcalculator", appContext.packageName)
+        assertEquals("com.mshell.caldis", appContext.packageName)
     }
 }

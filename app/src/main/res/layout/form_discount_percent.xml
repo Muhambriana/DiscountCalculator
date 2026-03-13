@@ -47,7 +47,7 @@
         app:layout_constraintStart_toEndOf="@+id/ed_discount_percent"
         app:layout_constraintTop_toTopOf="@+id/tv_title_form_discount_percent" />
 
-    <com.mshell.discountcalculator.utils.view.CurrencyEditText
+    <com.mshell.caldis.utils.view.CurrencyEditText
         android:id="@+id/ed_max_discount"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"

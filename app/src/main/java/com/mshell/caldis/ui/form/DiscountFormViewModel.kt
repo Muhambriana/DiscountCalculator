@@ -1,11 +1,11 @@
-package com.mshell.discountcalculator.ui.form
+package com.mshell.caldis.ui.form
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mshell.discountcalculator.core.models.Form
-import com.mshell.discountcalculator.core.repository.DiscalRepository
-import com.mshell.discountcalculator.core.resource.DiscalEvent
-import com.mshell.discountcalculator.core.resource.DiscalResource
+import com.mshell.caldis.core.models.Form
+import com.mshell.caldis.core.repository.DiscalRepository
+import com.mshell.caldis.core.resource.DiscalEvent
+import com.mshell.caldis.core.resource.DiscalResource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

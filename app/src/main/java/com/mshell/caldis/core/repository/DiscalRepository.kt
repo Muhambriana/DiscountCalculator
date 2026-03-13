@@ -1,6 +1,6 @@
-package com.mshell.discountcalculator.core.repository
+package com.mshell.caldis.core.repository
 
-import com.mshell.discountcalculator.core.models.Form
+import com.mshell.caldis.core.models.Form
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

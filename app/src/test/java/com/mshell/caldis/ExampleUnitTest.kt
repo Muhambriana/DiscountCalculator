@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator
+package com.mshell.caldis
 
 import org.junit.Test
 

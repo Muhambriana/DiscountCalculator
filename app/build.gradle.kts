@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mshell.discountcalculator"
+    namespace = "com.mshell.caldis"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.mshell.discountcalculator"
+        applicationId = "com.mshell.caldis"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

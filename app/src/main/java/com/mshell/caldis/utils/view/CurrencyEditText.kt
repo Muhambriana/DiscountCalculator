@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.utils.view
+package com.mshell.caldis.utils.view
 
 import android.content.Context
 import android.text.Editable

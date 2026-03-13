@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator
+package com.mshell.caldis
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

@@ -1,4 +1,4 @@
-package com.mshell.discountcalculator.core.models
+package com.mshell.caldis.core.models
 
 data class Form(
 
