@@ -7,14 +7,14 @@ plugins {
 
 android {
     namespace = "com.mshell.caldis"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.mshell.discountcalculator"
+        applicationId = "com.mshell.caldis"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 9
-        versionName = "1.3.1"
+        targetSdk = 36
+        versionCode = 2
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
