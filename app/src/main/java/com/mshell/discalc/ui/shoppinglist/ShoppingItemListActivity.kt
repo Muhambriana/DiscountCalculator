@@ -3,6 +3,7 @@ package com.mshell.discalc.ui.shoppinglist
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -60,20 +61,28 @@ class ShoppingItemListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar.root as Toolbar?)
-        setOnBackPressedDispatcher()
+        setupBackStackListener()
+        setupOnBackPressedDispatcher()
 
         initialization()
     }
 
-    private fun setOnBackPressedDispatcher() {
-        onBackPressedDispatcher.addCallback(this) {
-            if (binding.flFragmentContainer.isVisible) {
-                supportFragmentManager.popBackStack()
-                binding.flFragmentContainer.visibility = View.GONE
-                return@addCallback
-            }
+    private fun setupBackStackListener() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            val isEmpty = supportFragmentManager.backStackEntryCount == 0
+            binding.flFragmentContainer.visibility =
+                if (isEmpty) View.GONE else View.VISIBLE
+        }
+    }
 
-            super.onBackPressedDispatcher.onBackPressed()
+    private fun setupOnBackPressedDispatcher() {
+        onBackPressedDispatcher.addCallback(this) {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack()
+            } else {
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+            }
         }
     }
 
