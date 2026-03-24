@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         tools:visibility="visible"
-        app:constraint_referenced_ids="rv_item_shopping, btn_delete_item, btn_calculate"/>
+        app:constraint_referenced_ids="rv_item_shopping, btn_calculate"/>
 
     <FrameLayout
         android:id="@+id/fl_fragment_container"

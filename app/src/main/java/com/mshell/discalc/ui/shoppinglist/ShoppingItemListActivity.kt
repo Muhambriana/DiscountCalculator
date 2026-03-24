@@ -132,6 +132,7 @@ class ShoppingItemListActivity : AppCompatActivity() {
     }
 
     private fun initButton() {
+        binding.btnDeleteItem.visibility = View.GONE
         binding.btnDeleteItem.setSingleClickListener {
 
         }
