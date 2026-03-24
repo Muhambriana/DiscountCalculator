@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mshell.caldis"
+    namespace = "com.mshell.discalc"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.mshell.caldis"
+        applicationId = "com.mshell.discalc"
         minSdk = 24
         targetSdk = 36
         versionCode = 2

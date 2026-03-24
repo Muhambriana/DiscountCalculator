@@ -56,7 +56,7 @@
                 app:layout_constraintStart_toStartOf="@id/tv_discount"
                 app:layout_constraintTop_toBottomOf="@id/tv_discount" />
 
-            <com.mshell.caldis.utils.view.CustomRadioGroup
+            <com.mshell.discalc.utils.view.CustomRadioGroup
                 android:id="@+id/radio_group_discount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -173,7 +173,7 @@
                         app:layout_constraintStart_toEndOf="@+id/tv_sub_title_nominal"
                         app:layout_constraintTop_toTopOf="@id/iv_icon_nominal" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.mshell.caldis.utils.view.CustomRadioGroup>
+            </com.mshell.discalc.utils.view.CustomRadioGroup>
 
             <View
                 android:id="@+id/view_barrier"

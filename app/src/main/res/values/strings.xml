@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CalDis</string>
+    <string name="app_name">DisCalc</string>
     <string name="add_more">Add More</string>
     <string name="item">Item</string>
     <string name="price">Price per item</string>
