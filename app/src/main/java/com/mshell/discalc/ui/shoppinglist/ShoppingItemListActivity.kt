@@ -3,6 +3,7 @@ package com.mshell.discalc.ui.shoppinglist
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
@@ -59,7 +60,21 @@ class ShoppingItemListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar.root as Toolbar?)
+        setOnBackPressedDispatcher()
+
         initialization()
+    }
+
+    private fun setOnBackPressedDispatcher() {
+        onBackPressedDispatcher.addCallback(this) {
+            if (binding.flFragmentContainer.isVisible) {
+                supportFragmentManager.popBackStack()
+                binding.flFragmentContainer.visibility = View.GONE
+                return@addCallback
+            }
+
+            super.onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun initialization() {
@@ -255,22 +270,6 @@ class ShoppingItemListActivity : AppCompatActivity() {
             .replace(binding.flFragmentContainer.id, fragment, fragment.tag)
             .addToBackStack(fragment.tag)
             .commit()
-    }
-
-    @Deprecated(
-        "This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.",
-        ReplaceWith(
-            "super.onBackPressedDispatcher.onBackPressed()",
-            "androidx.appcompat.app.AppCompatActivity"
-        )
-    )
-    override fun onBackPressed() {
-        if (binding.flFragmentContainer.isVisible) {
-            supportFragmentManager.popBackStack()
-            binding.flFragmentContainer.visibility = View.GONE
-            return
-        }
-        super.onBackPressedDispatcher.onBackPressed()
     }
 
     companion object {
